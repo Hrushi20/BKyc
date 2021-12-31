@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Nunito+Sans:wght@300&family=Nunito:wght@300&family=Righteous&display=swap');
+
+/* ============================================ sec1 ======================================================  */
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.back, .front{
+    width: 100%;
+    height: 100vh;
+}
+
+.front {
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+}
+
+.back {
+    position: absolute;
+    top: 0;
+    background-image: url('../assets/network.svg');
+    z-index: -1;
+}
+
+.title {
+    font-family: 'Righteous', cursive;
+    font-size: 72px;
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    letter-spacing: 8px;
+    margin-bottom: 20px;
+}
+
+.tagline {
+    font-family: 'Nunito', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: white;
+    padding: 0 12px;
+    text-align: center;
+}
+
+.tech {
+    font-size: 2.4rem;
+    color: #ff9933;
+}
+
+.mainHeading {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.nav {
+    display: flex;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav ul {
+   display: flex;
+   align-content: center;
+   justify-content: center;
+}
+
+.nav ul .li {
+    padding: 5px 20px;
+    font-family: 'Nunito Sans', sans-serif;
+    letter-spacing: 0.5px;
+    color: white;
+    text-decoration: none;
+}
+
+.nav ul .li:hover {
+    cursor: pointer;
+    color: #ff9933;
+    border-bottom: 1px solid white;
+    font-size: large;
+}
+
+.authButton {
+    margin-left: 20px;
+    padding: 5px 32px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-family: 'Nunito Sans', sans-serif;
+    border: 2px solid white
+}
+
+.authButton:hover {
+    cursor: pointer;
+    background-color: #ff9933;
+    color: white;
+}
+
+
+/* ============================================ sec2 ======================================================  */
+
+.sec2 {
+    display: flex;
+    margin: 100px 100px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.sec2 img {
+    height: 300px;
+    width: 300px;
+}
+
+.sec2 .contentArea {
+    width: 40vw;
+    background-color: #f2f2f2;
+    padding: 24px 44px;
+    border-radius: 8px;
+    border: 1px solid black;
+
+}
+
+.contentArea .content{
+    font-family: 'Nunito', sans-serif;
+    line-height: 24px;
+    font-size: 18px;
+}
+
+.container {
+    position: absolute;
+    height: 160px;
+    width: 45vw;
+    margin-left: 34px;
+    border: 1px solid black;
+    background-color: #b3b3b3;
+    z-index: -1;
+    border-radius: 8px;
+}
+
+
+/* ============================================ contact form ================================================ */
+
+.contact-form {
+    height: 400px;
+    width: 100%;
+    background-color: #ff9933;
+    margin-top: 360px;
+    display: flex;
+    justify-content: center;
+} 
+
+.form {
+    position: relative;
+    top: -150px;
+    border: 2px solid gray;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    width: 80%;
+    height: 450px;
+    background-color: snow;
+}
+
+.text {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.cform {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left-width: 1px;
+    border-left-color: gray;
+    border-left-style: solid;
+}
+
+.cform .inputItem {
+    padding: 20px 100px;
+}
+
+.cform .inputItem label {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.inputItem input {
+    margin-left: 16px;
+    width: 180px;
+    height: 24px;
+    border-width: 1;
+}
+
+.contactSvg {
+    width: 200px;
+    height: 200px;
+}
+
+.contactText {
+    font-size: 70px;
+    margin-bottom: 40px;
+    font-family: 'Anton', sans-serif;
+}
