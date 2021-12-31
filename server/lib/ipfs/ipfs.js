@@ -1,4 +1,4 @@
-const { node } = require("../../utils/ipfs");
+const { node } = require("../../utils/initEssentials");
 const { globSource } = require('ipfs-core');
 
 class Ipfs {
