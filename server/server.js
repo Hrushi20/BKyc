@@ -1,21 +1,25 @@
 const express = require('express');
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
 
 const ipfsRoutes = require("./router/ipfs.js");
-const { initIpfs } = require("./utils/ipfs");
+const { initEssentials } = require("./utils/initEssentials");
+
+// For adding .env variables into node.js
+dotenv.config();
 
 const app = express();
-const port = 8080;
+const PORT = 8080;
 
+// For parsing Json objects received from the frontend
 app.use(bodyParser.json())
 
+// To prevent cross origin resource sharing (cors) errors in frontend 
 app.use(cors());
 
 // routes
-
 app.use('/ipfs',ipfsRoutes);
-
 
 app.use('/',(req,res) => {
     
@@ -23,12 +27,11 @@ app.use('/',(req,res) => {
 
 });
 
+app.listen(PORT, async() => {
 
+    // Configure monogoose connection and setup ipfs node.
+    await initEssentials();
 
-app.listen(port, async() => {
-
-    await initIpfs();
-
-    console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Example app listening at http://localhost:${PORT}`)
 
 });
