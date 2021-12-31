@@ -1,18 +1,20 @@
 import React, {useEffect} from 'react';
+import {Routes, Route, Link} from 'react-router-dom';
 import './App.css';
+import About from './views/About';
+import Error from './views/Error';
+import Home from './views/Home';
 
 function App() {
-  const [text, setText] = React.useState("nthg");
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_PORTAL}/sample`)
-      .then(res => res.json())
-      .then(res => setText(res.uname))
-  })
+  
   return (
-    <div className="App">
-      <h2>{text}</h2>
-      <p>This is cmng from frontend only.. </p>
-    </div>
+    <>
+       <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/about' element={<About />} />
+        <Route path='*' element={<Error />} />
+      </Routes>
+    </>
   );
 }
 
