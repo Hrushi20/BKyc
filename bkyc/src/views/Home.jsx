@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import RContent from "../components/content/RContent";
 import LContent from "../components/content/LContent";
 import ContactForm from "../components/forms/Contact";
+import Footer from "../components/Footer";
 
 const Home = () => {
     const { isAuthenticated } = useAuth0();
@@ -44,6 +45,7 @@ const Home = () => {
          <div className="contact-form">
              <ContactForm />
          </div>
+         <Footer />
        </div>
     )
 };

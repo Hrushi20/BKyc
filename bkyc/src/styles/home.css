@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Nunito+Sans:wght@300&family=Nunito:wght@300&family=Righteous&display=swap');
 
+/* ============================================ colors ===================================================  */
+
+:root {
+    --light-black : rgba(0,0,0,0.6);
+    --orange : #ff9933;
+    --white : #ffffff;
+    --ash: #f2f2f2;
+    --light-grey: #b3b3b3;
+    --black: #000000;
+    --gray: gray;
+    --snow: snow;
+}
+
+
 /* ============================================ sec1 ======================================================  */
 
 * {
@@ -13,7 +27,7 @@
 }
 
 .front {
-    background-color: rgba(0,0,0,0.6);
+    background-color: var(--light-black);
     display: flex;
     flex-direction: column;
 }
@@ -28,7 +42,7 @@
 .title {
     font-family: 'Righteous', cursive;
     font-size: 72px;
-    color: white;
+    color: var(--white);
     text-align: center;
     vertical-align: middle;
     letter-spacing: 8px;
@@ -39,14 +53,14 @@
     font-family: 'Nunito', sans-serif;
     font-size: 28px;
     letter-spacing: 1px;
-    color: white;
+    color: var(--white);
     padding: 0 12px;
     text-align: center;
 }
 
 .tech {
     font-size: 2.4rem;
-    color: #ff9933;
+    color: var(--orange);
 }
 
 .mainHeading {
@@ -74,14 +88,14 @@
     padding: 5px 20px;
     font-family: 'Nunito Sans', sans-serif;
     letter-spacing: 0.5px;
-    color: white;
+    color: var(--white);
     text-decoration: none;
 }
 
 .nav ul .li:hover {
     cursor: pointer;
-    color: #ff9933;
-    border-bottom: 1px solid white;
+    color: var(--orange);
+    border-bottom: 1px solid var(--white);
     font-size: large;
 }
 
@@ -91,13 +105,13 @@
     border-radius: 20px;
     font-size: 16px;
     font-family: 'Nunito Sans', sans-serif;
-    border: 2px solid white
+    border: 2px solid var(--white)
 }
 
 .authButton:hover {
     cursor: pointer;
-    background-color: #ff9933;
-    color: white;
+    background-color: var(--orange);
+    color: var(--white);
 }
 
 
@@ -117,10 +131,10 @@
 
 .sec2 .contentArea {
     width: 40vw;
-    background-color: #f2f2f2;
+    background-color: var(--ash);
     padding: 24px 44px;
     border-radius: 8px;
-    border: 1px solid black;
+    border: 1px solid var(--black);
 
 }
 
@@ -135,8 +149,8 @@
     height: 160px;
     width: 45vw;
     margin-left: 34px;
-    border: 1px solid black;
-    background-color: #b3b3b3;
+    border: 1px solid var(--black);
+    background-color: var(--light-grey);
     z-index: -1;
     border-radius: 8px;
 }
@@ -147,7 +161,7 @@
 .contact-form {
     height: 400px;
     width: 100%;
-    background-color: #ff9933;
+    background-color: var(--orange);
     margin-top: 360px;
     display: flex;
     justify-content: center;
@@ -156,14 +170,14 @@
 .form {
     position: relative;
     top: -150px;
-    border: 2px solid gray;
+    border: 2px solid var(--gray);
     border-radius: 12px;
     display: flex;
     justify-content: space-around;
     align-content: center;
     width: 80%;
     height: 450px;
-    background-color: snow;
+    background-color: var(--snow);
 }
 
 .text {
@@ -182,7 +196,7 @@
     flex-direction: column;
     justify-content: center;
     border-left-width: 1px;
-    border-left-color: gray;
+    border-left-color: var(--gray);
     border-left-style: solid;
 }
 
@@ -212,4 +226,60 @@
     font-size: 70px;
     margin-bottom: 40px;
     font-family: 'Anton', sans-serif;
+}
+
+
+/* ============================================  footer  ================================================ */
+
+.footer {
+    height: 350px;
+    background-color: var(--orange);
+    display: flex;
+}
+
+.left-footer, .right-footer {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--black);
+    flex-direction: column;
+}
+
+.right-footer {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.right-footer .head {
+    margin-top: 28px;
+}
+
+.footer .foottit {
+    font-size: 56px;
+    color: var(--black);
+    margin-bottom: 40px;
+}
+
+.footer .head {
+     font-size: 20px;
+     font-family: 'Anton', sans-serif;
+     margin-bottom: 12px;
+     letter-spacing: 2px;
+}
+
+.right-footer .links, .left-footer .cp {
+    font-size: 16px;
+    font-family: 'Nunito', sans-serif;
+    margin-bottom: 4px;
+    display: block;
+    text-decoration: none;
+    color: var(--black);
+}
+
+.left-footer .cp {
+    margin-top: 44px;
+    font-size: 12px;
 }
