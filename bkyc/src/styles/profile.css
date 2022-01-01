@@ -1,0 +1,68 @@
+.profile {
+    height: 78vh;
+}
+
+.metadata {
+    align-items: flex-end;
+    justify-content: space-around;
+    display: flex;
+}
+
+.avatar {
+    border: 4px solid white;
+    position: relative;
+    top: 100px;
+    align-self: center;
+}
+
+.name {
+    font-size: 46px;
+    margin-top: 54px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 60px;
+}
+
+.metadata .status,.metadata .email {
+    width: 340px;
+    height: 40px;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 2px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 50px;
+}
+
+.metadata .email {
+    width: 340px;
+}
+
+.stephead {
+    font-size: 34px;
+    font-family: 'Nunito-Sans', sans-serif;
+}
+
+.kyc-form {
+    margin: 80px;
+    margin-top: 32px;
+    border: 1px solid var(--light-grey);
+    border-radius: 10px;
+    box-shadow: 3px 0px rgba(0,0,0,0.2), -3px 5px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.formContainer {
+    display:"flex";
+    align-items:"center";
+    justify-content: "space-around";
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 50px;
+    margin-bottom: 0;
+}
