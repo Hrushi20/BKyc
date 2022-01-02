@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react';
-import {Routes, Route, Link} from 'react-router-dom';
+import React from 'react';
+import {Routes, Route} from 'react-router-dom';
+import Loader from './components/loader';
 import Home from './views/Home';
 
 const LazyAbout = React.lazy(() => import('./views/About'));
@@ -10,7 +11,7 @@ function App() {
   
   return (
     <>
-      <React.Suspense fallback="Loading ..." >
+      <React.Suspense fallback={<Loader />} >
        <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<LazyAbout />} />

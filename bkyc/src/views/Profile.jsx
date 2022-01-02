@@ -16,6 +16,7 @@ import useKyc from "../hooks/useKyc";
 import Lottie from 'react-lottie';
 import reviewAnim from '../assets/review.json';
 import ethAnim from '../assets/etherium.json';
+import Footer from '../components/Footer';
 
 
 const StepperForm = ({data, activeStep, setActiveStep}) => (
@@ -84,20 +85,20 @@ function Profile() {
 
             {
                 status === 'rejected' ? 
-                   <p className="content" style={{fontSize: 15, color: 'red'}} > The previous KYC was rejected. Please fill it again. To know WHY ? <a href='#'> view report </a>  </p>
+                   <p className="statuscontent" style={{fontSize: 15, color: 'red'}} > The previous KYC was rejected. Please fill it again. To know WHY ? <a href='#'> view report </a>  </p>
                 : status === 'verified' ? 
                      <>
-                        <p className="content"> Congratulations !!. Your KYC is verified.  </p>
+                        <p className="statuscontent"> Congratulations !!. Your KYC is verified.  </p>
                         <Lottie 
                             options={etherium}
                             height={400}
                             width={400}
                         /> 
-                        <p className="content"> Know your Hash here - <a href='#'> view Hash </a> </p>
+                        <p className="statuscontent"> Know your Hash here - <a href='#'> view Hash </a> </p>
                      </>
                 : status === 'pending' ? 
                   <>
-                       <p className="content"> Please Wait !!. Your KYC is under process. </p>
+                       <p className="statuscontent"> Please Wait !!. Your KYC is under process. </p>
                       <Lottie 
                         options={review}
                         height={400}
@@ -128,6 +129,8 @@ function Profile() {
                 <StepperForm data={data} activeStep={activeStep} setActiveStep={setActiveStep}  />
               </>
             }
+
+            <Footer />
             
         </div>
     )
