@@ -12,32 +12,35 @@ import Form4 from '../components/forms/Kyc/form4';
 import Form3 from '../components/forms/Kyc/form3';
 import Form2 from '../components/forms/Kyc/form2';
 import Form1 from '../components/forms/Kyc/form1';
-
+import useKyc from "../hooks/useKyc";
 
 function Profile() {
 
+    const data = useKyc();
     const [activeStep, setActiveStep] = React.useState(0);
-    const [component, setComponent] = React.useState(<Form1 />)
-   
-    React.useEffect(() => {
-        switch (activeStep) {
-            case 0:
-                setComponent(<Form1 />);
-                break;
-            case 1:
-                setComponent(<Form2 />);
-                break;
-            case 2:
-                setComponent(<Form3 />);
-                break;
-            case 3:
-                 setComponent(<Form4 />);
-                 break;
+    // const [component, setComponent] = React.useState(<Form1 {...data}/>)
+
+    console.log(data);
+
+    // React.useEffect(() => {
+    //     switch (activeStep) {
+    //         case 0:
+    //             setComponent(<Form1 {...data}/>);
+    //             break;
+    //         case 1:
+    //             setComponent(<Form2 {...data}/>);
+    //             break;
+    //         case 2:
+    //             setComponent(<Form3 {...data}/>);
+    //             break;
+    //         case 3:
+    //              setComponent(<Form4 {...data}/>);
+    //              break;
         
-            default:
-                break;
-        }
-    }, [activeStep])
+    //         default:
+    //             break;
+    //     }
+    // }, [activeStep])
 
 
     return (
@@ -84,7 +87,7 @@ function Profile() {
             </Stepper>
 
             <div className="kyc-form" style={{height : activeStep === 3 ? 660 : 450}}>
-              {component}
+              {activeStep == 0? <Form1 {...data}/>:activeStep == 1 ? <Form2 {...data}/>: activeStep == 2 ?<Form3 {...data}/>:<Form4 {...data}/>}
               <div className="buttons">                
                 <Button variant='outlined' disabled={activeStep === 0} color='inherit' onClick={() => setActiveStep(activeStep - 1)}>Previous</Button>
                 <Button variant='outlined' disabled={activeStep === 3} color='inherit' onClick={() => setActiveStep(activeStep + 1)}>Next</Button>
