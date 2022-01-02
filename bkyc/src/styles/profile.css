@@ -66,3 +66,10 @@
     margin: 50px;
     margin-bottom: 0;
 }
+
+.content {
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    font-size: 20px;
+    margin: 48px;
+}
