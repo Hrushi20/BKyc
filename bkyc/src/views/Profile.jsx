@@ -87,7 +87,7 @@ function Profile() {
             </Stepper>
 
             <div className="kyc-form" style={{height : activeStep === 3 ? 660 : 450}}>
-              {activeStep == 0? <Form1 {...data}/>:activeStep == 1 ? <Form2 {...data}/>: activeStep == 2 ?<Form3 {...data}/>:<Form4 {...data}/>}
+              {activeStep === 0? <Form1 {...data}/>:activeStep === 1 ? <Form2 {...data}/>: activeStep === 2 ?<Form3 {...data}/>:<Form4 {...data}/>}
               <div className="buttons">                
                 <Button variant='outlined' disabled={activeStep === 0} color='inherit' onClick={() => setActiveStep(activeStep - 1)}>Previous</Button>
                 <Button variant='outlined' disabled={activeStep === 3} color='inherit' onClick={() => setActiveStep(activeStep + 1)}>Next</Button>
