@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 
 const ipfsRoutes = require("./router/ipfs.js");
+const usersRoutes = require("./router/users.js")
 const { initEssentials } = require("./utils/initEssentials");
 
 // For adding .env variables into node.js
@@ -20,6 +21,8 @@ app.use(cors());
 
 // routes
 app.use('/ipfs',ipfsRoutes);
+
+app.use('/users',usersRoutes);
 
 app.use('/',(req,res) => {
     
