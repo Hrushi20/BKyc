@@ -1,4 +1,5 @@
 const { Ipfs } = require("../lib/ipfs/ipfs");
+const { errHandler } = require("../utils/errHandler");
 
 const storeFile = async(req,res,next) => {
 
@@ -15,11 +16,7 @@ const storeFile = async(req,res,next) => {
 
         res.status(200).json({"message":"Stored the file successfully"});
     }catch(err){
-        if(err)
-            return next(err);
-
-        err  = new Error("Internal sever error");
-        next(err);
+       errHandler(err,next);
     }
 
 }

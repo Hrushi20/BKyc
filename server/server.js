@@ -17,7 +17,6 @@ const PORT = 8080;
 
 // For parsing Json objects received from the frontend
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended:true }))
 
 // To prevent cross origin resource sharing (cors) errors in frontend 
 app.use(cors());
@@ -39,7 +38,7 @@ app.use('/',(req,res) => {
 app.use((err,req,res,next) => {
 
     console.log(err);
-    
+
     if(!err.status)
         err.status = 501;
 

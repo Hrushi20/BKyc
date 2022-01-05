@@ -1,5 +1,6 @@
 const fs = require("fs/promises");
 const { v4: uuidv4 } = require('uuid');
+const { errHandler } = require("../utils/errHandler");
 
 const storeKyc = (req,res,next) => {
 
@@ -14,11 +15,7 @@ const storeKyc = (req,res,next) => {
 
         res.status(201).send("<h1>Storing kyc on server... Will be updated to the blockchain</h1>");
     }catch(err){
-        if(err)
-            return next(err);
-
-        err  = new Error("Internal sever error");
-        next(err);
+        errHandler(err,next);
     }
 
 };
