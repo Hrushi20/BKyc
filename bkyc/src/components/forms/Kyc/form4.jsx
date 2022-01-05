@@ -28,7 +28,7 @@ const Form4 = ({ submitKyc,setLivePhoto, livePhoto }) => {
                     audio={false}
                     ref={webcamRef}
                     screenshotFormat="image/jpeg"
-                    style={{width: 400, border: '2px solid gray', borderRadius: 10}}
+                    style={{width: 400, border: '2px solid gray', borderRadius: 10 }}
                 />
                 <br /><br />
                 <Button onClick={capturePhoto}>Capture Photo</Button>

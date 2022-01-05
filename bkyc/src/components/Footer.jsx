@@ -1,4 +1,7 @@
 import React from 'react'
+import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 const Footer = () => {
     return (
@@ -6,6 +9,11 @@ const Footer = () => {
            <div className="left-footer">
                 <p className="title foottit">B'KYC'</p>
                 <p className="head">Follow us </p>
+                <div style={{display: 'flex'}} className="icons">
+                    <FacebookOutlinedIcon />
+                    <LinkedInIcon />
+                    <GitHubIcon />
+                </div>
                 <p className="cp"> &copy; Copyright 2022 - B'KYC' <br />
                     All rights reserved 
                  </p>
