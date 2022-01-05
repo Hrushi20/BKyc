@@ -24,6 +24,8 @@ function useKyc(){
 
     async function submitKyc(){
 
+        const formData = new FormData();
+
         const body = {
             firstName,
             lastName,
@@ -33,19 +35,21 @@ function useKyc(){
             pincode,
             email,
             phoneNumber,
-            pan,
-            aadhar,
-            livePhoto,
+            livePhoto
         }
 
+        formData.append("pan",pan);
+        formData.append("aadhar",aadhar);
+        formData.append("body",JSON.stringify(body));
+
         console.log(body)
-        // let res = await (await fetch(`${process.env.REACT_APP_PORTAL}/kyc/submitKyc`,{
-        //     method: "POST",
-        //     body: {
+        let res = await fetch(`${process.env.REACT_APP_PORTAL}/kyc/store-kyc`,{
+            method: "POST",
+            body: formData,
+            
+        });
 
-        //     }
-        // })).json();
-
+        console.log(res);
 
         // return res;
     }

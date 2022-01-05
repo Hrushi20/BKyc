@@ -35,6 +35,17 @@ app.use('/',(req,res) => {
 
 });
 
+// Global error handler for all controllers...
+app.use((err,req,res,next) => {
+
+    console.log(err);
+    
+    if(!err.status)
+        err.status = 501;
+
+    res.status(err.status).json(err);
+})
+
 app.listen(PORT, async() => {
 
     // Configure monogoose connection and setup ipfs node.

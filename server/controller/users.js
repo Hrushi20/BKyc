@@ -1,6 +1,6 @@
 const UsersSchema = require("../models/Users");
 
-const storeUser = async(req,res) => {
+const storeUser = async(req,res,next) => {
 
     try{
 
@@ -15,11 +15,15 @@ const storeUser = async(req,res) => {
         res.status(201).send("<h1>Storing user</h1>");
 
     }catch(err){
+        if(err)
+            return next(err);
 
+        err  = new Error("Internal sever error");
+        next(err);
     }
 }
 
-const getUser = async(req,res) => {
+const getUser = async(req,res,next) => {
 
     try{
 
@@ -28,7 +32,11 @@ const getUser = async(req,res) => {
         res.status(200).json(userData);
 
     }catch(err){
-        
+        if(err)
+            return next(err);
+
+        err  = new Error("Internal sever error");
+        next(err);
     }
 }
 
