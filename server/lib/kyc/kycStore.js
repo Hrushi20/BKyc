@@ -1,13 +1,14 @@
 const fs = require("fs/promises");
 const path = require("path");
+const UnverifiedUsers = require("../../models/UnverifiedUsers");
 
 module.exports = class KycStorage {
 
-    constructor(data,uId,docs){
+    constructor(data,storageId,docs){
         this.data = data;
-        this.uId = uId;
+        this.storageId = storageId;
         this.docs = docs;
-        this.path = path.join(__dirname,'../..','UserData',this.uId);
+        this.path = path.join(__dirname,'../..','UserData',this.storageId);
     }
 
     async storeLivePhoto(livePhoto){
@@ -35,10 +36,23 @@ module.exports = class KycStorage {
 
     async store(){
 
-        this.storeUserDetailsAsJson(this.data);
-        this.storeLivePhoto(this.data.livePhoto);
-        this.storeDocuments(this.docs);
+        try{
+            // No logic to check if directory exists or not...
+            await fs.mkdir(this.path);
+            await this.storeUserDetailsAsJson(this.data);
+            await this.storeLivePhoto(this.data.livePhoto);
+            this.storeDocuments(this.docs);
 
+            // Storing data in database...
+            // const unverifiedUsers = new UnverifiedUsers({
+            //     userId:"kfjdsalfjdska93240234",
+            //     storageId:this.storageId
+            // })
+
+            // await unverifiedUsers.save();
+        }catch(err){
+            throw err;
+        }
     }    
 
 }

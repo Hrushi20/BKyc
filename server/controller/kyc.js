@@ -1,21 +1,21 @@
-const fs = require("fs/promises");
 const { v4: uuidv4 } = require('uuid');
 const { errHandler } = require("../utils/errHandler");
+const KycStore = require("../lib/kyc/kycStore");
+const KycFetch = require("../lib/kyc/kycFetch");
 
-const KycStorage = require("../lib/kycStorage/kycStorage");
-
-const storeKyc = (req,res,next) => {
+// Stores all kycs in UserData folder using uuid and store uuid in mongodb
+const storeKyc = async(req,res,next) => {
 
     try{
         // Get the json data from client
         data = JSON.parse(req.body.body);
 
         // Get the pan and aadhar details
-        const files = req.files;
+        const docs = req.files;
 
-        // const uId = uuidv4();
-        const uId = "92274f12-5f01-482a-9f87-a715e87b652f";
-        const kycStorage = new KycStorage(data,uId,files);
+        // const storageId = uuidv4();
+        const storageId = "92274f12-5f01-482a-9f87-a715e87b652f";
+        const kycStorage = new KycStore(data,storageId,docs);
         kycStorage.store();
 
         res.status(201).send("<h1>Storing kyc on server... Will be updated to the blockchain</h1>");
@@ -25,4 +25,16 @@ const storeKyc = (req,res,next) => {
 
 };
 
-module.exports = { storeKyc };
+// Get all the unverified kycs from the db
+const getKycsForVerification = (req,res,next) => {
+    try{
+
+        const kycs = new KycFetch().getAllKycs();
+        res.status(201).json({kycs});
+
+    }catch(err){
+        errHandler(err,next);
+    }
+}
+
+module.exports = { storeKyc,getKycsForVerification };

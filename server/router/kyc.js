@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { storeKyc } = require("../controller/kyc");
+const { storeKyc,getKycsForVerification } = require("../controller/kyc");
 
 const router = express.Router();
 
@@ -8,5 +8,7 @@ const router = express.Router();
 const multer = require("multer");
 
 router.post("/store-kyc",multer().any(),storeKyc);
+
+router.get("/get-unverified-kycs",getKycsForVerification);
 
 module.exports = router;
