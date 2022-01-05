@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node server.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +18,8 @@
     "express-openid-connect": "^2.5.2",
     "ipfs-core": "^0.13.0",
     "mongodb": "^4.2.2",
-    "mongoose": "^6.1.4"
+    "mongoose": "^6.1.4",
+    "multer": "^1.4.4",
+    "uuid": "^8.3.2"
   }
 }
