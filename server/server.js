@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 
 const ipfsRoutes = require("./router/ipfs.js");
+const usersRoutes = require("./router/users.js")
+const kycRoutes = require("./router/kyc.js")
+
 const { initEssentials } = require("./utils/initEssentials");
 
 // For adding .env variables into node.js
@@ -21,11 +24,26 @@ app.use(cors());
 // routes
 app.use('/ipfs',ipfsRoutes);
 
+app.use('/users',usersRoutes);
+
+app.use('/kyc',kycRoutes);
+
 app.use('/',(req,res) => {
     
     res.send("Backend Is up and running");
 
 });
+
+// Global error handler for all controllers...
+app.use((err,req,res,next) => {
+
+    console.log(err);
+
+    if(!err.status)
+        err.status = 501;
+
+    res.status(err.status).json(err);
+})
 
 app.listen(PORT, async() => {
 

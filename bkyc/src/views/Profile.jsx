@@ -109,7 +109,7 @@ function Profile() {
 
             }
 
-            {(status === 'no KYC' || status === 'rejected') && 
+            {(status === 'noKYC' || status === 'rejected') && 
               <>
                 <Stepper activeStep={activeStep} alternativeLabel>
                     <Step key={0}>
