@@ -1,47 +1,38 @@
 const { node } = require("../../utils/initEssentials");
-const { globSource } = require('ipfs-core');
+const CryptoJs = require("crypto-js");
+const { v4: uuidv4 } = require('uuid');
+const { enc } = require("crypto-js");
 
 class Ipfs {
 
-    async getHashesOfFilesInFolder (dir_name){
-        const fileHashes = [];
+    encryptUserKyc(data,cipherKey){
+        return CryptoJs.AES.encrypt(data,cipherKey).toString();
+    }
 
-        for await(let hashes of node.ipfs.addAll(globSource(dir_name,"**/*")))
-            fileHashes.push(hashes);
-        
-        return fileHashes;
+    decryptUserKyc(data,cipherKey){
+        return CryptoJs.AES.decrypt(data,cipherKey).toString(enc.Utf8);
     }
 
     /*
-        Creates an html file and returns the hash of the html file. 
+        Hashes the json data of the user...
     */
     async createUserKycHash(data){
 
-        const html = 
-        `<html>
-            <head>
-                <title>Hrushi</title>
-            </head>
-            <body>
-                <table>
-                    <tr>
-                        <td>Name</td>
-                        <td>Hrushi</td>
-                    </tr>
-                    <tr>
-                        <td>Address</td>
-                        <td>fjdksafjlaksdfjksdf</td>
-                    </tr>
-                </table>
+        const ipfsData = {};
 
-                <img src="https://ipfs.io/ipfs/QmfGcymAVSEPJx8W7PgNhPaxruY4d15mbW9caNanpj3WqD" alt="Pan card"/>
-                <img src="https://ipfs.io/ipfs/QmYz9doeU4fcihEFn6exDqHyhJsY8Yi1EwwmmHjXDqWcUY" alt="Aadhar card">
-            </body>
-        </html>`
+        let jsonString = JSON.stringify(data);
 
-        const htmlHash = await node.ipfs.add(html);
+        // Need to update it to uuid();
+        const cipherKey = "92274f12-5f01-482a-9f87-a715e87b652f";
 
-        return htmlHash;
+        const encryptedData = this.encryptUserKyc(jsonString,cipherKey);
+
+        const userHash = await node.ipfs.add(encryptedData);
+
+        ipfsData["cipherKey"] = cipherKey;
+        ipfsData["userHash"] = userHash;
+        
+        return ipfsData;
     }
 
 }
