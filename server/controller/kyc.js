@@ -26,10 +26,10 @@ const storeKyc = async(req,res,next) => {
 };
 
 // Get all the unverified kycs from the db
-const getKycsForVerification = (req,res,next) => {
+const getKycsForVerification = async(req,res,next) => {
     try{
 
-        const kycs = new KycFetch().getAllKycs();
+        const kycs = await new KycFetch().fetchAllKycs();
         res.status(201).json({kycs});
 
     }catch(err){

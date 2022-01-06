@@ -6,13 +6,14 @@ module.exports = class KycStorage {
 
     async fetchAllKycs(){
         const kycs = [];
-        const storageIds = await UnverifiedUsers.find({}).exec();
+        // const storageIds = await UnverifiedUsers.find({}).exec();
+        const storageIds = ["92274f12-5f01-482a-9f87-a715e87b652f"];
 
-        // Todo logic to get all the files from the UserData folder and send it to the client;
-        storageIds.forEach(id => {
-            
-        });
-        
+        for(let id of storageIds){
+            const userData = await this.fetchData(id);
+            const userDocs = await this.fetchDocuments(id);
+            kycs.push({ ...userData,...userDocs });
+        }
         return kycs;
     }
 
@@ -22,15 +23,30 @@ module.exports = class KycStorage {
 
         const dirName = path.join(__dirname,"..","..",`UserData/${storageId}`);
 
-        // Need to get mimetype of the file...
-        await fs.readFile(`${dirName}/pan.`);
-        await fs.readFile(`${dirName}/aadhar.`)
+        const files = await fs.readdir(dirName);
+
+        const fileNames = files.filter(file => file.startsWith("aadhar.") || file.startsWith("pan."));
+
+        for(let file of fileNames){
+            let doc =  (await fs.readFile(`${dirName}/${file}`, { encoding:"base64" })).toString();
+
+            // Need to change type of base64 header for different images...
+            doc = "data:image/jpeg;base64," + doc;
+            if(file.startsWith("pan"))
+                docs["pan"] = doc;
+            else if(file.startsWith("aadhar"))
+                docs["aadhar"] = doc;
+            else
+                throw new Error("Error! Shouldn't be able to read such a file");
+        }
 
         return docs;
     }
 
     async fetchData(storageId){
         const dirName = path.join(__dirname,"..","..",`UserData/${storageId}`);
-        return await fs.readFile(`${dirName}/userData.json`);
+        const data = await fs.readFile(`${dirName}/userData.json`,'utf8');
+
+        return JSON.parse(data);
     }
 }
