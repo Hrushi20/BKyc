@@ -1,0 +1,17 @@
+.toggleButtons {
+    width: 100%;
+    margin: 42px 0;
+    justify-content: center;
+}
+
+.active, .pending {
+    height: 500px;
+    margin: 16px 64px;
+    border: 1px solid var(--light-grey);
+    border-radius: 10px;
+    box-shadow: 3px 0px rgba(0,0,0,0.2), -3px 5px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}

@@ -34,7 +34,6 @@ function Profile() {
     const data = useKyc();
     const [activeStep, setActiveStep] = React.useState(0);
     const [status, setStatus] = React.useState('rejected');
-    const [component, setComponent] = React.useState(<Form1 {...data}/>)
 
     console.log(data);
 

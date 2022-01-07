@@ -7,7 +7,7 @@ function Nav() {
         <div className="nav">
             <ul className="links">
                 <Link className="li" to='/'> Home </Link>
-                <Link className="li" to='/about'> About </Link>
+                <Link className="li" to='/status'> status </Link>
                 <Link className="li" to='/'> Wallet </Link>
                 <Link className="li" to='/profile'> Profile </Link>
                 <button className="authButton" > Logout </button>
