@@ -11,6 +11,7 @@ module.exports = class KycStorage {
         this.path = path.join(__dirname,'../..','UserData',this.storageId);
     }
 
+    // Converting image from base64 and storing it...
     async storeLivePhoto(livePhoto){
            
             const userPhoto = livePhoto.replace(/^data:image\/\w+;base64,/, '');
@@ -19,6 +20,7 @@ module.exports = class KycStorage {
 
     }
 
+    // Storing all the kyc docs(aadhar and pan)...
     storeDocuments(docs){
         
         docs.forEach(async(doc) => {
@@ -28,6 +30,7 @@ module.exports = class KycStorage {
 
     }
 
+    // Storing the userKyc json file...
     async storeUserDetailsAsJson(data){
         
         await fs.writeFile(`${this.path}/userData.json`,JSON.stringify(data),'utf8');
@@ -37,7 +40,7 @@ module.exports = class KycStorage {
     async store(){
 
         try{
-            // No logic to check if directory exists or not...
+            // No logic to check if directory exists or not... ======>>>>>> IMPORTANT.... (Server crashing if not added)
             await fs.mkdir(this.path);
             await this.storeUserDetailsAsJson(this.data);
             await this.storeLivePhoto(this.data.livePhoto);

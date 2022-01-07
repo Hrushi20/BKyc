@@ -5,10 +5,12 @@ const { enc } = require("crypto-js");
 
 class Ipfs {
 
+    // Encrypting the userKyc.json file...
     encryptUserKyc(data,cipherKey){
         return CryptoJs.AES.encrypt(data,cipherKey).toString();
     }
 
+    // Decrypting the ifps file...
     decryptUserKyc(data,cipherKey){
         return CryptoJs.AES.decrypt(data,cipherKey).toString(enc.Utf8);
     }
