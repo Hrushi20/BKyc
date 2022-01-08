@@ -17,6 +17,7 @@ import Lottie from 'react-lottie';
 import reviewAnim from '../assets/review.json';
 import ethAnim from '../assets/etherium.json';
 import Footer from '../components/Footer';
+import useMetamask from '../hooks/useMetamask';
 
 
 const StepperForm = ({data, activeStep, setActiveStep}) => (
@@ -31,6 +32,7 @@ const StepperForm = ({data, activeStep, setActiveStep}) => (
 
 function Profile() {
 
+    const { connectToMetamask,getKycFromEthereum,sendKycToEthereum } = useMetamask();
     const data = useKyc();
     const [activeStep, setActiveStep] = React.useState(0);
     const [status, setStatus] = React.useState('noKYC');
@@ -128,6 +130,10 @@ function Profile() {
                 <StepperForm data={data} activeStep={activeStep} setActiveStep={setActiveStep}  />
               </>
             }
+
+            <button onClick={connectToMetamask}>Connect to metamask</button>
+            <button onClick={sendKycToEthereum}>Send data</button>
+            <button onClick={getKycFromEthereum}>Get data</button>
 
             <Footer />
             
