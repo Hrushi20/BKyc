@@ -33,7 +33,7 @@ function Profile() {
 
     const data = useKyc();
     const [activeStep, setActiveStep] = React.useState(0);
-    const [status, setStatus] = React.useState('rejected');
+    const [status, setStatus] = React.useState('noKYC');
 
     console.log(data);
 
