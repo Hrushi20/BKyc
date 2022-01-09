@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import contact from '../../assets/suggestions.svg';
 import Slide from 'react-reveal/Slide';
+import Msg from '../../assets/msg.json';
 import Fade from 'react-reveal/Fade';
+import Lottie from 'react-lottie';
+
 
 const ContactForm = () => {
 
@@ -9,6 +12,17 @@ const ContactForm = () => {
     const [name,setName] = useState("");
     const [email,setEmail] = useState("");
     const [message,setMessage] = useState("");
+
+
+    const msg = {
+      loop: false,
+      autoplay: true,
+      animationData: Msg,
+      rendererSettings: {
+        preserveAspectRatio: "xMidYMid slice"
+      }
+    };
+
 
 
     function updateForm(type,value){
@@ -94,16 +108,19 @@ const ContactForm = () => {
                   </Slide>  
                 </form>:
               
-              <div>
-                <h3>Thank you for submitting your form</h3>
-                <p>Will reach out to you as soon as possible.</p>
-                {/* Lottie file can be added here 
+              <div className='msg-sent' >
+                <Lottie
+                    options={msg}
+                    height={250}
+                    width={250}
+                /> 
+                <div className="texts">
+                  <p>Thank you for submitting your form</p>
+                  <p>We will reach out to you as soon as possible.</p>
+                </div>
                 
-                  https://iconscout.com/lottie/thank-you-for-signup-4423290
-                  https://iconscout.com/lotties/thank%20you?utm_campaign=search&utm_medium=marketplace&utm_source=lottiefiles
-                */}
                 
-            </div>}
+              </div>}
             </div>
     )
 }

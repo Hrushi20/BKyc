@@ -4,6 +4,8 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import { Avatar, Button, Chip } from '@mui/material';
 import Fade from 'react-reveal/Fade';
+import Slide from 'react-reveal/Slide';
+import Zoom from 'react-reveal/Zoom';
 import '../styles/profile.css';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import Nav from './Nav';
@@ -99,22 +101,28 @@ function Profile() {
                       <Fade left cascade> Profile</Fade>
                     </p>
                     <div className="metadata">
-                        <Chip className='status' color='success' label= {"status : " + status }  />
-                        <Avatar
-                        className='avatar'
-                        alt="Remy Sharp"
-                        sx={{ width: 140, height: 140, bgcolor: '#ff9933'}}
-                        >
-                            <PersonRoundedIcon sx={{width: 80, height: 80}} />
-                        </Avatar>
-                        <Chip className='email' style={{fontSize: 13}} color='primary' label={"Email : " + profileData.user.email }/>
+                        <Slide left>
+                          <Chip className='status' color='success' label= {"status : " + status }  />
+                        </Slide>
+                          <Avatar
+                          className='avatar'
+                          alt="Remy Sharp"
+                          sx={{ width: 140, height: 140, bgcolor: '#ff9933'}}
+                          >
+                              <PersonRoundedIcon sx={{width: 80, height: 80}} />
+                          </Avatar>
+                        <Slide right>
+                          <Chip className='email' style={{fontSize: 13}} color='primary' label={"Email : " + profileData.user.email }/>
+                        </Slide>
                     </div>
                 </div>
               </div>
                 <div className="back profile" />
             </div>
-
-            <p className="name">{profileData.user.name}</p>
+            <Zoom>
+               <p className="name">{profileData.user.name}</p>
+            </Zoom>
+            
 
             {
                 status === 'rejected' ? 

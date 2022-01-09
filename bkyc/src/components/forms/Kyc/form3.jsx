@@ -4,6 +4,7 @@ import { Button, TextField } from "@mui/material";
 import docs from "../../../assets/docs.svg"
 import { useState } from "react";
 
+
 const Form3 = ({ setAadhar,setPan,pan,aadhar, setValidate3 }) => {
 
     React.useEffect(() => {

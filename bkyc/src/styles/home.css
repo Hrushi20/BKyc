@@ -228,6 +228,20 @@
     font-family: 'Anton', sans-serif;
 }
 
+.msg-sent {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.texts p {
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Nunito', sans-serif;
+    margin: 16px 8px;
+}
 
 /* ============================================  footer  ================================================ */
 

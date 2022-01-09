@@ -1,7 +1,9 @@
 import React from 'react';
 import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import contactInfo from "../../../assets/form2.svg"
+import contactInfo from "../../../assets/form2.svg";
+import Fade from 'react-reveal/Fade';
+
 
 const Form2 = ({ address,setAddress,pincode,setPhoneNumber,phoneNumber,setPincode,email,setEmail, click2, setValidate2 }) => {
 
@@ -20,6 +22,7 @@ const Form2 = ({ address,setAddress,pincode,setPhoneNumber,phoneNumber,setPincod
 
     return (
         <div style={{ display:"flex", alignItems:"center", justifyContent: "space-around", width: '100%'}}>
+          <Fade left cascade>
             <Box component="form" autoComplete="off" style={{width: 400}} >
                 <TextField onBlur={() => setInput1(true)} error={!click2 ? validate(address, input1) : address == ''} style={{ margin:10 }} helperText={!click2 ? validate(address, input1) && "required" : address == '' && "required"}  label="Address" fullWidth  variant="outlined" type="text" value={address} onChange={(e)=>setAddress(e.target.value)}/>
                 <br/>
@@ -29,6 +32,7 @@ const Form2 = ({ address,setAddress,pincode,setPhoneNumber,phoneNumber,setPincod
                 <br/>
                 <TextField onBlur={() => setInput4(true)} error={!click2 ? validate(phoneNumber, input4) : phoneNumber == ''} style={{ margin:10 }} helperText={!click2 ? validate(phoneNumber, input4) && "required" : phoneNumber == '' && "required"} label="Phone No." fullWidth variant="outlined" type="number" value={phoneNumber} onChange={(e)=>setPhoneNumber(e.target.value)}/>
             </Box>
+         </Fade>
             <div>
                 <img style={{width:300,height:300}} src={contactInfo} alt="This is an img"/>
             </div>
