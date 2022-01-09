@@ -6,6 +6,7 @@ import loadingform from '../assets/loadingform.json';
 import Lottie from 'react-lottie';
 import Item from '../components/Item';
 import useKycVerification from '../hooks/useKycVerfication';
+import Footer from '../components/Footer';
 
 
 const Status = () => {
@@ -23,7 +24,6 @@ const Status = () => {
     const { fetchAllUnverifiedKycs,data,kycVerified,kycRejected } = useKycVerification();
 
     React.useEffect(async() => {
-
          await fetchAllUnverifiedKycs();
          setLoading(false);
             
@@ -31,17 +31,17 @@ const Status = () => {
 
     const ActiveForms = () => {
         return (
-            <div className='active'>
-                {data?.map((item, ind) => (
-                    <Item data={item} index={ind} kycVerified={kycVerified} kycRejected={kycRejected}/>
-                ))}
-            </div>
-        )
-    };
-
-    const PendingForms = () => {
-        return (
-            <div className='pending'> Pending list goes here ... </div>
+         <>
+            {data  ?
+                <div className='active'>
+                    {data?.map((item, ind) => (
+                        <Item data={item} index={ind} kycVerified={kycVerified} kycRejected={kycRejected}/>
+                    )) }
+                </div>
+                : 
+                    <p style={{fontSize: 16, fontFamily: 'Nunito', textAlign: 'center', marginBottom: 24}}>No applications to Show</p>
+            }
+         </>
         )
     };
 
@@ -66,6 +66,7 @@ const Status = () => {
                             height={400}
                             width={400}
                         />  : <ActiveForms />}
+            <Footer />
         </div>
     )
 }
