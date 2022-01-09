@@ -3,6 +3,7 @@ const { errHandler } = require("../utils/errHandler");
 const KycStore = require("../lib/kyc/kycStore");
 const KycFetch = require("../lib/kyc/kycFetch");
 const { Ipfs } = require("../lib/ipfs/ipfs");
+const UnpaidKycs = require("../models/UnpaidKycs");
 
 // Stores all kycs in UserData folder using uuid and store uuid in mongodb
 const storeKyc = async(req,res,next) => {
@@ -41,22 +42,45 @@ const getKycsForVerification = async(req,res,next) => {
 const storeKycOnIpfs = async(req,res,next) => {
     try{
 
-        const { data } = req.body;
+        const userData = req.body;
 
-        console.log(data);
-        
         const IPFS = new Ipfs();
 
-        const encryptedUserData = await IPFS.createUserKycHash(data);
+        const encryptedUserData = await IPFS.createUserKycHash(userData);
 
         console.log(encryptedUserData);
-        // Store the encrypted data in database and change the status of the user to pending payment...
 
-        res.status(200).json({"message":"Data processed successfully"});
+        // Stores the encrypted data in database and change the status of the user to pending payment...
+
+        // const data = new UnpaidKycs({
+        //     userId: "j23423432",
+        //     ipfsHash:encryptedUserData.userHash.path,
+        //     cipherKey:encryptedUserData.cipherKey
+        // })
+
+        await data.save();
+        
+
+        res.status(200).json({"message":"Data processed successfully..."});
 
     }catch(err){
         errHandler(err,next);
     }
 }
 
-module.exports = { storeKyc,getKycsForVerification,storeKycOnIpfs };
+const rejectKyc = (req,res,next) => {
+
+    try{
+
+        console.log("Need  to reject userKyc")
+
+        // Todo    logic for reject userKyc.....
+
+        res.status(201).json({ "message":"Data processed successfully..." })
+
+    }catch(err){
+        errHandler(err,next);
+    }
+}
+
+module.exports = { storeKyc,getKycsForVerification,storeKycOnIpfs,rejectKyc };
