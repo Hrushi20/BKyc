@@ -7,7 +7,7 @@ module.exports = class KycStorage {
     async fetchAllKycs(){
         const kycs = [];
         // const storageIds = await UnverifiedUsers.find({}).exec();
-        const storageIds = ["92274f12-5f01-482a-9f87-a715e87b652f"];
+        const storageIds = ["92274f12-5f01-482a-9f87-a715e87b652f","92274f12-5f01-482a-9f87-a715e87b6524"];
 
         for(let id of storageIds){
             const userData = await this.fetchData(id);
