@@ -1,9 +1,14 @@
+import React from 'react';
 import { Box } from "@mui/system";
 import { Button, TextField } from "@mui/material";
 import docs from "../../../assets/docs.svg"
 import { useState } from "react";
 
-const Form3 = ({ setAadhar,setPan,pan,aadhar }) => {
+const Form3 = ({ setAadhar,setPan,pan,aadhar, setValidate3 }) => {
+
+    React.useEffect(() => {
+        setValidate3(pan != null && aadhar != null)
+    })
 
     const [isPanImgLarge,setIsPanImgIsLarge] = useState(false);
     const [isAadharImgLarge,setIsAadharImgLarge] = useState(false);

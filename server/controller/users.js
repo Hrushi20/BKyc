@@ -12,7 +12,7 @@ const storeUser = async(req,res,next) => {
         if(userData == null){
             const user = new UsersSchema({
                 username: req.body.user.name,
-                status:"noKyc",
+                status:"noKYC",
                 authId: req.body.user.sub,
             });
 

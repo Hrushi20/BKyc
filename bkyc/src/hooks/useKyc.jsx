@@ -8,18 +8,25 @@ function useKyc(){
     const [lastName,setLastName] = useState("");
     const [middleName,setMiddleName] = useState("");
     const [dob,setDob] = useState("");
+    const [validate1, setValidate1] = useState(false);
+    const [click1, setClick1] = useState(false);
 
     // Page 2
     const [address,setAddress] = useState("");
     const [pincode,setPincode] = useState("");
     const [email,setEmail] = useState("");
     const [phoneNumber,setPhoneNumber] = useState("");
+    const [validate2, setValidate2] = useState(false);
+    const [click2, setClick2] = useState(false);
+
 
     // Page 3
     const [pan,setPan] = useState(null);
     const [aadhar,setAadhar] = useState(null);
-    const [livePhoto,setLivePhoto] = useState(null);
+    const [validate3, setValidate3] = useState(false);
 
+    //page 4
+    const [livePhoto,setLivePhoto] = useState(null);
 
 
     async function submitKyc(){
@@ -58,25 +65,35 @@ function useKyc(){
         firstName,
         lastName,
         middleName,
+        validate1,
+        click1,
         dob,
         address,
         pincode,
         email,
         phoneNumber,
+        validate2,
+        click2,
         pan,
         aadhar,
         livePhoto,
+        validate3,
         setFirstName,
         setLastName,
         setMiddleName,
+        setValidate1,
+        setClick1,
         setDob,
         setAddress,
         setPincode,
         setEmail,
         setPhoneNumber,
+        setValidate2,
+        setClick2,
         setPan,
         setAadhar,
         setLivePhoto,
+        setValidate3,
         submitKyc
     }
 };

@@ -5,7 +5,6 @@ import StepLabel from '@mui/material/StepLabel';
 import { Avatar, Button, Chip } from '@mui/material';
 import Fade from 'react-reveal/Fade';
 import '../styles/profile.css';
-import blockchain from '../assets/blockchain.svg';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import Nav from './Nav';
 import Form4 from '../components/forms/Kyc/form4';
@@ -21,15 +20,32 @@ import { useAuth0 } from "@auth0/auth0-react";
 import useMetamask from '../hooks/useMetamask';
 
 
-const StepperForm = ({data, activeStep, setActiveStep}) => (
-    <div className="kyc-form" style={{height : activeStep === 3 ? 'unset' : 450, padding : activeStep === 3 && 32 }}>
+const StepperForm = ({data, activeStep, setActiveStep}) => {
+
+  function onNextHandler() {
+    if(activeStep === 0) {
+      data.setClick1(true);
+      data.validate1 && setActiveStep(activeStep + 1);
+    }
+    else if(activeStep === 1) {
+       data.setClick2(true);
+       data.validate2 && setActiveStep(activeStep + 1);
+    }
+    else if(activeStep == 2){
+       data.validate3 && setActiveStep(activeStep + 1);
+    }
+  }
+
+  return (
+    <div className="kyc-form" style={{height : activeStep === 3 ? 'unset' : 500, padding : activeStep === 3 && 32 }}>
               {activeStep === 0? <Form1 {...data}/>:activeStep === 1 ? <Form2 {...data}/>: activeStep === 2 ?<Form3 {...data}/>:<Form4 {...data}/>}
               <div className="buttons">                
                 <Button variant='outlined' disabled={activeStep === 0} color='inherit' onClick={() => setActiveStep(activeStep - 1)}>Previous</Button>
-                <Button variant='outlined' disabled={activeStep === 3} color='inherit' onClick={() => setActiveStep(activeStep + 1)}>Next</Button>
+                <Button variant='outlined' disabled={activeStep === 3} color='inherit' onClick={onNextHandler}>Next</Button>
               </div>
     </div>
-)
+  )
+}
 
 function Profile() {
 
