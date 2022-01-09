@@ -3,7 +3,6 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 
-const ipfsRoutes = require("./router/ipfs.js");
 const usersRoutes = require("./router/users.js")
 const kycRoutes = require("./router/kyc.js")
 
@@ -22,8 +21,6 @@ app.use(bodyParser.json())
 app.use(cors());
 
 // routes
-app.use('/ipfs',ipfsRoutes);
-
 app.use('/users',usersRoutes);
 
 app.use('/kyc',kycRoutes);

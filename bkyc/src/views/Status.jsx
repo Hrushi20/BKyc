@@ -5,6 +5,7 @@ import '../styles/status.css';
 import loadingform from '../assets/loadingform.json';
 import Lottie from 'react-lottie';
 import Item from '../components/Item';
+import useKycVerification from '../hooks/useKycVerfication';
 
 
 const Status = () => {
@@ -18,20 +19,21 @@ const Status = () => {
         }
       };
 
-    const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { fetchAllUnverifiedKycs,data,kycVerified,kycRejected } = useKycVerification();
 
-    React.useEffect(() => {
-        fetch('http://localhost:8080/kyc/get-unverified-kycs')
-            .then(res => res.json())
-            .then(res => {setData(res['kycs']); setLoading(false); } )
+    React.useEffect(async() => {
+
+         await fetchAllUnverifiedKycs();
+         setLoading(false);
+            
     },[])
 
     const ActiveForms = () => {
         return (
             <div className='active'>
-                {data.map((item, ind) => (
-                    <Item data={item} index={ind} />
+                {data?.map((item, ind) => (
+                    <Item data={item} index={ind} kycVerified={kycVerified} kycRejected={kycRejected}/>
                 ))}
             </div>
         )

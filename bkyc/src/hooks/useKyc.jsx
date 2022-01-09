@@ -43,7 +43,7 @@ function useKyc(){
         formData.append("body",JSON.stringify(body));
 
         console.log(body)
-        let res = await fetch(`${process.env.REACT_APP_PORTAL}/kyc/store-kyc`,{
+        let res = await fetch(`${process.env.REACT_APP_PORTAL}/kyc/store-kyc-for-verification`,{
             method: "POST",
             body: formData,
             

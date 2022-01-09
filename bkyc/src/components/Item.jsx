@@ -9,23 +9,23 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import TodayIcon from '@mui/icons-material/Today';
 
 
-const Buttons = () => (
+const Buttons = ({kycVerified,kycRejected,index}) => (
     <div className="buttons">
         <Button startIcon={<TodayIcon />} style={{margin: '0 20'}}  variant="contained"> Schedule a Meet </Button>
         <Tooltip title="Accept">
-            <IconButton color='success' >
+            <IconButton color='success' onClick={()=>kycVerified(index)}>
                 <CheckCircleIcon style={{margin: '0 20'}} />
             </IconButton>
         </Tooltip>
         <Tooltip title="Reject">
-            <IconButton color='error' >
+            <IconButton color='error' onClick={()=>kycRejected(index)}>
                 <CancelIcon style={{margin: '0 20'}} />
             </IconButton>
         </Tooltip>
     </div>
 )
 
-function Item({data, index}) {
+function Item({data, index, kycVerified,kycRejected}) {
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -55,7 +55,7 @@ function Item({data, index}) {
              className='item-body'>
             <div className="left-content">
                 <p className='applicant-name'>{data.firstName} {data.middleName} {data.lastName}</p>
-                <div style={{margin: '20 0'}} ><Buttons /></div>
+                <div style={{margin: '20 0'}} ><Buttons kycVerified={kycVerified} kycRejected={kycRejected} index={index}/></div>
             </div>
             <div className="right-content">
                 <div className="detail"><p className='que'>Date-of-Birth : </p> {data.dob}</div>
@@ -88,7 +88,7 @@ function Item({data, index}) {
                             <img src={data.pan} alt="pan" width={100} style={{border: '2px solid gray', borderRadius: 10}}  />                        
                         </div>
                 
-                        <Buttons />
+                        <Buttons kycVerified={kycVerified} kycRejected={kycRejected} index={index}/>
                         
                     </div>
                 </Box>
