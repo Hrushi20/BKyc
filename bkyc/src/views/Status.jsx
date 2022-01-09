@@ -1,34 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Nav from './Nav'
 import Fade from 'react-reveal/Fade';
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import '../styles/status.css';
+import loadingform from '../assets/loadingform.json';
+import Lottie from 'react-lottie';
+import Item from '../components/Item';
+import useKycVerification from '../hooks/useKycVerfication';
 
 
+const Status = () => {
 
-function Status() {
+    const loadingForm = {
+        loop: true,
+        autoplay: true,
+        animationData: loadingform,
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid slice"
+        }
+      };
 
+    const [loading, setLoading] = useState(true);
+    const { fetchAllUnverifiedKycs,data,kycVerified,kycRejected } = useKycVerification();
+
+    React.useEffect(async() => {
+
+         await fetchAllUnverifiedKycs();
+         setLoading(false);
+            
+    },[])
 
     const ActiveForms = () => {
         return (
-            <div className='active'>Active list goes here ... </div>
+            <div className='active'>
+                {data?.map((item, ind) => (
+                    <Item data={item} index={ind} kycVerified={kycVerified} kycRejected={kycRejected}/>
+                ))}
+            </div>
         )
     };
-    
+
     const PendingForms = () => {
         return (
             <div className='pending'> Pending list goes here ... </div>
         )
-    };
-
-    const [alignment, setAlignment] = React.useState('active');
-    const [component, setComponent] = React.useState(<ActiveForms />);
-
-    const handleChange = (event, newAlignment) => {
-        setAlignment(newAlignment);
-        console.log(newAlignment, event);
-        if(newAlignment === 'active') setComponent(<ActiveForms />)
-        else setComponent(<PendingForms />)
     };
 
     return (
@@ -45,18 +59,13 @@ function Status() {
               </div>
                 <div className="back profile" />
             </div> 
-
-            <ToggleButtonGroup
-                className= 'toggleButtons'
-                color='warning'
-                value={alignment}
-                exclusive
-                onChange={handleChange}
-            >
-                <ToggleButton value="active">Active</ToggleButton>
-                <ToggleButton value="pending">pending</ToggleButton>
-            </ToggleButtonGroup>
-            {component}
+             <p className='details-text'>Details </p>
+            {loading ? 
+                        <Lottie
+                            options={loadingForm}
+                            height={400}
+                            width={400}
+                        />  : <ActiveForms />}
         </div>
     )
 }

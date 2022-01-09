@@ -1,23 +1,51 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import {Routes, Route} from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
 import Loader from './components/loader';
 import Home from './views/Home';
+import useMetamask from './hooks/useMetamask';
+import Lottie from 'react-lottie';
 
 const LazyStatus = React.lazy(() => import('./views/Status'));
 const LazyError = React.lazy(() => import('./views/Error'));
 const LazyProfile = React.lazy(() => import('./views/Profile'));
 
 function App() {
+
+  // const loadingForm = {
+  //   loop: true,
+  //   autoplay: true,
+  //   animationData: loadingform,
+  //   rendererSettings: {
+  //     preserveAspectRatio: "xMidYMid slice"
+  //   }
+  // };
   
+  const { initMetamask } = useMetamask();
+  const { isLoading } = useAuth0();
+
+  useEffect(()=>{
+    
+    initMetamask();
+
+  },[]);
+
+
   return (
     <>
       <React.Suspense fallback={<Loader />} >
-       <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/status' element={<LazyStatus />} />
-          <Route path='/profile' element={<LazyProfile />} />
-          <Route path='*' element={<LazyError />} />
-      </Routes>
+        {isLoading ?
+         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
+           <img src={require('../src/assets/loading.gif')} alt="loading..." />
+         </div>
+         :
+        <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/status' element={<LazyStatus />} />
+            <Route path='/profile' element={<LazyProfile />} />
+            <Route path='*' element={<LazyError />} />
+        </Routes>
+      }
       </React.Suspense>
     </>
   );

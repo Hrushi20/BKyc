@@ -1,0 +1,43 @@
+.item-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 32px;
+    height: 162px;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.applicant-name {
+    font-size: 42px;
+}
+
+.left-content {
+    border-right: 1px solid var(--light-grey);
+}
+
+.left-content, .right-content {
+    width: 50%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Nunito', sans-serif;
+    color: rgba(0,0,0,0.7);
+}
+
+
+.detail {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.que {
+    font-family: 'Anton', sans-serif;
+}
+
+.buton {
+    margin: 20px;
+}
