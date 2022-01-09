@@ -17,6 +17,7 @@ import Lottie from 'react-lottie';
 import reviewAnim from '../assets/review.json';
 import ethAnim from '../assets/etherium.json';
 import Footer from '../components/Footer';
+import { useAuth0 } from "@auth0/auth0-react";
 import useMetamask from '../hooks/useMetamask';
 
 
@@ -35,9 +36,24 @@ function Profile() {
     const { connectToMetamask,getKycFromEthereum,sendKycToEthereum } = useMetamask();
     const data = useKyc();
     const [activeStep, setActiveStep] = React.useState(0);
-    const [status, setStatus] = React.useState('noKYC');
+    const [status, setStatus] = React.useState('...');
 
-    console.log(data);
+    const profileData = useAuth0();
+
+    console.log(data, profileData);
+
+    React.useEffect(() => {
+
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(profileData)
+      };
+  
+      fetch('http://localhost:8080/users/store-user', requestOptions)
+          .then(response => response.json())
+          .then(data => setStatus(data.status))
+    })
 
     const review = {
         loop: true,
@@ -75,14 +91,14 @@ function Profile() {
                         >
                             <PersonRoundedIcon sx={{width: 80, height: 80}} />
                         </Avatar>
-                        <Chip className='email' color='primary' label="Email : xxxxxxx@gmail.com" />
+                        <Chip className='email' style={{fontSize: 13}} color='primary' label={"Email : " + profileData.user.email }/>
                     </div>
                 </div>
               </div>
                 <div className="back profile" />
             </div>
 
-            <p className="name">Guest</p>
+            <p className="name">{profileData.user.name}</p>
 
             {
                 status === 'rejected' ? 

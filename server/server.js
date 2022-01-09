@@ -7,6 +7,7 @@ const usersRoutes = require("./router/users.js")
 const kycRoutes = require("./router/kyc.js")
 
 const { initEssentials } = require("./utils/initEssentials");
+const { urlencoded } = require('body-parser');
 
 // For adding .env variables into node.js
 dotenv.config();
@@ -19,6 +20,10 @@ app.use(bodyParser.json())
 
 // To prevent cross origin resource sharing (cors) errors in frontend 
 app.use(cors());
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 
 // routes
 app.use('/users',usersRoutes);
@@ -41,6 +46,7 @@ app.use((err,req,res,next) => {
 
     res.status(err.status).json(err);
 })
+
 
 app.listen(PORT, async() => {
 
