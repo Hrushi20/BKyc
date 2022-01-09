@@ -16,7 +16,7 @@ const app = express();
 const PORT = 8080;
 
 // For parsing Json objects received from the frontend
-app.use(bodyParser.json())
+app.use(bodyParser.json({ limit:"10mb" }))
 
 // To prevent cross origin resource sharing (cors) errors in frontend 
 app.use(cors());
