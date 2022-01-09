@@ -29,7 +29,7 @@ const ContactForm = () => {
 
     }
 
-    async function submitForm(){
+   async function submitForm(){
 
       const body = {
         name,
@@ -39,14 +39,13 @@ const ContactForm = () => {
 
       // Need to create a route to submit the form and store the data in mongoose.
       
-      // let res = await fetch(`${process.env.REACT_APP_PORTAL}/contact-us`,{
-      //   method:"POST",
-      //   body: JSON.stringify(body)
-      // });
-
-      
-
-      console.log(body);
+      fetch(`${process.env.REACT_APP_PORTAL}/users/get-messages`,{
+        method:"POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+        .then(res => res.json())
+        .then(res => console.log(res))
 
       setFormSubmitted(true);
 
@@ -76,7 +75,7 @@ const ContactForm = () => {
                     <div className="inputItem">
                         <label>
                         Email :
-                        <input type="text" name="email" onChange={(e)=>updateForm("email",e.target.value)}/>
+                        <input required type="text" name="email" onChange={(e)=>updateForm("email",e.target.value)}/>
                         </label>
                     </div>
                   </Fade>
@@ -85,13 +84,13 @@ const ContactForm = () => {
                     <div className="inputItem">
                         <label>
                         Message: <br />
-                        <textarea rows={10} cols={34} onChange={(e)=>updateForm("message",e.target.value)}/>
+                        <textarea required rows={10} cols={34} onChange={(e)=>updateForm("message",e.target.value)}/>
                         </label>
                     </div>
                   </Fade>
 
                   <Slide bottom cascade>
-                    <input className='submit' style={{cursor:"pointer" ,alignSelf: 'center', padding: '8px 44px', borderRadius: 12, backgroundColor: '#ff9933', border: '1px solid gray', color: 'white'}} type="submit" value="Submit" onClick={submitForm}/>
+                    <input  className='submit' style={{cursor:"pointer" ,alignSelf: 'center', padding: '8px 44px', borderRadius: 12, backgroundColor: '#ff9933', border: '1px solid gray', color: 'white'}} type="submit" value="Submit" onClick={submitForm}/>
                   </Slide>  
                 </form>:
               
