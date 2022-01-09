@@ -6,10 +6,12 @@ const LogoutButton = () => {
   return (
     <button
       className="authButton"
-      onClick={() =>
+      onClick={() =>{
         logout({
           returnTo: window.location.origin,
-        })
+        });
+        localStorage.removeItem("userId");
+      }
       }
     >
       Log Out

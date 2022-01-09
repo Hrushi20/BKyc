@@ -1,18 +1,17 @@
 const fs = require("fs/promises");
 const path = require("path");
-const UnverifiedUsers = require("../../models/UnverifiedUsers");
+const UserSchema = require("../../models/Users");
 
 module.exports = class KycStorage {
 
     async fetchAllKycs(){
         const kycs = [];
-        // const storageIds = await UnverifiedUsers.find({}).exec();
-        const storageIds = ["92274f12-5f01-482a-9f87-a715e87b652f","92274f12-5f01-482a-9f87-a715e87b6524"];
+        const users = await UserSchema.find({}).exec();
 
-        for(let id of storageIds){
-            const userData = await this.fetchData(id);
-            const userDocs = await this.fetchDocuments(id);
-            kycs.push({ ...userData,...userDocs });
+        for(let user of users){
+            const userData = await this.fetchData(user.storageId);
+            const userDocs = await this.fetchDocuments(user.storageId);
+            kycs.push({ ...userData,...userDocs,userId: user.userId});
         }
         return kycs;
     }

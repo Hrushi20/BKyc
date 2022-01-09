@@ -1,12 +1,13 @@
 const fs = require("fs/promises");
 const path = require("path");
-const UnverifiedUsers = require("../../models/UnverifiedUsers");
+const UserSchema = require("../../models/Users");
+const { v4: uuidv4 } = require('uuid');
 
 module.exports = class KycStorage {
 
     constructor(data,storageId,docs){
         this.data = data;
-        this.storageId = storageId;
+        this.storageId = uuidv4();
         this.docs = docs;
         this.path = path.join(__dirname,'../..','UserData',this.storageId);
     }
@@ -40,19 +41,18 @@ module.exports = class KycStorage {
     async store(){
 
         try{
+
+            const userId = this.data.userId;
+            delete this.data.userId;
             // No logic to check if directory exists or not... ======>>>>>> IMPORTANT.... (Server crashing if not added)
             await fs.mkdir(this.path);
             await this.storeUserDetailsAsJson(this.data);
             await this.storeLivePhoto(this.data.livePhoto);
             this.storeDocuments(this.docs);
 
-            // Storing data in database...
-            // const unverifiedUsers = new UnverifiedUsers({
-            //     userId:"kfjdsalfjdska93240234",
-            //     storageId:this.storageId
-            // })
+            const userData = await UserSchema.findOneAndUpdate({ userId: userId },{ status:"pending",storageId:this.storageId },{ new:true });
 
-            // await unverifiedUsers.save();
+            return { status:userData.status,userId:userData.userId };
         }catch(err){
             throw err;
         }

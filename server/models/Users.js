@@ -11,9 +11,11 @@ const UserSchema = new Schema({
         type:String,
         required:true
     },
-    authId: {
-        type: String,
-        required:true
+    userId:{
+        type:String
+    },
+    storageId:{
+        type:String
     }
     // UUid same or another schema...
 });

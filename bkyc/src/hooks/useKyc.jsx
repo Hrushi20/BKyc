@@ -3,6 +3,9 @@ import { useState } from 'react';
 
 function useKyc(){
 
+    // status of the UI
+    const [status, setStatus] = useState('...');
+
     // Page 1
     const [firstName,setFirstName] = useState("");
     const [lastName,setLastName] = useState("");
@@ -33,6 +36,8 @@ function useKyc(){
 
         const formData = new FormData();
 
+        const userId = localStorage.getItem("userId");
+
         const body = {
             firstName,
             lastName,
@@ -42,21 +47,21 @@ function useKyc(){
             pincode,
             email,
             phoneNumber,
-            livePhoto
+            livePhoto,
+            userId
         }
 
         formData.append("pan",pan);
         formData.append("aadhar",aadhar);
         formData.append("body",JSON.stringify(body));
 
-        console.log(body)
-        let res = await fetch(`${process.env.REACT_APP_PORTAL}/kyc/store-kyc-for-verification`,{
+        let res = await(await fetch(`${process.env.REACT_APP_PORTAL}/kyc/store-kyc-for-verification`,{
             method: "POST",
             body: formData,
             
-        });
+        })).json();
 
-        console.log(res);
+        setStatus(res.status);
 
         // return res;
     }
@@ -78,6 +83,8 @@ function useKyc(){
         aadhar,
         livePhoto,
         validate3,
+        status,
+        setStatus,
         setFirstName,
         setLastName,
         setMiddleName,

@@ -1,4 +1,3 @@
-const { v4: uuidv4 } = require('uuid');
 const { errHandler } = require("../utils/errHandler");
 const KycStore = require("../lib/kyc/kycStore");
 const KycFetch = require("../lib/kyc/kycFetch");
@@ -14,13 +13,11 @@ const storeKyc = async(req,res,next) => {
 
         // Get the pan and aadhar details
         const docs = req.files;
+        const kycStorage = new KycStore(data,docs);
+        const userStatus = await kycStorage.store();
 
-        // const storageId = uuidv4();
-        const storageId = "92274f12-5f01-482a-9f87-a715e87b652f";
-        const kycStorage = new KycStore(data,storageId,docs);
-        kycStorage.store();
+        res.status(201).json({ message:"Kyc submitted successfully.", ...userStatus});
 
-        res.status(201).send("<h1>Storing kyc on server... Will be updated to the blockchain</h1>");
     }catch(err){
         errHandler(err,next);
     }

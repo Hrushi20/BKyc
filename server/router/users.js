@@ -1,10 +1,8 @@
 const express = require("express");
 
-const { getUser,storeUser,getMessage } = require("../controller/users");
+const { storeUser,getMessage } = require("../controller/users");
 
 const router = express.Router();
-
-router.get("/get-user",getUser);
 
 router.post('/store-user', storeUser );
 

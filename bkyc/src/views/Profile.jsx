@@ -52,13 +52,11 @@ const StepperForm = ({data, activeStep, setActiveStep}) => {
 function Profile() {
 
     const { connectToMetamask,getKycFromEthereum,sendKycToEthereum } = useMetamask();
-    const data = useKyc();
+    const { setStatus,status ,...data } = useKyc();
     const [activeStep, setActiveStep] = React.useState(0);
-    const [status, setStatus] = React.useState('...');
+
 
     const profileData = useAuth0();
-
-    console.log(data, profileData);
 
     React.useEffect(() => {
 
@@ -70,8 +68,11 @@ function Profile() {
   
       fetch('http://localhost:8080/users/store-user', requestOptions)
           .then(response => response.json())
-          .then(data => setStatus(data.status))
-    })
+          .then(data => {
+            setStatus(data.status);
+            localStorage.setItem("userId",profileData.user.sub);
+          })
+    },[])
 
     const review = {
         loop: true,

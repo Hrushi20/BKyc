@@ -6,15 +6,13 @@ const storeUser = async(req,res,next) => {
 
     try{
 
-        const userData = await UsersSchema.findOne({ authId:req.body.user.sub }).exec();
-        console.log("user :: ", req.body);
-        console.log("userData :: ", userData);
+        const userData = await UsersSchema.findOne({ userId:req.body.user.sub }).exec();
 
         if(userData == null){
             const user = new UsersSchema({
                 username: req.body.user.name,
                 status:"noKYC",
-                authId: req.body.user.sub,
+                userId: req.body.user.sub,
             });
 
             await user.save();
@@ -31,18 +29,6 @@ const storeUser = async(req,res,next) => {
     }
 }
 
-const getUser = async(req,res,next) => {
-
-    try{
-
-        const userData = await UsersSchema.findOne({ authId:"61d41be6cde5bf5cc4e7c44d" }).exec();
-
-        res.status(200).json(userData);
-
-    }catch(err){
-        errHandler(err,next);
-    }
-}
 
 const getMessage = async(req, res, next) => {
     try{
@@ -60,7 +46,7 @@ const getMessage = async(req, res, next) => {
             return ;
         }
 
-        res.status(201).json(meesage);
+        res.status(201).json(message);
 
     }catch(err){
         errHandler(err, next)
@@ -69,4 +55,4 @@ const getMessage = async(req, res, next) => {
 
 
 
-module.exports = { storeUser,getUser, getMessage };
+module.exports = { storeUser, getMessage };
