@@ -66,6 +66,36 @@ const useMetamask = () => {
         
     }
 
+    async function fetchHashedKycData(){
+        const userId = localStorage.getItem("userId");
+
+        const res = await(await fetch(`${process.env.REACT_APP_PORTAL}/ethereum/get-hashed-kyc`,{
+            body:JSON.stringify(userId),
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })).json();
+
+        console.log(res);
+
+        return res;
+    }
+
+    async function kycStoredOnBlockchainSuccess(){
+        const userId = localStorage.getItem("userId");
+
+        const res = await(await fetch(`${process.env.REACT_APP_PORTAL}/ethereum/kyc-stored-on-blockchain-success`,{
+            body:JSON.stringify(userId),
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })).json()
+
+        console.log(res);
+
+        return res;
+
+    }
 
 
     return {
