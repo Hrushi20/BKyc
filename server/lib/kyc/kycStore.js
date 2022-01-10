@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 
 module.exports = class KycStorage {
 
-    constructor(data,storageId,docs){
+    constructor(data,docs){
         this.data = data;
         this.storageId = uuidv4();
         this.docs = docs;

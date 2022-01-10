@@ -1,0 +1,16 @@
+services:
+
+  # ganache:
+  #   build: "."
+  #   ports:
+  #     - "8545:8545"
+  frontend:
+    build: "./bkyc"
+    ports:
+      - "3000:3000"
+    # depends_on:
+    #   - "ganache"
+  backend:
+    build: "./server"
+    ports:
+      - "8080:8080"

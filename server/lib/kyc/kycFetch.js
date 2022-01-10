@@ -6,6 +6,8 @@ module.exports = class KycStorage {
 
     async fetchAllKycs(){
         const kycs = [];
+
+        // Better to create unverified kyc model to solve future bugs....
         const users = await UserSchema.find({}).exec();
 
         for(let user of users){
