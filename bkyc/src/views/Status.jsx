@@ -32,7 +32,7 @@ const Status = () => {
     const ActiveForms = () => {
         return (
          <>
-            {data  ?
+            {data.length  ?
                 <div className='active'>
                     {data?.map((item, ind) => (
                         <Item data={item} index={ind} kycVerified={kycVerified} kycRejected={kycRejected}/>

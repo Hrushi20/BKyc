@@ -76,10 +76,37 @@
 }
 
 
-.validate {
-    margin: 0;
-    padding: 0 16px;
-    font-size: 12px;
-    font-family: 'Nunito', sans-serif;
-    color: red;
+.payment {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Nunito', sans-serif ;
+    padding-bottom: 84px;
+}
+
+.pay-tit {
+    font-size: 24px;
+    color: darkblue;
+    margin: 16px 0;
+    font-weight: bold;
+}
+
+.pay-cont {
+    font-size: 20px;
+    color: var(--gray);
+    margin: 16px 0;
+    font-weight: bold;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+}
+
+.payment button {
+    margin-top: 32px;
+    margin-right: 28px;
+}
+
+.payment a {
+    text-decoration: none;
+    color: white
 }

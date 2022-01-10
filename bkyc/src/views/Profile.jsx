@@ -20,6 +20,7 @@ import ethAnim from '../assets/etherium.json';
 import Footer from '../components/Footer';
 import { useAuth0 } from "@auth0/auth0-react";
 import useMetamask from '../hooks/useMetamask';
+import pay from '../assets/pay.svg';
 
 
 const StepperForm = ({data, activeStep, setActiveStep}) => {
@@ -51,7 +52,7 @@ const StepperForm = ({data, activeStep, setActiveStep}) => {
 
 function Profile() {
 
-    const { connectToMetamask,getKycFromEthereum,sendKycToEthereum } = useMetamask();
+    const { connectToMetamask,getKycFromEthereum,sendKycToEthereum,isInstalled } = useMetamask();
     const { setStatus,status ,...data } = useKyc();
     const [activeStep, setActiveStep] = React.useState(0);
 
@@ -59,6 +60,8 @@ function Profile() {
     const profileData = useAuth0();
 
     React.useEffect(() => {
+
+      console.log(isInstalled);
 
       const requestOptions = {
         method: 'POST',
@@ -133,8 +136,8 @@ function Profile() {
                         <p className="statuscontent"> Congratulations !!. Your KYC is verified.  </p>
                         <Lottie 
                             options={etherium}
-                            height={400}
-                            width={400}
+                            height={300}
+                            width={300}
                         /> 
                         <p className="statuscontent"> Know your Hash here - <a href='#'> view Hash </a> </p>
                      </>
@@ -147,6 +150,17 @@ function Profile() {
                         width={400}
                       /> 
                   </>
+                : status === 'payment-pending' ? 
+                  <div className='payment'>
+                    <p className="pay-tit">You are almost there ! </p>
+                    <img style={{width:300,height:300}} src={pay} alt="This is an img"/>
+                    <p className="pay-cont"> Complete the payment using Metamask to enjoy the benefits of BLOCKCHAIN </p>
+                    <Button color='success' variant='contained' onClick={connectToMetamask}> <a href={!isInstalled && 'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en-US'}>Connect to metamask</a></Button>
+                    <div>
+                      <Button variant='outlined' onClick={sendKycToEthereum}>Send data</Button>
+                      <Button variant='outlined' color='warning' onClick={getKycFromEthereum}>Get data</Button>
+                    </div>
+                  </div> 
                 : <></>
 
             }
@@ -171,10 +185,6 @@ function Profile() {
                 <StepperForm data={data} activeStep={activeStep} setActiveStep={setActiveStep}  />
               </>
             }
-
-            <button onClick={connectToMetamask}>Connect to metamask</button>
-            <button onClick={sendKycToEthereum}>Send data</button>
-            <button onClick={getKycFromEthereum}>Get data</button>
 
             <Footer />
             

@@ -7,6 +7,8 @@ const useMetamask = () => {
 
     const [isConnected,setIsConnected] = useState(false);
 
+    const [isInstalled,setIsInstalled] = useState(true);
+
     async function initMetamask(){
         
         provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -31,12 +33,19 @@ const useMetamask = () => {
 
 
     async function connectToMetamask(){
-        try{
-            await provider.send("eth_requestAccounts", []);
-            // await signer.getAddress();
-            setIsConnected(true);
-        }catch(err){
-            // User didn't accept account for metamask....
+        if(provider == undefined) {
+            setIsInstalled(false);
+            console.log(isInstalled);
+        }else {
+            setIsInstalled(true);
+            try{
+                await provider.send("eth_requestAccounts", []);
+                // await signer.getAddress();
+                setIsConnected(true);
+            }catch(err){
+                console.log('Error: ', err);
+                // User didn't accept account for metamask....
+            }
         }
     }
 
@@ -63,7 +72,8 @@ const useMetamask = () => {
         initMetamask,
         connectToMetamask,
         getKycFromEthereum,
-        sendKycToEthereum
+        sendKycToEthereum,
+        isInstalled
     };
 }
 
