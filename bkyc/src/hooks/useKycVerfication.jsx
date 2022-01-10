@@ -30,7 +30,7 @@ const useKycVerification = () =>{
 
     async function kycRejected(index){
         // Need to get userId
-        let userId;
+        const userId = localStorage.getItem("userId");
         console.log("Rejecting " + index + "...");
         let res = await (await fetch(`${process.env.REACT_APP_PORTAL}/kyc/reject-kyc`,{
             method:"POST",

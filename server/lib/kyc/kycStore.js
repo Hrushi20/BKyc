@@ -64,4 +64,9 @@ module.exports = class KycStorage {
         }
     }    
 
+    static async deleteFolder(storageId){
+        const folderPath = path.join(__dirname,'../..','UserData',storageId);
+        await fs.rm(folderPath, { force:true, recursive:true });
+    }
+
 }

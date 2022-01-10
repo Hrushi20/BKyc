@@ -2,7 +2,7 @@ const { errHandler } = require("../utils/errHandler");
 const KycStore = require("../lib/kyc/kycStore");
 const KycFetch = require("../lib/kyc/kycFetch");
 const { Ipfs } = require("../lib/ipfs/ipfs");
-const UnpaidKycs = require("../models/UnpaidKycs");
+const UserSchema = require("../models/Users");
 
 // Stores all kycs in UserData folder using uuid and store uuid in mongodb
 const storeKyc = async(req,res,next) => {
@@ -47,16 +47,7 @@ const storeKycOnIpfs = async(req,res,next) => {
 
         console.log(encryptedUserData);
 
-        // Stores the encrypted data in database and change the status of the user to pending payment...
-
-        // const data = new UnpaidKycs({
-        //     userId: "j23423432",
-        //     ipfsHash:encryptedUserData.userHash.path,
-        //     cipherKey:encryptedUserData.cipherKey
-        // })
-
-        // await data.save();
-        
+        // Twilio message to notify user about payment...
 
         res.status(200).json({"message":"Data processed successfully..."});
 
@@ -65,13 +56,16 @@ const storeKycOnIpfs = async(req,res,next) => {
     }
 }
 
-const rejectKyc = (req,res,next) => {
+const rejectKyc = async(req,res,next) => {
 
     try{
 
-        console.log("Need  to reject userKyc")
+        const { userId } = req.body;
 
-        // Todo    logic for reject userKyc.....
+        await UserSchema.findOneAndUpdate({ userId }, { status:"rejected" });
+
+        // Need to decide if we need to delete the users existsing folder...
+        // Twilio message to user to know that the kyc has been rejected...
 
         res.status(201).json({ "message":"Data processed successfully..." })
 
