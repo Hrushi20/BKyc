@@ -55,7 +55,7 @@ const storeKycOnIpfs = async(req,res,next) => {
         //     cipherKey:encryptedUserData.cipherKey
         // })
 
-        await data.save();
+        // await data.save();
         
 
         res.status(200).json({"message":"Data processed successfully..."});

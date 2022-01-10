@@ -2,6 +2,7 @@ const fs = require("fs/promises");
 const path = require("path");
 const UserSchema = require("../../models/Users");
 const { v4: uuidv4 } = require('uuid');
+const UnverifiedUsers = require("../../models/UnverifiedUsers");
 
 module.exports = class KycStorage {
 
@@ -50,7 +51,12 @@ module.exports = class KycStorage {
             await this.storeLivePhoto(this.data.livePhoto);
             this.storeDocuments(this.docs);
 
-            const userData = await UserSchema.findOneAndUpdate({ userId: userId },{ status:"pending",storageId:this.storageId },{ new:true });
+            await (new UnverifiedUsers({
+                userId,
+                storageId:this.storageId
+            })).save();
+            
+            const userData = await UserSchema.findOneAndUpdate({ userId: userId },{ status:"pending" },{ new:true });
 
             return { status:userData.status,userId:userData.userId };
         }catch(err){

@@ -1,6 +1,6 @@
 const fs = require("fs/promises");
 const path = require("path");
-const UserSchema = require("../../models/Users");
+const UnverifiedUsers = require("../../models/UnverifiedUsers");
 
 module.exports = class KycStorage {
 
@@ -8,9 +8,9 @@ module.exports = class KycStorage {
         const kycs = [];
 
         // Better to create unverified kyc model to solve future bugs....
-        const users = await UserSchema.find({}).exec();
+        const unverifiedUsers = await UnverifiedUsers.find({}).exec();
 
-        for(let user of users){
+        for(let user of unverifiedUsers){
             const userData = await this.fetchData(user.storageId);
             const userDocs = await this.fetchDocuments(user.storageId);
             kycs.push({ ...userData,...userDocs,userId: user.userId});

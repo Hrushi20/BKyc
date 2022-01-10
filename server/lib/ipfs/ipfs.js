@@ -2,6 +2,8 @@ const { node } = require("../../utils/initEssentials");
 const CryptoJs = require("crypto-js");
 const { v4: uuidv4 } = require('uuid');
 const { enc } = require("crypto-js");
+const UnverifiedUsers = require("../../models/UnverifiedUsers");
+const UserSchema = require("../../models/Users");
 
 class Ipfs {
 
@@ -22,10 +24,15 @@ class Ipfs {
 
         const ipfsData = {};
 
+        console.log(data);
+        const userId = data.userId;
+
+        delete data.userId;
+
         let jsonString = JSON.stringify(data);
 
         // Need to update it to uuid();
-        const cipherKey = "92274f12-5f01-482a-9f87-a715e87b652f";
+        const cipherKey = uuidv4();
 
         const encryptedData = this.encryptUserKyc(jsonString,cipherKey);
 
@@ -33,6 +40,13 @@ class Ipfs {
 
         ipfsData["cipherKey"] = cipherKey;
         ipfsData["userHash"] = userHash;
+
+        // Delete unverified kyc...
+        await UnverifiedUsers.findOneAndDelete({ userId:userId }).exec();
+
+        // Update status of the user...
+        await UserSchema.findOneAndUpdate({ userId: userId },{ status:"payment-pending" }).exec();
+
         
         return ipfsData;
     }
