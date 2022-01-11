@@ -49,34 +49,38 @@ const useMetamask = () => {
         }
     }
 
-    async function getKycFromEthereum(phoneNo){
+    async function getKycFromEthereum(){
         const kycContract = new ethers.Contract(KycStorage.networks["5777"].address,KycStorage.abi,provider);
-        // let data = await kycContract.getData("98498");
-        // console.log(data);
-        return await kycContract.getData(phoneNo);
+
+        const userId = localStorage.getItem("userId");
+        let blockchainResponse = await kycContract.getData(userId);
+        console.log(blockchainResponse);
+        return blockchainResponse;
     }
 
-    async function sendKycToEthereum(phoneNo,ipfsHash,cipherKey){
+    async function sendKycToEthereum(){
+        
         const signer = provider.getSigner();
         const kycContract = new ethers.Contract(KycStorage.networks["5777"].address,KycStorage.abi,provider);
         const kycSigner = kycContract.connect(signer);
         // let d = await kycSigner.setData("98498","this is a ipfs hash","This is a cipher key");
-        // console.log(d);
-        return await kycSigner.setData(phoneNo,ipfsHash,cipherKey);
-        
+        const userId = localStorage.getItem("userId");
+        const { ipfsHash,cipherKey  } = await fetchHashedKycData(userId);
+        let blockchainResponse = await kycSigner.setData(userId,ipfsHash,cipherKey);
+        console.log(blockchainResponse);
+        await kycStoredOnBlockchainSuccess();
+        window.location.reload("http://localhost:3000/profile");
     }
 
-    async function fetchHashedKycData(){
-        const userId = localStorage.getItem("userId");
+    async function fetchHashedKycData(userId){
 
         const res = await(await fetch(`${process.env.REACT_APP_PORTAL}/ethereum/get-hashed-kyc`,{
-            body:JSON.stringify(userId),
+            method:"POST",
+            body:JSON.stringify({ userId }),
             headers:{
                 "Content-Type":"application/json"
             }
         })).json();
-
-        console.log(res);
 
         return res;
     }
@@ -85,15 +89,12 @@ const useMetamask = () => {
         const userId = localStorage.getItem("userId");
 
         const res = await(await fetch(`${process.env.REACT_APP_PORTAL}/ethereum/kyc-stored-on-blockchain-success`,{
-            body:JSON.stringify(userId),
+            method:"POST",
+            body:JSON.stringify({ userId }),
             headers:{
                 "Content-Type":"application/json"
             }
         })).json()
-
-        console.log(res);
-
-        return res;
 
     }
 

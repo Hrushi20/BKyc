@@ -10,17 +10,17 @@ contract KycStorage{
 
     mapping(string => UsersKyc) data; 
 
-    function setData(string memory phNo,string memory ipfsHash,string memory ipfsCipherKey) public returns (bool){
+    function setData(string memory kycId,string memory ipfsHash,string memory ipfsCipherKey) public returns (bool){
         UsersKyc memory user = UsersKyc(ipfsHash,ipfsCipherKey,true);
-        data[phNo] = user;
+        data[kycId] = user;
         return true;
     }
 
-    function getData(string memory phNo) public view returns (string memory,string memory,string memory){
-        if(data[phNo].isValue == false){
+    function getData(string memory kycId) public view returns (string memory,string memory,string memory){
+        if(data[kycId].isValue == false){
             return ("Data doesn't exists","","");
         }
-        return (phNo,data[phNo].ipfsHash,data[phNo].ipfsCipherKey);
+        return (kycId,data[kycId].ipfsHash,data[kycId].ipfsCipherKey);
     }
 }
 
