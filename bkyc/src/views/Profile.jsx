@@ -52,7 +52,7 @@ const StepperForm = ({data, activeStep, setActiveStep}) => {
 
 function Profile() {
 
-    const { connectToMetamask,getKycFromEthereum,sendKycToEthereum,isInstalled } = useMetamask();
+    const { connectToMetamask,getKycFromEthereum,sendKycToEthereum,isInstalled, isConnected } = useMetamask();
     const { setStatus,status ,...data } = useKyc();
     const [activeStep, setActiveStep] = React.useState(0);
 
@@ -155,10 +155,13 @@ function Profile() {
                     <p className="pay-tit">You are almost there ! </p>
                     <img style={{width:300,height:300}} src={pay} alt="This is an img"/>
                     <p className="pay-cont"> Complete the payment using Metamask to enjoy the benefits of BLOCKCHAIN </p>
-                    <Button color='success' variant='contained' onClick={connectToMetamask}> <a href={!isInstalled && 'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en-US'}>Connect to metamask</a></Button>
+                    {!isInstalled ? 
+                         <Button color='success' variant='contained'> <a href='https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en-US'> Connectd to metamask </a></Button> : 
+                         <Button color='success' variant='contained' onClick={connectToMetamask}> {isConnected ? 'Change Address' : 'Connect to Metamask'} </Button>
+                    }
                     <div>
-                      <Button variant='outlined' onClick={sendKycToEthereum}>Send data</Button>
-                      <Button variant='outlined' color='warning' onClick={getKycFromEthereum}>Get data</Button>
+                      <Button disabled={!isConnected} variant='outlined' onClick={sendKycToEthereum}> Pay Ethers </Button>
+                      {/* <Button disabled={!isConnected} variant='outlined' color='warning' onClick={getKycFromEthereum}>Get data</Button> */}
                     </div>
                   </div> 
                 : <></>

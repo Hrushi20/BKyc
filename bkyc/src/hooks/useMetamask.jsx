@@ -33,9 +33,9 @@ const useMetamask = () => {
 
 
     async function connectToMetamask(){
+
         if(provider == undefined) {
             setIsInstalled(false);
-            console.log(isInstalled);
         }else {
             setIsInstalled(true);
             try{
@@ -103,7 +103,8 @@ const useMetamask = () => {
         connectToMetamask,
         getKycFromEthereum,
         sendKycToEthereum,
-        isInstalled
+        isInstalled,
+        isConnected
     };
 }
 
