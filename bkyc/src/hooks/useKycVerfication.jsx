@@ -10,19 +10,24 @@ const useKycVerification = () =>{
         setData(data["kycs"]);
     }
 
-    async function kycVerified(index){
-
+    async function kycVerified(index, email){
         
         const userData = data.filter((d,i) => i === index)[0];
+
+        const uData = {
+            userData,
+            email
+        }
+
         let res = await (await fetch(`${process.env.REACT_APP_PORTAL}/kyc/store-kyc-on-ipfs`,{
             method:"POST",
-            body: JSON.stringify(userData),
+            body: JSON.stringify(uData),
             headers:{
                 "Content-Type":"application/json"
             }
         })).json();
 
-        console.log(res);
+        console.log("Response:", res);
         
         setData(data.filter((_,i) => i !== index));
         // some ui rendering...

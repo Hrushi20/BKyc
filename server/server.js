@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const usersRoutes = require("./router/users.js")
 const kycRoutes = require("./router/kyc.js")
 const ethereumRoutes = require("./router/ethereum.js");
+const mailRoutes = require("./router/mailSupport.js");
 
 const { initEssentials } = require("./utils/initEssentials");
 const { urlencoded } = require('body-parser');
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/users',usersRoutes);
 app.use('/kyc',kycRoutes);
 app.use('/ethereum',ethereumRoutes);
+app.use('/mailSupport', mailRoutes);
 app.use('/',(req,res) => {
     
     res.send("Backend Is up and running");

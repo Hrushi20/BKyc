@@ -7,7 +7,7 @@ const client = new twilio(accountSid,authToken);
 
 module.exports = class Twilio {
     
-     // Your Account SID from www.twilio.com/console
+    // Your Account SID from www.twilio.com/console
     static async sendMessage(cipherKey,phoneNumber){
         const message = await client.messages
         .create({

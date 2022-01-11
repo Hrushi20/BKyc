@@ -69,7 +69,7 @@ function Profile() {
         body: JSON.stringify(profileData)
       };
   
-      fetch('http://localhost:8080/users/store-user', requestOptions)
+      fetch(`${process.env.REACT_APP_PORTAL}/users/store-user`, requestOptions)
           .then(response => response.json())
           .then(data => {
             setStatus(data.status);
