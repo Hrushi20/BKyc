@@ -12,7 +12,10 @@ const sendMail = async (cipherKey, toEmail) => {
     })
 
     let mailOptions = {
-        from: 'bkycinfo@gmail.com',
+        from: {
+            name: 'Team BKYC',
+            address: 'bkycinfo@gmail.com'
+        },
         to: toEmail,
         subject: `CipherKey of your IPFS Hash`,
         text: `Your kyc has been verified successfully. The cipherKey ${cipherKey} has been used to encrypt your data. 
