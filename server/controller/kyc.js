@@ -2,6 +2,7 @@ const { errHandler } = require("../utils/errHandler");
 const KycStore = require("../lib/kyc/kycStore");
 const KycFetch = require("../lib/kyc/kycFetch");
 const { Ipfs } = require("../lib/ipfs/ipfs");
+const { sendMail } = require('../lib/nodemailer/nodemailer');
 const UserSchema = require("../models/Users");
 
 // Stores all kycs in UserData folder using uuid and store uuid in mongodb
@@ -39,13 +40,16 @@ const getKycsForVerification = async(req,res,next) => {
 const storeKycOnIpfs = async(req,res,next) => {
     try{
 
-        const userData = req.body;
+        const userData = req.body.userData;
+        const toEmail = req.body.email;
 
         const IPFS = new Ipfs();
 
-        const encryptedUserData = await IPFS.createUserKycHash(userData);
+        const encryptedUserData = await IPFS.createUserKycHash(userData, toEmail);
 
-        console.log(encryptedUserData);
+        console.log("Encrypted userData ", encryptedUserData);
+
+        //nodemailer support
 
         // Twilio message to notify user about payment...
 
