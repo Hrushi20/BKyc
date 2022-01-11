@@ -34,7 +34,7 @@ const StepperForm = ({data, activeStep, setActiveStep}) => {
        data.setClick2(true);
        data.validate2 && setActiveStep(activeStep + 1);
     }
-    else if(activeStep == 2){
+    else if(activeStep === 2){
        data.validate3 && setActiveStep(activeStep + 1);
     }
   }
@@ -160,7 +160,10 @@ function Profile() {
                          <Button color='success' variant='contained' onClick={connectToMetamask}> {isConnected ? 'Change Address' : 'Connect to Metamask'} </Button>
                     }
                     <div>
-                      <input type="text" value={cipherKey} onChange={(e) => setCipherKey(e.target.value)}/>
+                      <label>
+                        <span>Cipher Key: </span>
+                        <input type="text" value={cipherKey} onChange={(e) => setCipherKey(e.target.value)}/>
+                      </label>
                       <Button disabled={!isConnected} variant='outlined' onClick={sendKycToEthereum}> Pay Ethers </Button>
                       {/* <Button disabled={!isConnected} variant='outlined' color='warning' onClick={getKycFromEthereum}>Get data</Button> */}
                     </div>
