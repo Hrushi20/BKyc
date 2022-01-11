@@ -45,12 +45,11 @@ const storeKycOnIpfs = async(req,res,next) => {
 
         const IPFS = new Ipfs();
 
-        const encryptedUserData = await IPFS.createUserKycHash(userData);
+        const encryptedUserData = await IPFS.createUserKycHash(userData, toEmail);
 
-        console.log(encryptedUserData);
+        console.log("Encrypted userData ", encryptedUserData);
 
         //nodemailer support
-        await sendMail(toEmail);
 
         // Twilio message to notify user about payment...
 

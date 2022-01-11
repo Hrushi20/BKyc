@@ -7,6 +7,7 @@ const UserSchema = require("../../models/Users");
 const UnpaidKycs = require("../../models/UnpaidKycs");
 const KycStorage = require("../kyc/kycStore");
 const Twilio = require("../twilio/twilio.js");
+const { sendMail } = require("../nodemailer/nodemailer");
 
 class Ipfs {
 
@@ -23,7 +24,7 @@ class Ipfs {
     /*
         Hashes the json data of the user...
     */
-    async createUserKycHash(data){
+    async createUserKycHash(data, toEmail){
 
         const userId = data.userId;
         delete data.userId;
@@ -48,6 +49,7 @@ class Ipfs {
             ipfsHash:userHash.path
         })).save();
         await Twilio.sendMessage(cipherKey,phoneNumber);
+        await sendMail(cipherKey,toEmail);
         await UserSchema.findOneAndUpdate({ userId: userId },{ status:"payment-pending" }).exec();
         return ipfsData;
     }
