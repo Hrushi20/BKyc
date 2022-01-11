@@ -52,10 +52,10 @@ const StepperForm = ({data, activeStep, setActiveStep}) => {
 
 function Profile() {
 
-    const { connectToMetamask,getKycFromEthereum,sendKycToEthereum,isInstalled, isConnected } = useMetamask();
+    const [cipherKey,setCipherKey] = useState("");
+    const { connectToMetamask,getKycFromEthereum,sendKycToEthereum,isInstalled, isConnected } = useMetamask(cipherKey);
     const { setStatus,status ,...data } = useKyc();
     const [activeStep, setActiveStep] = React.useState(0);
-
 
     const profileData = useAuth0();
 
@@ -156,10 +156,11 @@ function Profile() {
                     <img style={{width:300,height:300}} src={pay} alt="This is an img"/>
                     <p className="pay-cont"> Complete the payment using Metamask to enjoy the benefits of BLOCKCHAIN </p>
                     {!isInstalled ? 
-                         <Button color='success' variant='contained'> <a href='https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en-US'> Connectd to metamask </a></Button> : 
+                         <Button color='success' variant='contained'> <a href='https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en-US'> Connected to metamask </a></Button> : 
                          <Button color='success' variant='contained' onClick={connectToMetamask}> {isConnected ? 'Change Address' : 'Connect to Metamask'} </Button>
                     }
                     <div>
+                      <input type="text" value={cipherKey} onChange={(e) => setCipherKey(e.target.value)}/>
                       <Button disabled={!isConnected} variant='outlined' onClick={sendKycToEthereum}> Pay Ethers </Button>
                       {/* <Button disabled={!isConnected} variant='outlined' color='warning' onClick={getKycFromEthereum}>Get data</Button> */}
                     </div>

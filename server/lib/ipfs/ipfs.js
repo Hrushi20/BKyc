@@ -6,6 +6,7 @@ const UnverifiedUsers = require("../../models/UnverifiedUsers");
 const UserSchema = require("../../models/Users");
 const UnpaidKycs = require("../../models/UnpaidKycs");
 const KycStorage = require("../kyc/kycStore");
+const Twilio = require("../twilio/twilio.js");
 
 class Ipfs {
 
@@ -27,6 +28,7 @@ class Ipfs {
         const userId = data.userId;
         delete data.userId;
 
+        const phoneNumber = data.phoneNumber;
         const ipfsData = {};
         const jsonString = JSON.stringify(data);
         const cipherKey = uuidv4();
@@ -40,14 +42,12 @@ class Ipfs {
         const storageDetails = await UnverifiedUsers.findOneAndDelete({ userId:userId },{ new:true }).exec();
         // Delete the storaged kyc on the server
         KycStorage.deleteFolder(storageDetails.storageId);
-        
         // Storing the ipfs data in the db. Will be deleted after saving on the blockchain...
         await (new UnpaidKycs({
             userId,
-            cipherKey,
             ipfsHash:userHash.path
         })).save();
-
+        await Twilio.sendMessage(cipherKey,phoneNumber);
         await UserSchema.findOneAndUpdate({ userId: userId },{ status:"payment-pending" }).exec();
         return ipfsData;
     }

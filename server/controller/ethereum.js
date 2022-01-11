@@ -7,8 +7,8 @@ const getHashedKyc = async(req,res,next) => {
     try{
 
         const { userId } = req.body;
-        const { cipherKey,ipfsHash }  = await UnPaidKycs.findOne({ userId }).exec();
-        res.status(200).json({ cipherKey,ipfsHash });
+        const { ipfsHash }  = await UnPaidKycs.findOne({ userId }).exec();
+        res.status(200).json({ ipfsHash });
     }catch(err){
         errHandler(err,next);
     }

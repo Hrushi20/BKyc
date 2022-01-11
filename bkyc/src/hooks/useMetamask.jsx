@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import KycStorage from "../truffle/build/contracts/KycStorage.json"
 
 let provider;
-const useMetamask = () => {
+const useMetamask = (cipherKey) => {
 
     const [isConnected,setIsConnected] = useState(false);
 
@@ -65,7 +65,7 @@ const useMetamask = () => {
         const kycSigner = kycContract.connect(signer);
         // let d = await kycSigner.setData("98498","this is a ipfs hash","This is a cipher key");
         const userId = localStorage.getItem("userId");
-        const { ipfsHash,cipherKey  } = await fetchHashedKycData(userId);
+        const { ipfsHash } = await fetchHashedKycData(userId);
         let blockchainResponse = await kycSigner.setData(userId,ipfsHash,cipherKey);
         console.log(blockchainResponse);
         await kycStoredOnBlockchainSuccess();

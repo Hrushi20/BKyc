@@ -10,10 +10,6 @@ const UnpaidKycs = new Schema({
     ipfsHash: {
         type:String,
         required:true
-    },
-    cipherKey:{
-        type:String,
-        required:true
     }
 });
 
