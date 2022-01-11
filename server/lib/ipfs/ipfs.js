@@ -33,10 +33,10 @@ class Ipfs {
         const ipfsData = {};
         const jsonString = JSON.stringify(data);
         const cipherKey = uuidv4();
+        console.log(cipherKey)
         const encryptedData = this.encryptUserKyc(jsonString,cipherKey);
         const userHash = await node.ipfs.add(encryptedData);
 
-        ipfsData["cipherKey"] = cipherKey;
         ipfsData["userHash"] = userHash;
 
         // Delete unverified kyc...

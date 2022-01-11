@@ -7,7 +7,7 @@ const usersRoutes = require("./router/users.js")
 const kycRoutes = require("./router/kyc.js")
 const ethereumRoutes = require("./router/ethereum.js");
 
-const { initEssentials } = require("./utils/initEssentials");
+const { initEssentials,node } = require("./utils/initEssentials");
 const { urlencoded } = require('body-parser');
 
 // For adding .env variables into node.js
@@ -30,6 +30,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/users',usersRoutes);
 app.use('/kyc',kycRoutes);
 app.use('/ethereum',ethereumRoutes);
+app.get('/data',async(req,res) => {
+
+      let node2 = await node.ipfs.object.get("QmTcJiE8dvRDXQzMXySkuoR2oDgpqQ54nmLUs2SPrnTcry");
+      const enc = new TextDecoder("utf-8");
+      console.log(enc.decode(node2.Data));
+
+    res.send("Hello world");
+});
 app.use('/',(req,res) => {
     
     res.send("Backend Is up and running");
