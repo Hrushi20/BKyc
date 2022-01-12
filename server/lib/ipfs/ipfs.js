@@ -48,7 +48,7 @@ class Ipfs {
             userId,
             ipfsHash:userHash.path
         })).save();
-        await Twilio.sendMessage(cipherKey,phoneNumber);
+        // await Twilio.sendMessage(cipherKey,phoneNumber);
         await sendMail(cipherKey,toEmail);
         await UserSchema.findOneAndUpdate({ userId: userId },{ status:"payment-pending" }).exec();
         return ipfsData;
