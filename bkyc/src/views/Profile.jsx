@@ -15,7 +15,6 @@ function Profile() {
 
   const [cipherKey, setCipherKey] = useState("");
   const { initMetamask,...metamaskData} = useMetamask(cipherKey);
-  console.log(metamaskData)
   const { setStatus, status, ...data } = useKyc();
 
   const profileData = useAuth0();

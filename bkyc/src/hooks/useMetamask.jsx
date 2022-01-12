@@ -39,7 +39,8 @@ const useMetamask = (cipherKey) => {
     }
 
 async function getKycFromEthereum() {
-    const kycContract = new ethers.Contract(KycStorage.networks["5777"].address, KycStorage.abi, provider);
+    const networkId = Object.keys(KycStorage.networks)[0];
+    const kycContract = new ethers.Contract(KycStorage.networks[networkId.toString()].address, KycStorage.abi, provider);
 
     const userId = localStorage.getItem("userId");
     let blockchainResponse = await kycContract.getData(userId);
@@ -49,12 +50,16 @@ async function getKycFromEthereum() {
 
 async function sendKycToEthereum() {
 
+
     const signer = provider.getSigner();
-    const kycContract = new ethers.Contract(KycStorage.networks["5777"].address, KycStorage.abi, provider);
+    const networkId = Object.keys(KycStorage.networks)[0];
+    const kycContract = new ethers.Contract(KycStorage.networks[networkId.toString()].address, KycStorage.abi, provider);
     const kycSigner = kycContract.connect(signer);
     // let d = await kycSigner.setData("98498","this is a ipfs hash","This is a cipher key");
     const userId = localStorage.getItem("userId");
+    console.log("sendkycToeth ", cipherKey);
     const { ipfsHash } = await fetchHashedKycData(userId);
+    console.log("sendkycToeth ", cipherKey);
 
     await getUserKyc(ipfsHash, cipherKey);
     // let blockchainResponse = await kycSigner.setData(userId,ipfsHash,cipherKey);
