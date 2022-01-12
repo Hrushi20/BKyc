@@ -40,7 +40,7 @@ const StepperForm = ({data, activeStep, setActiveStep}) => {
   }
 
   return (
-    <div className="kyc-form" style={{height : activeStep === 3 ? 'unset' : 500, padding : activeStep === 3 && 32 }}>
+    <div className="kyc-form" style={{height : (activeStep === 3 || activeStep === 2) ? 'unset' : 500, padding : activeStep === 3 || activeStep === 2 && 32 }}>
               {activeStep === 0? <Form1 {...data}/>:activeStep === 1 ? <Form2 {...data}/>: activeStep === 2 ?<Form3 {...data}/>:<Form4 {...data}/>}
               <div className="buttons">                
                 <Button variant='outlined' disabled={activeStep === 0} color='inherit' onClick={() => setActiveStep(activeStep - 1)}>Previous</Button>
@@ -55,7 +55,7 @@ function Profile() {
     const [cipherKey,setCipherKey] = useState("");
     const { connectToMetamask,getKycFromEthereum,sendKycToEthereum,isInstalled, isConnected } = useMetamask(cipherKey);
     const { setStatus,status ,...data } = useKyc();
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = React.useState(2);
 
     const profileData = useAuth0();
 

@@ -32,6 +32,17 @@ const Form1 = ({ setFirstName,setMiddleName,setLastName,setValidate1,firstName,m
                     <br/>
                     <TextField onBlur={() => setInput3(true)} error={!click1 ? validate(lastName, input3) : lastName == ''} style={{ margin:10 }} helperText={!click1 ? validate(lastName, input3) && "required" : lastName == '' && "required"} fullWidth label="Last Name" variant="outlined" type="text" value={lastName} onChange={(e)=>setLastName(e.target.value)}/>
                     <br/>
+                    <TextField
+                        style={{ margin:10 }}
+                        id="date"
+                        label="Birthday"
+                        type="date"
+                        sx={{ width: 220 }}
+                        InputLabelProps={{
+                        shrink: true,
+                        }}
+                        onChange={e => console.log(e)}
+                    />
                     {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DatePicker
                             label="DoB"

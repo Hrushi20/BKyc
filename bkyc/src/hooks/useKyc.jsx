@@ -26,6 +26,7 @@ function useKyc(){
     // Page 3
     const [pan,setPan] = useState(null);
     const [aadhar,setAadhar] = useState(null);
+    const [location, setLocation] = useState({ lat: null, long: null, addr: 'Loading ..'});
     const [validate3, setValidate3] = useState(false);
 
     //page 4
@@ -81,6 +82,7 @@ function useKyc(){
         click2,
         pan,
         aadhar,
+        location,
         livePhoto,
         validate3,
         status,
@@ -99,6 +101,7 @@ function useKyc(){
         setClick2,
         setPan,
         setAadhar,
+        setLocation,
         setLivePhoto,
         setValidate3,
         submitKyc
