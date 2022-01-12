@@ -1,9 +1,8 @@
-import React,{ useEffect } from 'react';
+import React from 'react';
 import {Routes, Route} from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import Loader from './components/loader';
 import Home from './views/Home';
-import useMetamask from './hooks/useMetamask';
 
 const LazyStatus = React.lazy(() => import('./views/Status'));
 const LazyError = React.lazy(() => import('./views/Error'));
@@ -20,15 +19,7 @@ function App() {
   //   }
   // };
   
-  const { initMetamask } = useMetamask();
   const { isLoading } = useAuth0();
-
-  useEffect(()=>{
-    
-    initMetamask();
-
-  },[]);
-
 
   return (
     <>
