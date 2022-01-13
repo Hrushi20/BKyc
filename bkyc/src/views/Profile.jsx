@@ -12,8 +12,7 @@ import ProfileHeader from '../components/profile/header';
 
 function Profile() {
 
-  const [cipherKey, setCipherKey] = useState("");
-  const { initMetamask,...metamaskData} = useMetamask(cipherKey);
+  const { initMetamask,getKycFromEthereum, ...metamaskData} = useMetamask();
   const { setStatus, status, ...data } = useKyc();
 
   const profileData = useAuth0();
@@ -40,6 +39,7 @@ function Profile() {
           status === 'verified' ?
 
             <Verified
+              getKycFromEthereum={getKycFromEthereum}
              />
 
             : status === 'pending' ?
@@ -49,8 +49,7 @@ function Profile() {
               : status === 'payment-pending' ?
                 <PaymentPending 
                 {...metamaskData}
-                setCipherKey={setCipherKey}
-                cipherKey={cipherKey}/>
+                />
                 : <></>
 
       }
