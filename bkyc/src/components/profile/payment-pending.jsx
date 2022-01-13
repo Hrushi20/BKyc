@@ -2,11 +2,43 @@ import { Button, Checkbox, FormControlLabel } from "@mui/material";
 import pay from "../../assets/pay.svg";
 import { useState } from 'react';
 
-function DisplayKyc( data ) {
-   
+function DisplayKyc(data) {
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '70vw',
+        bgcolor: 'white',
+        border: '1px solid #000',
+        borderRadius: 1,
+        boxShadow: 24,
+        height: '90vh',
+        overflow: 'auto',
+        display: 'flex',
+    };
+
     return (
         <div>
-            Your decoded kyc will come here
+            <div className="left-content">
+                <img src={data.livePhoto} alt="live" width={200} style={{ border: '2px solid gray', borderRadius: 10 }} />
+                <div className="detail"><p className='que'>First name : </p> {data.firstName}</div>
+                <div className="detail"><p className='que'>Last name : </p> {data.lastName}</div>
+                <div className="detail"><p className='que'>Middle name : </p> {data.middleName}</div>
+                <div className="detail"><p className='que'>Date-of-Birth : </p> {data.dob}</div>
+                <div className="detail"><p className='que'>Email : </p> {data.email}</div>
+            </div>
+            <div className="right-content">
+                <div className="detail"><p className='que'>Phone : </p> {data.phoneNumber}</div>
+                <div className="detail"><p className='que'>Address : </p><p style={{ width: '60%' }}> {data.address} </p></div>
+                <div className="detail"><p className='que'>Pin : </p> {data.pincode}</div>
+                <div className="detail"><p className='que'>Aadhaar & Pan-card : </p></div>
+                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-around' }} className="docs">
+                    <img src={data.aadhar} alt="aadhaar" width={100} style={{ border: '2px solid gray', borderRadius: 10 }} />
+                    <img src={data.pan} alt="pan" width={100} style={{ border: '2px solid gray', borderRadius: 10 }} />
+                </div>
+            </div>
         </div>
     )
 }
@@ -14,7 +46,7 @@ function DisplayKyc( data ) {
 const PaymentPending = ({ connectToMetamask, address, isInstalled, sendKycToEthereum, decodeUserKyc, userKyc }) => {
 
     const [cipherKey, setCipherKey] = useState("");
-    const [checked,setChecked] = useState(false);
+    const [checked, setChecked] = useState(false);
 
     return (
         <div className='payment'>
@@ -31,8 +63,8 @@ const PaymentPending = ({ connectToMetamask, address, isInstalled, sendKycToEthe
                     <Button onClick={() => decodeUserKyc(cipherKey)}>Confirm Cipher Key</Button>
                 </label>
                 {userKyc && <><DisplayKyc {...userKyc} />
-                <FormControlLabel control={<Checkbox checked={checked} onChange={(e)=>setChecked(e.target.checked)}/>} label="Confirm kyc"/>
-                <Button disabled={!checked} variant='outlined' onClick={() => sendKycToEthereum(cipherKey)}> Pay Ethers </Button></>}
+                    <FormControlLabel control={<Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)} />} label="Confirm kyc" />
+                    <Button disabled={!checked} variant='outlined' onClick={() => sendKycToEthereum(cipherKey)}> Pay Ethers </Button></>}
             </div>
         </div>
     )

@@ -13,8 +13,11 @@ const UserSchema = new Schema({
     },
     userId:{
         type:String
+    },
+    role:{
+        type:String,
+        required:true
     }
-    // UUid same or another schema...
 });
 
 module.exports = mongoose.model('UserSchema',UserSchema);

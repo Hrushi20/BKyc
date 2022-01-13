@@ -1,26 +1,18 @@
-const UsersSchema = require("../models/Users");
+const Users = require("../lib/Users/Users");
 const MessageSchema = require("../models/Messages");
 const { errHandler } = require("../utils/errHandler");
 
 const storeUser = async(req,res,next) => {
+    // Todo, need to add status from frontend...
+    // Status of banker and authorizer will be "banker" and "authorizer" respectively.
 
     try{
-
-        const userData = await UsersSchema.findOne({ userId:req.body.user.sub }).exec();
-
-        if(userData == null){
-            const user = new UsersSchema({
-                username: req.body.user.name,
-                status:"noKYC",
-                userId: req.body.user.sub,
-            });
-
-            await user.save();
-
-            res.status(201).json(user);
-
+        const data = req.body;
+        let userData = await Users.getUser(data);
+        if(!userData){
+            userData = await Users.createUser(data);
+            res.status(201).json(userData);
             return ;
-             
         }
         res.status(201).json(userData);
 
@@ -28,6 +20,7 @@ const storeUser = async(req,res,next) => {
         errHandler(err,next);
     }
 }
+
 
 
 const getMessage = async(req, res, next) => {
