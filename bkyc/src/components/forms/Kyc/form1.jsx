@@ -5,7 +5,7 @@ import personalInfo from "../../../assets/form1.svg";
 import Fade from 'react-reveal/Fade';
 
 
-const Form1 = ({ setFirstName,setMiddleName,setLastName,setValidate1,firstName,middleName,lastName, validate1, click1 }) => {
+const Form1 = ({ setFirstName,setMiddleName,setLastName,dob,setDob,setValidate1,firstName,middleName,lastName, validate1, click1 }) => {
 
     const [input1, setInput1] = React.useState(false);
     const [input2, setInput2] = React.useState(false);
@@ -41,7 +41,7 @@ const Form1 = ({ setFirstName,setMiddleName,setLastName,setValidate1,firstName,m
                         InputLabelProps={{
                         shrink: true,
                         }}
-                        onChange={e => console.log(e)}
+                        onChange={e => setDob(`${e.target.value} (yyyy-mm-dd) `)}
                     />
                     {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DatePicker

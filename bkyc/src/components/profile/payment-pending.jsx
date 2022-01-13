@@ -16,7 +16,7 @@ const paymentPending = ({ connectToMetamask,address,isInstalled,sendKycToEthereu
                     <span>Cipher Key: </span>
                     <input type="text" value={cipherKey} onChange={(e) => setCipherKey(e.target.value)} />
                 </label>
-                <Button disabled={!address} variant='outlined' onClick={sendKycToEthereum}> Pay Ethers </Button>
+                <Button disabled={!address} variant='outlined' onClick={() => sendKycToEthereum()}> Pay Ethers </Button>
                 {/* <Button disabled={!isConnected} variant='outlined' color='warning' onClick={getKycFromEthereum}>Get data</Button> */}
             </div>
         </div>
