@@ -4,9 +4,9 @@ WORKDIR /code
 
 COPY package.json .
 
-RUN npm install --save --legacy-peer-deps
+RUN yarn install
 
-RUN npm install -g truffle 
+RUN yarn global add truffle
 
 COPY . ./
 
@@ -18,4 +18,4 @@ RUN truffle build
 
 WORKDIR /code
 
-CMD ["npm","start"]
+CMD ["yarn","start"]

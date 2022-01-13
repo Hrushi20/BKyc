@@ -4,10 +4,10 @@ WORKDIR /server
 
 COPY package.json .
 
-RUN npm install
+RUN yarn install
 
 COPY . ./
 
 RUN mkdir ./UserData
 
-CMD ["node","server.js"]
+CMD ["yarn","server.js"]
