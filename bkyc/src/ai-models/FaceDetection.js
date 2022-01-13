@@ -1,8 +1,9 @@
+import '@tensorflow/tfjs-backend-webgl';
 const blazeface = require('@tensorflow-models/blazeface');
 
-
-async function main(image) {
+export async function main(image) {
     // Load the model.
+    console.log("in main: ", image);
     const model = await blazeface.load();
 
    // const image = <img href={`https://images.unsplash.com/photo-1611003228941-98852ba62227?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmFieSUyMGRvZ3xlbnwwfHwwfHw%3D&w=1000&q=80`} />
@@ -16,6 +17,7 @@ async function main(image) {
     if (predictions.length > 0) {
 
         console.log("Faces detected");
+        return true;
       /*
       `predictions` is an array of objects describing each detected face, for example:
   
@@ -45,8 +47,8 @@ async function main(image) {
     //     ctx.fillRect(start[0], start[1], size[0], size[1]);
       } else {
             console.log("No faces");
+            return false;
       }
   }
 
-  module.exports = { main }
   

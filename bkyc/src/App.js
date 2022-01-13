@@ -3,6 +3,8 @@ import {Routes, Route} from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import Loader from './components/loader';
 import Home from './views/Home';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const LazyStatus = React.lazy(() => import('./views/Status'));
 const LazyError = React.lazy(() => import('./views/Error'));
@@ -36,6 +38,7 @@ function App() {
             <Route path='*' element={<LazyError />} />
         </Routes>
       }
+      <ToastContainer />
       </React.Suspense>
     </>
   );

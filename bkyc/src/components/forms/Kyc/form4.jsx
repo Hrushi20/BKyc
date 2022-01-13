@@ -1,25 +1,85 @@
-import { Button, Checkbox, FormControlLabel } from "@mui/material";
+import { Button, Modal } from "@mui/material";
 import { Box } from "@mui/system";
 import submit from "../../../assets/form4.svg";
 import Webcam from "react-webcam";
 import { useRef } from "react";
 import { useCallback } from "react";
 import React from "react";
+import { main } from "../../../ai-models/FaceDetection";
+import Alert from '@mui/material/Alert';
+import {  toast } from 'react-toastify';
+import Lottie from 'react-lottie';
+import Facescan from '../../../assets/face-scan.json';
+
+const Scan = () => {
+    const style = {
+        position: 'absolute',
+        width: '100vw',
+        bgcolor: 'rgba(256,256,256,0.6)',
+        height: '100vh',
+        overflow: 'auto',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent:'center'
+    };
+    const [open, setOpen] = React.useState(true);
+    const handleClose = () => setOpen(true);
+
+    const scan = {
+        loop: true,
+        autoplay: true,
+        animationData: Facescan,
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid slice"
+        }
+      };
+
+    return (
+        <Modal open={open} handleClose={handleClose} >
+            <Box sx={style} >
+                <Lottie options={scan} width={300} height={300} />
+            </Box>
+        </Modal>
+    )
+}
 
 
 const Form4 = ({ submitKyc,setLivePhoto, livePhoto }) => {
 
     const webcamRef = useRef(null);
-
+    const facedetectionImg = useRef(null);
     const [checked, setChecked] = React.useState(false);
+    const [init, setInit] = React.useState(true);
+    const [temp, setTemp] = React.useState(false);
+ 
+    const [faceDetected, setFaceDetected] = React.useState({ bool: false, loading: true});
+    
 
-    const handleChange = () => setChecked(!checked)
+    const checkErr = () => {
+        !checked && toast.error("click the checkbox to continue !!");
+        !livePhoto && toast.error("capture a live photo!");
+    }
 
-    const capturePhoto = useCallback(() => {
-
-        setLivePhoto(webcamRef.current.getScreenshot())
+    const capturePhoto = useCallback( () => {
+        setInit(true);
+        setFaceDetected({ bool: false, loading: true });
+        setTemp(true);
+        setLivePhoto(webcamRef.current.getScreenshot());
 
     },[setLivePhoto])
+
+    React.useEffect( () => {
+         
+         async function faceDetect() {
+            const detection = await main(facedetectionImg.current);
+            setFaceDetected({bool: detection, loading: false});
+            setInit(false);
+            !detection && setLivePhoto(null);
+        }
+    
+        livePhoto && faceDetect();
+        
+    }, [livePhoto])
 
     return (
         <div style={{ display:"flex", alignItems:"center", justifyContent: "space-around", width: '100%'}}>
@@ -32,15 +92,28 @@ const Form4 = ({ submitKyc,setLivePhoto, livePhoto }) => {
                 />
                 <br /><br />
                 <Button onClick={capturePhoto}>Capture Photo</Button>
-                {livePhoto && (
-                    <img
-                    src={livePhoto}
-                    />
-                )}
+                {livePhoto && <img ref={facedetectionImg} src={livePhoto} alt='LivePhoto' />}
+
+                {init && temp && (faceDetected.loading ?  <Scan />
+                    : !faceDetected.loading && faceDetected.bool ? toast.success("Image is good to go !", { position: toast.POSITION.TOP_CENTER })
+                    : !faceDetected.loading && !faceDetected.bool ? toast.warning("Our AI tells there is no face in the captured pic" )
+                    : null)
+                }
                 <br />
-                <FormControlLabel control={<Checkbox defaultChecked />} label="Please check all the documents before submitting your documents." />               
-                <br /><br />
-                <Button variant="contained" color="success" onClick={submitKyc}>Submit</Button>
+                <div style={{display: 'flex'}} className="check">
+                    <input
+                        type="checkbox"
+                        id="check"
+                        name="check"
+                        checked={checked}
+                        onChange={(e) => setChecked(e.target.checked)}
+                        />
+                    <label htmlFor="check" style={{fontFamily: 'Nunito', marginLeft: 16, position: "relative", top: -4}}> Please check all the documents before submitting your documents. </label>
+                    
+                </div>
+                
+                 <br /><br />
+                <Button variant="contained" color="success" onClick={(checked && livePhoto) ? submitKyc : checkErr}>Submit</Button>
 
             </Box>   
             <div>

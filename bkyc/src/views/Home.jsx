@@ -9,9 +9,21 @@ import LContent from "../components/content/LContent";
 import ContactForm from "../components/forms/Contact";
 import Footer from "../components/Footer";
 import Nav from "./Nav";
+import {  toast } from 'react-toastify';
 
 const Home = () => {
-    const { isAuthenticated } = useAuth0();
+   
+  const { isAuthenticated, user } = useAuth0();
+
+   React.useEffect(() => {
+    isAuthenticated ? toast.success(`Logged in using ${user.email} !`, {
+      position: toast.POSITION.TOP_CENTER,
+      style: { lineHeight: 1.5}
+    }) : toast.success("Logged out Successfully !", {
+      position: toast.POSITION.TOP_CENTER
+    })
+   }, [])
+
     console.log(useAuth0());
 
     return(

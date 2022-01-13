@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-
 import '../styles/profile.css';
 import useKyc from "../hooks/useKyc";
 import Footer from '../components/Footer';
