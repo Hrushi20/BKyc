@@ -1,11 +1,12 @@
+const UsersSchema = require("../../models/Users");
 module.exports = class Users {
 
     static async createUser(data) {
 
         const user = new UsersSchema({
-            username: data.user.name,
-            status: data.status,
-            userId: data.user.sub,
+            username: data.authData.user.name,
+            status: data.role === 'user' ? 'noKYC' : '-',
+            userId: data.authData.user.sub,
             role: data.role
         });
 
@@ -13,6 +14,6 @@ module.exports = class Users {
     }
 
     static async getUser(data) {
-        return await UsersSchema.findOne({ userId: data.user.sub }).exec();
+        return await UsersSchema.findOne({ userId: data.authData.user.sub }).exec();
     }
 }
