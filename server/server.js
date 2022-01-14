@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const usersRoutes = require("./router/users.js")
 const kycRoutes = require("./router/kyc.js")
 const ethereumRoutes = require("./router/ethereum.js");
+const bankRoutes = require("./router/bank");
 
 const { initEssentials,node } = require("./utils/initEssentials");
 const { urlencoded } = require('body-parser');
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/users',usersRoutes);
 app.use('/kyc',kycRoutes);
 app.use('/ethereum',ethereumRoutes);
+app.use('/bank',bankRoutes);
 app.get('/data',async(req,res) => {
 
       let node2 = await node.ipfs.object.get("QmTcJiE8dvRDXQzMXySkuoR2oDgpqQ54nmLUs2SPrnTcry");
