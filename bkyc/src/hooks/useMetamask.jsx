@@ -69,14 +69,7 @@ async function sendKycToEthereum(cipherKey) {
 
 async function fetchHashedKycData(userId) {
 
-    const res = await (await fetch(`${process.env.REACT_APP_PORTAL}/ethereum/get-hashed-kyc`, {
-        method: "POST",
-        body: JSON.stringify({ userId }),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })).json();
-
+    const res = await (await fetch(`${process.env.REACT_APP_PORTAL}/ethereum/get-hashed-kyc/${userId}`)).json();
     return res;
 }
 
@@ -97,14 +90,7 @@ async function decodeUserKyc(cipherKey) {
 async function kycStoredOnBlockchainSuccess() {
     const userId = localStorage.getItem("userId");
 
-    const res = await (await fetch(`${process.env.REACT_APP_PORTAL}/ethereum/kyc-stored-on-blockchain-success`, {
-        method: "POST",
-        body: JSON.stringify({ userId }),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })).json()
-
+    const res = await (await fetch(`${process.env.REACT_APP_PORTAL}/ethereum/kyc-stored-on-blockchain-success/${userId}`)).json()
 }
 
 

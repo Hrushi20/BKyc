@@ -4,7 +4,7 @@ const { getHashedKyc,kycStoredOnBlockchainSuccess } = require("../controller/eth
 
 const router = express.Router();
 
-router.post("/get-hashed-kyc",getHashedKyc);
-router.post("/kyc-stored-on-blockchain-success",kycStoredOnBlockchainSuccess);
+router.get("/get-hashed-kyc/:userId",getHashedKyc);
+router.get("/kyc-stored-on-blockchain-success/:userId",kycStoredOnBlockchainSuccess);
 
 module.exports = router;
