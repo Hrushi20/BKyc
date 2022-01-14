@@ -1,5 +1,6 @@
 const Users = require("../lib/Users/Users");
 const MessageSchema = require("../models/Messages");
+const UsersSchema = require("../models/Users");
 const { errHandler } = require("../utils/errHandler");
 
 const storeUser = async(req,res,next) => {
@@ -46,6 +47,22 @@ const getMessage = async(req, res, next) => {
     }
 }
 
+const getUserInfo = async(req,res,next) => {
+    try{
+        const data = req.body;
+        console.log(data);
+        let userData = await UsersSchema.findOne({ userId: data.user.sub }).exec();
+        console.log("user : ", userData);
+        if(!userData){
+            return ;
+        }
+        res.status(201).json(userData);
+
+    }catch(err){
+        errHandler(err,next);
+    }
+}
 
 
-module.exports = { storeUser, getMessage };
+
+module.exports = { storeUser, getMessage, getUserInfo };

@@ -5,6 +5,7 @@ function useKyc(){
 
     // status of the UI
     const [status, setStatus] = useState('...');
+    const [role, setRole] = useState(null);
 
     // Page 1
     const [firstName,setFirstName] = useState("");
@@ -86,7 +87,9 @@ function useKyc(){
         livePhoto,
         validate3,
         status,
+        role,
         setStatus,
+        setRole,
         setFirstName,
         setLastName,
         setMiddleName,
