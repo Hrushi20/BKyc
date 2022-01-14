@@ -11,7 +11,8 @@ const storeUser = async(req,res,next) => {
         const data = req.body;
         let userData = await Users.getUser(data);
         if(!userData){
-            userData = await Users.createUser(data);
+            await Users.createUser(data);
+            let userData = await Users.getUser(data);
             res.status(201).json(userData);
             return ;
         }

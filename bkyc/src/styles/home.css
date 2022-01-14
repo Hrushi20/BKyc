@@ -87,6 +87,7 @@
 .nav ul .li {
     padding: 5px 20px;
     font-family: 'Nunito Sans', sans-serif;
+    font-weight: bold;
     letter-spacing: 0.5px;
     color: var(--white);
     text-decoration: none;
