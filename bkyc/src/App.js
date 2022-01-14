@@ -18,9 +18,7 @@ function App() {
 
   const [role, setRole] = React.useState(null);
 
-  const element = !isAuthenticated ? <Home /> :  role === null ? <UserRole /> : <Home />
 
-  console.log(element);
   return (
     <>
       <React.Suspense fallback={<Loader />} >

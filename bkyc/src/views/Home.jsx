@@ -20,41 +20,50 @@ const Home = ({role,setRole}) => {
   const { initMetamask } = useMetamask();
   const authData = useAuth0();
 
-async function findUserinMongoose() {
-    console.log("In find user fn ");
+  const uData = {
+    authData,
+    role
+  }
+
+  async function findUserinMongoose() {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(authData)
+        body: JSON.stringify(uData)
     }
-      console.log("data1");
-      const data = await (await fetch(`${process.env.REACT_APP_PORTAL}/users/get-user`, requestOptions)).json();
-      console.log("data2");
-      localStorage.setItem("userId", authData.user.sub);
-  
+      const data = await (await fetch(`${process.env.REACT_APP_PORTAL}/users/store-user`, requestOptions)).json();
+      const jsonData = { userId : data.userId, role: data.role }
+      localStorage.setItem("user-data", JSON.stringify(jsonData));
+      console.log("item set");
       initMetamask(); 
-      setStatus(data.status ?? '...');
-      setRole(data.role ?? null);
-
-      console.log("role is ", data);
+      setStatus(data.status);
+      setRole(data.role);
   }
 
    React.useEffect(() => {
-      authData.isAuthenticated ? toast.success(`Logged in using ${authData.user.email} !`, {
+      console.log("home useeffect and role : ", role);
+      const user = localStorage.getItem("user-data");
+      if(user){
+        const roleName = JSON.parse(user).role;
+        setRole(roleName);
+      }
+      if(role == null ){
+        authData.isAuthenticated ? toast.success(`Logged in using ${authData.user.email} !`, {
         position: toast.POSITION.TOP_CENTER,
-        style: { lineHeight: 1.5}
-      }) : toast.success("Logged out Successfully !", {
-        position: toast.POSITION.TOP_CENTER
-      })
+        style: { lineHeight: 1.5 }
+        }) : toast.success("Logged out Successfully !", {
+          position: toast.POSITION.TOP_CENTER
+        })
+      }
 
-      findUserinMongoose();
+       role!=null && findUserinMongoose();
    }, [role])
 
-    console.log(useAuth0());
+
 
     return(
       <>
-       {authData.isAuthenticated && role == null ? <UserRole role={role} setRole={setRole} /> :
+       {authData.isAuthenticated && role == null ?  <UserRole role={role} setRole={setRole} /> :
          <div className="body">
               <div className="sec1">
                   <div className="front">

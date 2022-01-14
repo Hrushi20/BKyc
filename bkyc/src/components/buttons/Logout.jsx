@@ -10,7 +10,7 @@ const LogoutButton = () => {
         logout({
           returnTo: window.location.origin,
         });
-        localStorage.removeItem("userId");
+        localStorage.removeItem("user-data");
       }
       }
     >
