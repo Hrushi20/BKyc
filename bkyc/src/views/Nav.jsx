@@ -14,12 +14,12 @@ function Nav() {
         <div className="nav">
             <ul className="links">
                 <Link className="li" to='/'> HOME </Link>
-                {roleName && roleName === 'user' && <Link className="li" to='/'> NOTIFICATIONS </Link> }
+                {roleName && roleName === 'user' && <Link className="li" to='/notifications'> NOTIFICATIONS </Link> }
                 { isAuthenticated ?
                 <>
                     {roleName && roleName === 'authorizer' && <Link className="li" to='/status'> STATUS </Link> }
                     {roleName && roleName === 'user' && <Link className="li" to='/profile'> PROFILE </Link> }
-                    {roleName && roleName === 'bank' && <Link className="li" to='/profile'> ADD CLIENTS </Link> }
+                    {roleName && roleName === 'bank' && <Link className="li" to='/add-clients'> ADD CLIENTS </Link> }
                     <LogoutButton />
                 </>
                 : <LoginButton /> }

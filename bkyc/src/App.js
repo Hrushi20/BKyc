@@ -11,10 +11,12 @@ import useKyc from './hooks/useKyc';
 const LazyStatus = React.lazy(() => import('./views/Status'));
 const LazyError = React.lazy(() => import('./views/Error'));
 const LazyProfile = React.lazy(() => import('./views/Profile'));
+const LazyClients = React.lazy(() => import('./views/AddClients'));
+const LazyNotif = React.lazy(() => import('./views/Notifications'));
 
 function App() {
 
-  const { isLoading, isAuthenticated } = useAuth0();
+  const { isLoading } = useAuth0();
 
   const [role, setRole] = React.useState(null);
 
@@ -31,6 +33,8 @@ function App() {
             <Route path='/' element={<Home role={role} setRole={setRole} />} />
             <Route path='/status' element={<LazyStatus />} />
             <Route path='/profile' element={<LazyProfile />} />
+            <Route path='/add-clients' element={<LazyClients />} />
+            <Route path='/notifications' element={<LazyNotif />} />
             <Route path='*' element={<LazyError />} />
         </Routes>
       }

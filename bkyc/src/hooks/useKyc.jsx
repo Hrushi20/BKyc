@@ -3,8 +3,12 @@ import { useState } from 'react';
 
 function useKyc(){
 
+    const user = localStorage.getItem("user-data");
+    const ustatus = user ? JSON.parse(user).status : null;
+
+
     // status of the UI
-    const [status, setStatus] = useState('...');
+    const [status, setStatus] = useState(ustatus);
     const [role, setRole] = useState(null);
 
     // Page 1

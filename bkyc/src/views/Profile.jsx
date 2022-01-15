@@ -13,22 +13,9 @@ import ProfileHeader from '../components/profile/header';
 function Profile() {
 
   const { initMetamask,getKycFromEthereum, ...metamaskData} = useMetamask();
-  const { setStatus, status, ...data } = useKyc();
+  const {status, setStatus,  ...data } = useKyc();
 
   const profileData = useAuth0();
-
-  useEffect(async () => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(profileData)
-    };
-    const data = await (await fetch(`${process.env.REACT_APP_PORTAL}/users/store-user`, requestOptions)).json();
-    localStorage.setItem("userId", profileData.user.sub);
-
-    initMetamask(); 
-    setStatus(data.status);
-  }, [])
 
   return (
     <div>

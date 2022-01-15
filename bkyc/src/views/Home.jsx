@@ -32,7 +32,7 @@ const Home = ({role,setRole}) => {
         body: JSON.stringify(uData)
     }
       const data = await (await fetch(`${process.env.REACT_APP_PORTAL}/users/store-user`, requestOptions)).json();
-      const jsonData = { userId : data.userId, role: data.role }
+      const jsonData = { userId : data.userId, role: data.role, status: data.status }
       localStorage.setItem("user-data", JSON.stringify(jsonData));
       console.log("item set");
       initMetamask(); 
@@ -47,7 +47,7 @@ const Home = ({role,setRole}) => {
         const roleName = JSON.parse(user).role;
         setRole(roleName);
       }
-      if(role == null ){
+      if(role === null ){
         authData.isAuthenticated ? toast.success(`Logged in using ${authData.user.email} !`, {
         position: toast.POSITION.TOP_CENTER,
         style: { lineHeight: 1.5 }

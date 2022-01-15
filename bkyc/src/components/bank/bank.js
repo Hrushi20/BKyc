@@ -12,7 +12,7 @@ const Bank = () => {
 
     useEffect(async () => {
         const bankId = "9876";
-        const res = await (await fetch(`${process.env.REACT_APP_PORTAL}/bank/getAllGrantedUserDetails/${bankId}`)).json();
+        const res = await (await fetch(`${process.env.REACT_APP_PORTAL}/bank/getAllGrantedUserDetails/:${bankId}`)).json();
         setLoading(false);
         setUserDetails(res.userDetails);
     }, [])
