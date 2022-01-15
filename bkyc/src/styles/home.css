@@ -74,8 +74,14 @@
 .nav {
     display: flex;
     height: 100px;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    margin: 0 32px;
+}
+
+.nav img{
+    position: relative;
+    top: -20px;
 }
 
 .nav ul {
@@ -132,10 +138,10 @@
 
 .sec2 .contentArea {
     width: 40vw;
-    background-color: var(--ash);
+    background-color: snow;
     padding: 24px 44px;
     border-radius: 8px;
-    border: 1px solid var(--black);
+    border: 2px solid var(--light-grey);
 
 }
 

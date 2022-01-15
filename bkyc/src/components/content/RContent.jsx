@@ -12,9 +12,6 @@ const RContent = (props) => {
              </div>
             </Fade>
             <Slide bottom cascade>
-                <Rotate top left>
-                    <div className="container" />
-                </Rotate>
                 <div className="contentArea">
                     <p className="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                     Quidem quod quisquam non facere veniam ducimus deserunt quibusdam maxime tempore,
