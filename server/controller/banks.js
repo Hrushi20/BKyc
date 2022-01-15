@@ -21,6 +21,28 @@ const grantedBankKyc = async (req, res, next) => {
     }
 }
 
+const rejectBankKyc = async (req,res,next) => {
+    try{
+        const { userId,bankId } = req.body;
+        await BankFunc.rejectBankKyc(userId,bankId);
+        res.status(201).json({ message:`Rejected bank ${bankId} permission to grant kyc.` });
+
+    }catch(err){
+        errHandler(err,next);
+    }
+}
+
+const terminateBankKyc = async (req,res,next) => {
+    try{
+        const { userId,bankId } = req.body;
+        await BankFunc.terminateBankKyc(userId,bankId);
+        res.status(201).json({ message:"Terminated access to bank successfully." })
+
+    }catch(err){
+        errHandler(err,next);
+    }
+}
+
 const getAllUserDetails = async(req,res,next) => {
     try{
         const bankId = req.params.bankId;
@@ -44,4 +66,4 @@ const getAllBankStatus = async(req,res,next) => {
 }
 
 
-module.exports = { requestUserKyc, grantedBankKyc,getAllUserDetails,getAllBankStatus };
+module.exports = { requestUserKyc, grantedBankKyc,getAllUserDetails,getAllBankStatus,rejectBankKyc,terminateBankKyc };

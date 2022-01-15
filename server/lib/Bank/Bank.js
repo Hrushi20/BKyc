@@ -11,8 +11,22 @@ module.exports = class Bank {
     
     static async grantedBankKyc(userId,bankId){
 
-        await UserData.findOneAndUpdate({ userId }, { $push: { "granted_kyc_access_to": { bankId } }, $pull: { "pending_kyc_access": { bankId: bankId } } }).exec();
-        await BankData.findOneAndUpdate({ bankId }, { $push: { "granted_kyc_accesses": { userId } } }).exec();
+        await UserData.findOneAndUpdate({ userId }, { $push: { "granted_kyc_access_to": { bankId } }, $pull: { "pending_kyc_access": { bankId } } }).exec();
+        await BankData.findOneAndUpdate({ bankId }, { $push: { "granted_kyc_accesses": { userId } }, $pull: { "pending_kyc_accesses": { userId } } }).exec();
+
+    }
+
+    static async rejectBankKyc(userId,bankId){
+
+        await UserData.findOneAndUpdate({ userId }, { $pull: { "pending_kyc_access": { bankId } } }).exec();
+        await BankData.findOneAndUpdate({ bankId }, { $pull: { "pending_kyc_accesses": { userId } } }).exec();
+
+    }
+
+    static async terminateBankKyc(userId,bankId){
+
+        await UserData.findOneAndUpdate({ userId }, { $pull: { "granted_kyc_access_to": { bankId } } }).exec();
+        await BankData.findOneAndUpdate({ bankId }, { $pull: { "granted_kyc_accesses": { userId } } }).exec();
 
     }
 
