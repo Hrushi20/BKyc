@@ -37,7 +37,7 @@ const StepperForm = ({ data, activeStep, setActiveStep }) => {
 
 const NoKycOrRejected = ({ data, status }) => {
 
-    const [activeStep, setActiveStep] = useState(3);
+    const [activeStep, setActiveStep] = useState(0);
 
     return (
         <>

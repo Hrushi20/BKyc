@@ -4,12 +4,8 @@ const BankFunc = require("../lib/Bank/Bank")
 const requestUserKyc = async (req, res, next) => {
     try {
         const { userId,bankId } = req.body;
-        const doesUserExists = BankFunc.requestUserKyc(userId,bankId); 
-        if(!doesUserExists){
-            res.status(200).json({ message:"Request to user sent successfully." });
-        }
-
-        res.status(200).json({ message: "User already exists" });
+        await BankFunc.requestUserKyc(userId,bankId); 
+        res.status(200).json({ message:"Request to user sent successfully." });
     } catch (err) {
         errHandler(err, next);
     }
@@ -25,10 +21,12 @@ const grantedBankKyc = async (req, res, next) => {
     }
 }
 
-const getAllGrantedUserDetails = async(req,res,next) => {
+const getAllUserDetails = async(req,res,next) => {
     try{
         const bankId = req.params.bankId;
-        const userDetails = await BankFunc.getAllGrantedUserDetails(bankId);
+        console.log("bankId", bankId);
+        const userDetails = await BankFunc.getAllUserDetails(bankId);
+        console.log("users : ", userDetails);
         res.status(201).json({ userDetails });
     }catch(err){
         errHandler(err,next);
@@ -46,4 +44,4 @@ const getAllBankStatus = async(req,res,next) => {
 }
 
 
-module.exports = { requestUserKyc, grantedBankKyc,getAllGrantedUserDetails,getAllBankStatus };
+module.exports = { requestUserKyc, grantedBankKyc,getAllUserDetails,getAllBankStatus };

@@ -11,7 +11,7 @@ function UserRole({role, setRole}) {
 
     return (
         <div className="role">
-            <p className="selrole"> Who are you ? role : {role} </p>
+            <p className="selrole"> Who are you ? </p>
             <div className="dialog">
                 <div onClick={() => onRoleSelect('user')} className="roles">
                     <img src={require('../assets/user.png')} alt="user" width='80%' />

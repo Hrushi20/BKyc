@@ -1,6 +1,8 @@
 const Users = require("../lib/Users/Users");
 const MessageSchema = require("../models/Messages");
+const BankData = require("../models/BankData");
 const UsersSchema = require("../models/Users");
+const userData = require("../models/UserData");
 const { errHandler } = require("../utils/errHandler");
 
 const storeUser = async(req,res,next) => {
@@ -64,6 +66,31 @@ const getUserInfo = async(req,res,next) => {
     }
 }
 
+const getRequests = async(req, res, next) => {
+    try{
+        const userId = req.params.userId;
+        const granted = [];
+        const pending = [];
+        let reqDetails = await userData.findOne({ userId: userId }).exec();
+
+        for(let bank of reqDetails.granted_kyc_access_to){
+            const bankDetail = await BankData.findOne({ bankId:bank.bankId }).select("bankId -_id").exec();
+            granted.push(bankDetail);
+        }
+        for(let bank of reqDetails.pending_kyc_access){
+            console.log("pending banks1 ", bank);
+            const bankDetail = await BankData.findOne({ bankId:bank.bankId }).select("bankId -_id").exec();
+            console.log("pending banks ", bankDetail);
+            pending.push(bankDetail);
+        }
+        const requests =  { 'grantedRequests': granted, 'pendingRequests': pending }
+
+        res.status(201).json({requests});
+
+    }catch(err){
+        errHandler(err,next);
+    }
+}
 
 
-module.exports = { storeUser, getMessage, getUserInfo };
+module.exports = { storeUser, getMessage, getUserInfo, getRequests };

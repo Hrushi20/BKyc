@@ -5,15 +5,10 @@ const UserSchema = require("../../models/Users");
 module.exports = class Bank {
 
     static async requestUserKyc(userId, bankId) {
-        let doesUserExists = true;
-        let user = await BankData.findOne({ bankId, "granted_kyc_accesses.userId": userId }).exec();
-        console.log(user);
-        if (!user) {
             await UserData.findOneAndUpdate({ userId: userId }, { $push: { "pending_kyc_access": { bankId } } }).exec();
-            doesUserExists = false;
-        }
-        return doesUserExists;
+            await BankData.findOneAndUpdate({ bankId: bankId }, { $push: { "pending_kyc_accesses": { userId } } }).exec();
     }
+    
     static async grantedBankKyc(userId,bankId){
 
         await UserData.findOneAndUpdate({ userId }, { $push: { "granted_kyc_access_to": { bankId } }, $pull: { "pending_kyc_access": { bankId: bankId } } }).exec();
@@ -21,14 +16,30 @@ module.exports = class Bank {
 
     }
 
-    static async getAllGrantedUserDetails (bankId) {
-        const userDetails = [];
-        const { granted_kyc_accesses } = await BankData.findOne({ bankId: bankId }).exec();
-        for(let user of granted_kyc_accesses){
+    static async getAllUserDetails (bankId) {
+        const granteduserDetails = [];
+        const pendinguserDetails = [];
+        let details = await BankData.findOne({ bankId }).exec();
+        if(!details) {
+             const bank = new BankData ({
+                 bankId, 
+                 granted_kyc_accesses: [],
+                 pending_kyc_accesses: []
+             });
+             await bank.save();
+             details = await BankData.findOne({ bankId }).exec();
+        }
+        console.log("Details : ", details);
+        for(let user of details.granted_kyc_accesses){
             const userDetail = await UserSchema.findOne({ userId:user.userId }).select("username userId -_id").exec();
-            userDetails.push(userDetail);
+            granteduserDetails.push(userDetail);
+        }
+        for(let user of details.pending_kyc_accesses){
+            const userDetail = await UserSchema.findOne({ userId:user.userId }).select("username userId -_id").exec();
+            pendinguserDetails.push(userDetail);
         }
 
+        const userDetails = { 'granteduserDetails': granteduserDetails, 'pendinguserDetails': pendinguserDetails  }
         return userDetails;
     }
     

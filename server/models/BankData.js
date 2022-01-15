@@ -7,7 +7,8 @@ const BankData = new Schema({
         type: String,
         required:true
     },
-    granted_kyc_accesses: [{ userId: String }]
+    granted_kyc_accesses: [{ userId: String }],
+    pending_kyc_accesses: [{ userId: String }]
 });
 
 module.exports = mongoose.model('BankData',BankData);
