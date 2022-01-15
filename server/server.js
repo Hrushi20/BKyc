@@ -32,14 +32,6 @@ app.use('/users',usersRoutes);
 app.use('/kyc',kycRoutes);
 app.use('/ethereum',ethereumRoutes);
 app.use('/bank',bankRoutes);
-app.get('/data',async(req,res) => {
-
-      let node2 = await node.ipfs.object.get("QmTcJiE8dvRDXQzMXySkuoR2oDgpqQ54nmLUs2SPrnTcry");
-      const enc = new TextDecoder("utf-8");
-      console.log(enc.decode(node2.Data));
-
-    res.send("Hello world");
-});
 app.use('/',(req,res) => {
     
     res.send("Backend Is up and running");
