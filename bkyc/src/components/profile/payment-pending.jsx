@@ -1,6 +1,8 @@
-import { Button, Checkbox, FormControlLabel } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, Modal, TextField } from "@mui/material";
 import pay from "../../assets/pay.svg";
 import { useState } from 'react';
+import { Box } from "@mui/system";
+import '../../styles/item.css';
 
 function DisplayKyc(data) {
 
@@ -20,7 +22,7 @@ function DisplayKyc(data) {
     };
 
     return (
-        <div>
+        <Box sx={style} >
             <div className="left-content">
                 <img src={data.livePhoto} alt="live" width={200} style={{ border: '2px solid gray', borderRadius: 10 }} />
                 <div className="detail"><p className='que'>First name : </p> {data.firstName}</div>
@@ -39,7 +41,7 @@ function DisplayKyc(data) {
                     <img src={data.pan} alt="pan" width={100} style={{ border: '2px solid gray', borderRadius: 10 }} />
                 </div>
             </div>
-        </div>
+        </Box>
     )
 }
 
@@ -47,6 +49,10 @@ const PaymentPending = ({ connectToMetamask, address, isInstalled, sendKycToEthe
 
     const [cipherKey, setCipherKey] = useState("");
     const [checked, setChecked] = useState(false);
+
+    const [open, setOpen] = useState(false);
+    const handleClose = () => { setOpen(false); }
+    const handleOpen = () => { setOpen(true); }
 
     return (
         <div className='payment'>
@@ -56,15 +62,20 @@ const PaymentPending = ({ connectToMetamask, address, isInstalled, sendKycToEthe
             {!isInstalled && <Button color='success' variant='contained'> <a href='https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en-US' rel="noreferrer" target="_blank"> Install Metamask </a></Button>}
             {!address && isInstalled && <Button color='success' variant='contained' onClick={connectToMetamask}> Connect to metamask </Button>}
             {address && isInstalled && <p>Your wallet with address: {address} has been connected to our website</p>}
-            <div>
+            <div style={{margin: '32px 0', display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
                 <label>
-                    <span>Cipher Key: </span>
-                    <input type="text" value={cipherKey} onChange={(e) => setCipherKey(e.target.value)} />
-                    <Button onClick={() => decodeUserKyc(cipherKey)}>Confirm Cipher Key</Button>
+                    <TextField fullWidth label='Enter cipher-key' type="text" value={cipherKey} onChange={(e) => setCipherKey(e.target.value)} />
+                    <Button style={{marginBottom: 24}} onClick={() => {handleOpen(); decodeUserKyc(cipherKey);} }>Confirm Cipher Key</Button> <br/>
                 </label>
-                {userKyc && <><DisplayKyc {...userKyc} />
-                    <FormControlLabel control={<Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)} />} label="Confirm kyc" />
-                    <Button disabled={!checked} variant='outlined' onClick={() => sendKycToEthereum(cipherKey)}> Pay Ethers </Button></>}
+                {userKyc &&
+                    <>
+                        <Modal open={open} onClose={handleClose} >
+                             <DisplayKyc {...userKyc} />
+                        </Modal>
+                        <FormControlLabel control={<Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)} />} label="Confirm kyc" />
+                        <Button disabled={!checked} variant='outlined' onClick={() => sendKycToEthereum(cipherKey)}> Pay Ethers </Button>
+                    </>
+                }
             </div>
         </div>
     )
