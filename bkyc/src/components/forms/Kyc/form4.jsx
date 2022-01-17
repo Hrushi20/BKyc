@@ -44,7 +44,7 @@ const Scan = () => {
 }
 
 
-const Form4 = ({ submitKyc,setLivePhoto, livePhoto }) => {
+const Form4 = ({ submitKyc, setStatus,setLivePhoto, livePhoto }) => {
 
     const webcamRef = useRef(null);
     const facedetectionImg = useRef(null);
@@ -58,6 +58,11 @@ const Form4 = ({ submitKyc,setLivePhoto, livePhoto }) => {
     const checkErr = () => {
         !checked && toast.error("click the checkbox to continue !!");
         !livePhoto && toast.error("capture a live photo!");
+    }
+
+    const onSubmit = () => {
+        if (checked && livePhoto) submitKyc(setStatus);
+        else checkErr();
     }
 
     const capturePhoto = useCallback( () => {
@@ -113,7 +118,7 @@ const Form4 = ({ submitKyc,setLivePhoto, livePhoto }) => {
                 </div>
                 
                  <br /><br />
-                <Button variant="contained" color="success" onClick={(checked && livePhoto) ? submitKyc : checkErr}>Submit</Button>
+                <Button variant="contained" color="success" onClick={onSubmit}>Submit</Button>
 
             </Box>   
             <div>

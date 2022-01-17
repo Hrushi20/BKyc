@@ -7,15 +7,13 @@ import { IconButton, Modal, Tooltip } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import TodayIcon from '@mui/icons-material/Today';
-import { useAuth0 } from "@auth0/auth0-react";
 
 
-const Buttons = ({kycVerified,kycRejected,index}) => {
+const Buttons = ({kycVerified,kycRejected,index, email}) => {
 
-    const authData = useAuth0();
-
+    
     const onAccept = () => {
-        kycVerified(index, authData.user.email);
+        kycVerified(index, email);
     }
 
     const onReject = () => {
@@ -67,7 +65,7 @@ function Item({data, index, kycVerified,kycRejected}) {
              className='item-body'>
             <div className="left-content">
                 <p className='applicant-name'>{data.firstName} {data.middleName} {data.lastName}</p>
-                <div style={{margin: '20 0'}} ><Buttons data={data} kycVerified={kycVerified} kycRejected={kycRejected} index={index}/></div>
+                <div style={{margin: '20 0'}} ><Buttons  email={data.email} data={data} kycVerified={kycVerified} kycRejected={kycRejected} index={index}/></div>
             </div>
             <div className="right-content">
                 <div className="detail"><p className='que'>Date-of-Birth : </p> {data.dob}</div>
@@ -100,7 +98,7 @@ function Item({data, index, kycVerified,kycRejected}) {
                             <img src={data.pan} alt="pan" width={100} style={{border: '2px solid gray', borderRadius: 10}}  />                        
                         </div>
                 
-                        <Buttons data={data} kycVerified={kycVerified} kycRejected={kycRejected} index={index}/>
+                        <Buttons email={data.email} data={data} kycVerified={kycVerified} kycRejected={kycRejected} index={index}/>
                         
                     </div>
                 </Box>

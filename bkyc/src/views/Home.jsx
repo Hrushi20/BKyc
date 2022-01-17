@@ -10,34 +10,29 @@ import ContactForm from "../components/forms/Contact";
 import Footer from "../components/Footer";
 import Nav from "./Nav";
 import {  toast } from 'react-toastify';
-import useMetamask from '../hooks/useMetamask';
-import useKyc from "../hooks/useKyc";
 import UserRole from './UserRole';
 
-const Home = ({role,setRole}) => {
+export async function findUserinMongoose(setStatus, setRole, uData) {
+  const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(uData)
+  }
+    const data = await (await fetch(`${process.env.REACT_APP_PORTAL}/users/store-user`, requestOptions)).json();
+    const jsonData = { userId : data.userId, role: data.role, status: data.status }
+    localStorage.setItem("user-data", JSON.stringify(jsonData));
+    console.log("item set");
+    setStatus(data.status);
+    setRole(data.role);
+}
+
+const Home = ({role, setRole, setStatus}) => {
  
-  const { setStatus } = useKyc();
-  const { initMetamask } = useMetamask();
   const authData = useAuth0();
 
   const uData = {
     authData,
     role
-  }
-
-  async function findUserinMongoose() {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(uData)
-    }
-      const data = await (await fetch(`${process.env.REACT_APP_PORTAL}/users/store-user`, requestOptions)).json();
-      const jsonData = { userId : data.userId, role: data.role, status: data.status }
-      localStorage.setItem("user-data", JSON.stringify(jsonData));
-      console.log("item set");
-      initMetamask(); 
-      setStatus(data.status);
-      setRole(data.role);
   }
 
    React.useEffect(() => {
@@ -56,7 +51,7 @@ const Home = ({role,setRole}) => {
         })
       }
 
-       role!=null && findUserinMongoose();
+       role!=null && findUserinMongoose(setStatus, setRole, uData);
    }, [role])
 
 

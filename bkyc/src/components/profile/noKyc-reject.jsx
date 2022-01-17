@@ -8,7 +8,7 @@ import Form2 from '../forms/Kyc/form2';
 import Form1 from '../forms/Kyc/form1';
 import { Button } from "@mui/material";
 
-const StepperForm = ({ data, activeStep, setActiveStep }) => {
+const StepperForm = ({ data, activeStep, setActiveStep, setStatus }) => {
 
     function onNextHandler() {
         if (activeStep === 0) {
@@ -26,7 +26,7 @@ const StepperForm = ({ data, activeStep, setActiveStep }) => {
 
     return (
         <div className="kyc-form" style={{ height: (activeStep === 3 || activeStep === 2) ? 'unset' : 500, padding: (activeStep === 3 || activeStep === 2) && 32 }}>
-            {activeStep === 0 ? <Form1 {...data} /> : activeStep === 1 ? <Form2 {...data} /> : activeStep === 2 ? <Form3 {...data} /> : <Form4 {...data} />}
+            {activeStep === 0 ? <Form1 {...data} /> : activeStep === 1 ? <Form2 {...data} /> : activeStep === 2 ? <Form3 {...data} /> : <Form4 setStatus={setStatus} {...data} />}
             <div className="buttons">
                 <Button variant='outlined' disabled={activeStep === 0} color='inherit' onClick={() => setActiveStep(activeStep - 1)}>Previous</Button>
                 <Button variant='outlined' disabled={activeStep === 3} color='inherit' onClick={onNextHandler}>Next</Button>
@@ -35,9 +35,9 @@ const StepperForm = ({ data, activeStep, setActiveStep }) => {
     )
 }
 
-const NoKycOrRejected = ({ data, status }) => {
+const NoKycOrRejected = ({ data, status, setStatus }) => {
 
-    const [activeStep, setActiveStep] = useState(0);
+    const [activeStep, setActiveStep] = useState(3);
 
     return (
         <>
@@ -58,7 +58,7 @@ const NoKycOrRejected = ({ data, status }) => {
                 </Step>
             </Stepper>
 
-            <StepperForm data={data} activeStep={activeStep} setActiveStep={setActiveStep} />
+            <StepperForm data={data} setStatus={setStatus} activeStep={activeStep} setActiveStep={setActiveStep} />
         </>
 
     )

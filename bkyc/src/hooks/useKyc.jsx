@@ -3,13 +3,6 @@ import { useState } from 'react';
 
 function useKyc(){
 
-    const user = localStorage.getItem("user-data");
-    const ustatus = user ? JSON.parse(user).status : null;
-
-
-    // status of the UI
-    const [status, setStatus] = useState(ustatus);
-    const [role, setRole] = useState(null);
 
     // Page 1
     const [firstName,setFirstName] = useState("");
@@ -38,11 +31,12 @@ function useKyc(){
     const [livePhoto,setLivePhoto] = useState(null);
 
 
-    async function submitKyc(){
+    async function submitKyc( setStatus ){
 
         const formData = new FormData();
 
-        const userId = localStorage.getItem("userId");
+        const user = localStorage.getItem("user-data");
+         const userId = JSON.parse(user).userId;
 
         const body = {
             firstName,
@@ -90,10 +84,6 @@ function useKyc(){
         location,
         livePhoto,
         validate3,
-        status,
-        role,
-        setStatus,
-        setRole,
         setFirstName,
         setLastName,
         setMiddleName,

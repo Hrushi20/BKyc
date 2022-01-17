@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState} from 'react';
 import {Routes, Route} from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import Loader from './components/loader';
@@ -18,7 +18,13 @@ function App() {
 
   const { isLoading } = useAuth0();
 
-  const [role, setRole] = React.useState(null);
+  const user = localStorage.getItem("user-data");
+  const ustatus = user ? JSON.parse(user).status : null;
+
+
+    const [status, setStatus] = useState(ustatus);
+    const [role, setRole] = useState(null);
+
 
 
   return (
@@ -30,9 +36,9 @@ function App() {
          </div>
          :
         <Routes>
-            <Route path='/' element={<Home role={role} setRole={setRole} />} />
+            <Route path='/' element={<Home role={role} setRole={setRole} status={status} setStatus={setStatus} />} />
             <Route path='/status' element={<LazyStatus />} />
-            <Route path='/profile' element={<LazyProfile />} />
+            <Route path='/profile' element={<LazyProfile role={role} setRole={setRole} status={status} setStatus={setStatus} />} />
             <Route path='/add-clients' element={<LazyClients />} />
             <Route path='/notifications' element={<LazyNotif />} />
             <Route path='*' element={<LazyError />} />
