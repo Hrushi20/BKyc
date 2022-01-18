@@ -54,6 +54,7 @@ const getUserInfo = async(req,res,next) => {
     try{
         const data = req.body;
         console.log(data);
+        if(!data.isAuthenticated) return;
         let userData = await UsersSchema.findOne({ userId: data.user.sub }).exec();
         console.log("user : ", userData);
         if(!userData){

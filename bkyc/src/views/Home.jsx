@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import '../styles/home.css';
 import Fade from 'react-reveal/Fade';
@@ -12,23 +12,27 @@ import Nav from "./Nav";
 import {  toast } from 'react-toastify';
 import UserRole from './UserRole';
 
-export async function findUserinMongoose(setStatus, setRole, uData) {
-  const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(uData)
-  }
-    const data = await (await fetch(`${process.env.REACT_APP_PORTAL}/users/store-user`, requestOptions)).json();
-    const jsonData = { userId : data.userId, role: data.role, status: data.status }
-    localStorage.setItem("user-data", JSON.stringify(jsonData));
-    console.log("item set");
-    setStatus(data.status);
-    setRole(data.role);
-}
+
 
 const Home = ({role, setRole, setStatus}) => {
  
   const authData = useAuth0();
+  const [loading, setLoading] = useState(true);
+
+  async function findUserinMongoose(setStatus, setRole, uData) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(uData)
+    }
+      const data = await (await fetch(`${process.env.REACT_APP_PORTAL}/users/store-user`, requestOptions)).json();
+      const jsonData = { userId : data.userId, role: data.role, status: data.status }
+      localStorage.setItem("user-data", JSON.stringify(jsonData));
+      console.log("item set");
+      setStatus(data.status);
+      setRole(data.role);
+      setLoading(false);
+  }
 
   const uData = {
     authData,
@@ -41,6 +45,7 @@ const Home = ({role, setRole, setStatus}) => {
       if(user){
         const roleName = JSON.parse(user).role;
         setRole(roleName);
+        setLoading(false);
       }
       if(role === null ){
         authData.isAuthenticated ? toast.success(`Logged in using ${authData.user.email} !`, {
@@ -57,12 +62,18 @@ const Home = ({role, setRole, setStatus}) => {
 
 
     return(
+     <>
+       {loading && authData.isAuthenticated && role != null ? 
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
+             <img src={require('../../src/assets/loading.gif')} alt="loading..." />
+          </div>
+         : 
       <>
-       {authData.isAuthenticated && role == null ?  <UserRole role={role} setRole={setRole} /> :
+       {authData.isAuthenticated && role === null ?  <UserRole role={role} setRole={setRole} /> :
          <div className="body">
               <div className="sec1">
                   <div className="front">
-                      <Nav />
+                      <Nav roleName={role}/>
                       <div className="mainHeading">
                           <p className="title">
                             <Fade left cascade> B'KYC'</Fade>
@@ -78,8 +89,12 @@ const Home = ({role, setRole, setStatus}) => {
                   <ContactForm />
               </div>
               <Footer />
-        </div>  }
+            </div>  
+          }
       </>
+     }
+    </>
+
     )
 };
 
