@@ -4,8 +4,11 @@ import Slide from 'react-reveal/Slide';
 import Zoom from 'react-reveal/Zoom';
 import Nav from '../../views/Nav';
 import { Avatar, Chip } from '@mui/material';
+import { useAuth0 } from "@auth0/auth0-react";
 
-const ProfileHeader = ({ status,profileData }) => {
+const ProfileHeader = ({ status }) => {
+    const authData = useAuth0();
+
     return (
         <>
             <div className="sec1">
@@ -27,7 +30,7 @@ const ProfileHeader = ({ status,profileData }) => {
                                 <PersonRoundedIcon sx={{ width: 80, height: 80 }} />
                             </Avatar>
                             <Slide right>
-                                <Chip className='email' style={{ fontSize: 13 }} color='primary' label={"Email : " + profileData.user.email} />
+                                <Chip className='email' style={{ fontSize: 13 }} color='primary' label={"Email : " + authData.user.email} />
                             </Slide>
                         </div>
                     </div>
@@ -35,7 +38,7 @@ const ProfileHeader = ({ status,profileData }) => {
                 <div className="back profile" />
             </div>
             <Zoom>
-                <p className="name">{profileData.user.name}</p>
+                <p className="name">{authData.user.name}</p>
             </Zoom>
         </>
     )

@@ -31,7 +31,7 @@ const getKycofUserForBank = async(req, res, next) => {
     try {
         const kycId = req.params.kycId;
         const decryptedUserKyc = await Ipfs.decryptUserKycFromEthereum(kycId);
-        res.status(200).json({ decryptedKyc:"Will decrypt and send the data",decryptedUserKyc });
+        res.status(200).json({ decryptedUserKyc });
     } catch (err) {
         errHandler(err, next);
     }

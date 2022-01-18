@@ -95,6 +95,12 @@ function AddClients() {
         setValue(newValue);
     };
 
+    async function fetchUserKyc(userId){
+      const res = await (await fetch(`${process.env.REACT_APP_PORTAL}/ethereum/get-decrypted-kyc-for-bank/${userId}`)).json();
+      console.log(res);
+      console.log("Need to display user Kyc");
+    }
+
     return (
         <div>
             <div className="sec1">
@@ -134,6 +140,7 @@ function AddClients() {
                       <div className='ubox'>
                         <p className='uname'>{item.username}</p>
                         <p className='uid'>USER - ID : &nbsp;&nbsp;&nbsp;  {item.userId}</p>
+                        <Button onClick={()=>fetchUserKyc(item.userId)}>View Kyc</Button>
                       </div>
                      ))}
                   </TabPanel>

@@ -14,6 +14,7 @@ function Profile({status, setStatus , role}) {
 
   const authData = useAuth0();
 
+  console.log(authData);
   const uData = {
     authData,
     role
@@ -47,7 +48,7 @@ function Profile({status, setStatus , role}) {
 
   return (
     <div>
-      <ProfileHeader status={status} profileData={authData} />
+      <ProfileHeader status={status}  />
       {
         status === 'rejected' || status === 'noKYC' ?
           <NoKycOrRejected status={status} setStatus={setStatus} data={data} /> :
