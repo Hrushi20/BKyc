@@ -1,5 +1,4 @@
-FROM node:16.13.2
-RUN npm install -g npm@8.3.1
+FROM node:16.13.1
 RUN npm install -g ipfs 
 RUN jsipfs init
 RUN jsipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"*\"]"

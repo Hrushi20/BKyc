@@ -71,7 +71,7 @@ async function fetchHashedKycData() {
 }
 
 async function decodeUserKyc(cipherKey) {
-    const ipfsNode = window.IpfsHttpClient.create({ host: "localhost", port: 5001, protocol: 'http' });
+    const ipfsNode = window.IpfsHttpClient.create({ host: process.env.IPFS_URL || "localhost" , port: 5001, protocol: 'http' });
     const { ipfsHash } = await fetchHashedKycData();
     localStorage.setItem("ipfsHash",ipfsHash);
     const encryptedKycString = await ipfsNode.object.get(ipfsHash);
