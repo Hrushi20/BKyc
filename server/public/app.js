@@ -10,6 +10,9 @@ const joinLeaveButton = document.getElementById('joinOrLeave');
 let connected = false;
 let room;
 
+const urlSearchParams = new URLSearchParams(window.location.search);
+const params = Object.fromEntries(urlSearchParams.entries());
+
 const trackSubscribed = (div, track) => {
   const trackElement = track.attach();
   div.appendChild(trackElement);
@@ -80,7 +83,7 @@ const connectOrDisconnect = async (event) => {
     },
     body: JSON.stringify({
       'identity': identity,
-      'room': 'Kyc Verification Room'
+      'room': params.roomId 
     })
   });
 

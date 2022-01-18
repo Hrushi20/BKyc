@@ -21,7 +21,7 @@ const pending = () => {
                 height={400}
                 width={400}
             />
-            <a href="http://localhost:8080/videoKyc" target="_blank">Video Kyc Verification</a>
+            <a href={`http://localhost:8080/videoKyc?roomId=${Math.floor(1000 + Math.random() * 9000)}`} target="_blank">Video Kyc Verification</a>
         </>
     )
 }
