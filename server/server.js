@@ -17,6 +17,8 @@ dotenv.config();
 const app = express();
 const PORT = 8080;
 
+// To allow static website
+app.use(express.static('public'));
 // For parsing Json objects received from the frontend
 app.use(bodyParser.json({ limit:"10mb" }))
 
@@ -32,6 +34,9 @@ app.use('/users',usersRoutes);
 app.use('/kyc',kycRoutes);
 app.use('/ethereum',ethereumRoutes);
 app.use('/bank',bankRoutes);
+app.get('/getKyc', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+})
 app.use('/',(req,res) => {
     
     res.send("Backend Is up and running");

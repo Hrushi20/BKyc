@@ -2,8 +2,13 @@ const { errHandler } = require("../utils/errHandler");
 const KycStore = require("../lib/kyc/kycStore");
 const KycFetch = require("../lib/kyc/kycFetch");
 const { Ipfs } = require("../lib/ipfs/ipfs");
-const { sendMail } = require('../lib/nodemailer/nodemailer');
 const UserSchema = require("../models/Users");
+
+const AccessToken = require('twilio').jwt.AccessToken;
+const VideoGrant = AccessToken.VideoGrant;
+const twilioClient = require('twilio')("SK4d83a847d69cce1bdb5c3c24e06a6923",
+    "3FwM2mkVcKMdUEQq9FbSNfl5mttzxqEO", { accountSid: "AC2afd314ab314d7d87c425a0d42a5da47" });
+
 
 // Stores all kycs in UserData folder using uuid and store uuid in mongodb
 const storeKyc = async(req,res,next) => {
@@ -37,8 +42,56 @@ const getKycsForVerification = async(req,res,next) => {
     }
 }
 
+const scheduleAMeet = async(req,res,next) => {
+    try{
+
+        if (!req.body.identity || !req.body.room) {
+            return res.status(400);
+        }
+        // Get the user's identity and the room name from the request
+        const identity = req.body.identity;
+        const roomName = req.body.room;
+        const roomList = await twilioClient.video.rooms.list({ uniqueName: roomName, status: 'in-progress' });
+
+        let room;
+
+        if (!roomList.length) {
+            // Call the Twilio video API to create the new Go room
+            room = await twilioClient.video.rooms.create({
+                uniqueName: roomName,
+                type: 'go'
+            });
+        } else {
+            room = roomList[0];
+        }
+
+        const videoGrant = new VideoGrant({
+            room: room.uniqueName,
+        })
+
+        // Create an access token
+        const token = new AccessToken(
+            "AC2afd314ab314d7d87c425a0d42a5da47",
+            "SK4d83a847d69cce1bdb5c3c24e06a6923",
+            "3FwM2mkVcKMdUEQq9FbSNfl5mttzxqEO"
+        );
+
+        token.addGrant(videoGrant);
+        token.identity = identity;
+
+        res.send({
+            token: token.toJwt()
+        });
+
+
+    }catch(err){
+        errHandler(err,next);
+    }
+}
+
 const storeKycOnIpfs = async(req,res,next) => {
     try{
+
 
         const userData = req.body.userData;
         const toEmail = req.body.email;
@@ -78,4 +131,4 @@ const rejectKyc = async(req,res,next) => {
     }
 }
 
-module.exports = { storeKyc,getKycsForVerification,storeKycOnIpfs,rejectKyc };
+module.exports = { storeKyc,getKycsForVerification,storeKycOnIpfs,rejectKyc,scheduleAMeet };
