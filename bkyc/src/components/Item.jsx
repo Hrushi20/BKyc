@@ -9,8 +9,11 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import TodayIcon from '@mui/icons-material/Today';
 
 
-const Buttons = ({kycVerified,kycRejected,index, email}) => {
+const Buttons = ({kycVerified,kycRejected,index, email, scheduleAMeet}) => {
 
+    function onScheduleAMeet(){
+        scheduleAMeet(index);
+    }
     
     const onAccept = () => {
         kycVerified(index, email);
@@ -21,7 +24,7 @@ const Buttons = ({kycVerified,kycRejected,index, email}) => {
     }
 
     return ( <div className="buttons">
-        <Button startIcon={<TodayIcon />} style={{margin: '0 20'}}  variant="contained"> Schedule a Meet </Button>
+        <Button startIcon={<TodayIcon />} style={{margin: '0 20'}}  variant="contained" onClick={onScheduleAMeet}> Schedule a Meet </Button>
         <Tooltip title="Accept">
             <IconButton color='success' onClick={onAccept}>
                 <CheckCircleIcon style={{margin: '0 20'}} />
@@ -35,7 +38,7 @@ const Buttons = ({kycVerified,kycRejected,index, email}) => {
     </div>)
 }
 
-function Item({data, index, kycVerified,kycRejected}) {
+function Item({data, index, kycVerified,kycRejected, scheduleAMeet}) {
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -65,7 +68,7 @@ function Item({data, index, kycVerified,kycRejected}) {
              className='item-body'>
             <div className="left-content">
                 <p className='applicant-name'>{data.firstName} {data.middleName} {data.lastName}</p>
-                <div style={{margin: '20 0'}} ><Buttons  email={data.email} data={data} kycVerified={kycVerified} kycRejected={kycRejected} index={index}/></div>
+                <div style={{margin: '20 0'}} ><Buttons scheduleAMeet={scheduleAMeet} email={data.email} data={data} kycVerified={kycVerified} kycRejected={kycRejected} index={index}/></div>
             </div>
             <div className="right-content">
                 <div className="detail"><p className='que'>Date-of-Birth : </p> {data.dob}</div>
@@ -98,7 +101,7 @@ function Item({data, index, kycVerified,kycRejected}) {
                             <img src={data.pan} alt="pan" width={100} style={{border: '2px solid gray', borderRadius: 10}}  />                        
                         </div>
                 
-                        <Buttons email={data.email} data={data} kycVerified={kycVerified} kycRejected={kycRejected} index={index}/>
+                        <Buttons scheduleAMeet={scheduleAMeet} email={data.email} data={data} kycVerified={kycVerified} kycRejected={kycRejected} index={index}/>
                         
                     </div>
                 </Box>

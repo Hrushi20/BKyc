@@ -1,18 +1,18 @@
 services:
-  ganache:
-    container_name: ganache-cli
-    build: "." 
-    ports:
-      - "7545:7545"
   frontend:
     container_name: frontend
     build: "./bkyc"
     ports:
       - "3000:3000"
-    depends_on:
-      - "ganache"
   backend:
     container_name: backend
     build: "./server"
     ports:
       - "8080:8080"
+  ipfs:
+    container_name: ipfs
+    build: "."
+    ports:
+      - "5050:5050"
+      - "5001:5001"
+      - "4001:4001"

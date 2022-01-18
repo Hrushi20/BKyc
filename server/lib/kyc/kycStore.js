@@ -53,7 +53,8 @@ module.exports = class KycStorage {
 
             await (new UnverifiedUsers({
                 userId,
-                storageId:this.storageId
+                storageId:this.storageId,
+                isScheduledAMeet:false
             })).save();
             
             const userData = await UserSchema.findOneAndUpdate({ userId: userId },{ status:"pending" },{ new:true });

@@ -3,6 +3,7 @@ const KycStore = require("../lib/kyc/kycStore");
 const KycFetch = require("../lib/kyc/kycFetch");
 const { Ipfs } = require("../lib/ipfs/ipfs");
 const UserSchema = require("../models/Users");
+const UnverifiedUsers = require("../models/UnverifiedUsers");
 
 const AccessToken = require('twilio').jwt.AccessToken;
 const VideoGrant = AccessToken.VideoGrant;
@@ -45,10 +46,19 @@ const getKycsForVerification = async(req,res,next) => {
 const scheduleAMeet = async(req,res,next) => {
     try{
 
-        if (!req.body.identity || !req.body.room) {
-            return res.status(400);
-        }
-        // Get the user's identity and the room name from the request
+        const userId = req.params.userId;
+
+        await UnverifiedUsers.findOneAndUpdate({ userId },{ isScheduledAMeet:true }).exec();
+        res.status(201).json({ message:"Meeting scheduled" });
+
+    }catch(err){
+        errHandler(err,next);
+    }
+}
+
+const joiningAMeet = async(req,res,next) => {
+    try{
+
         const identity = req.body.identity;
         const roomName = req.body.room;
         const roomList = await twilioClient.video.rooms.list({ uniqueName: roomName, status: 'in-progress' });
@@ -83,7 +93,6 @@ const scheduleAMeet = async(req,res,next) => {
             token: token.toJwt()
         });
 
-
     }catch(err){
         errHandler(err,next);
     }
@@ -112,7 +121,6 @@ const storeKycOnIpfs = async(req,res,next) => {
         errHandler(err,next);
     }
 }
-
 const rejectKyc = async(req,res,next) => {
 
     try{
@@ -131,4 +139,4 @@ const rejectKyc = async(req,res,next) => {
     }
 }
 
-module.exports = { storeKyc,getKycsForVerification,storeKycOnIpfs,rejectKyc,scheduleAMeet };
+module.exports = { storeKyc,getKycsForVerification,storeKycOnIpfs,rejectKyc,scheduleAMeet,joiningAMeet };

@@ -10,6 +10,17 @@ const useKycVerification = () =>{
         setData(data["kycs"]);
     }
 
+    async function scheduleAMeet(index){
+        const userData = data.filter((_,i) => i === index)[0];
+        const userId = userData.userId;
+
+        await (await fetch(`${process.env.REACT_APP_PORTAL}/kyc/schedule-a-meet/${userId}`)).json();
+
+        console.log("Scheduling a meeet......");
+
+    }
+
+
     async function kycVerified(index, email){
         
         const userData = data.filter((d,i) => i === index)[0];
@@ -35,8 +46,8 @@ const useKycVerification = () =>{
 
     async function kycRejected(index){
         // Need to get userId
-        const { userId } = JSON.parse(localStorage.getItem("user-data"));
-        console.log("Rejecting " + index + "...");
+        const userData = data.filter((_,i) => i === index);
+        const userId = userData.userId;
         let res = await (await fetch(`${process.env.REACT_APP_PORTAL}/kyc/reject-kyc`,{
             method:"POST",
             body:JSON.stringify(userId),
@@ -52,7 +63,8 @@ const useKycVerification = () =>{
         fetchAllUnverifiedKycs,
         kycVerified,
         kycRejected,
-        data
+        data,
+        scheduleAMeet
     }
 };
 

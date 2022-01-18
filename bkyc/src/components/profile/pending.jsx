@@ -1,5 +1,6 @@
 import Lottie from "react-lottie";
 import reviewAnim from "../../assets/review.json";
+import { Button } from "@mui/material";
 
 const review = {
     loop: true,
@@ -11,6 +12,7 @@ const review = {
 };
 
 const pending = () => {
+    
     return (
         <>
             <p className="statuscontent"> Please Wait !!. Your KYC is under process. </p>
@@ -19,6 +21,7 @@ const pending = () => {
                 height={400}
                 width={400}
             />
+            <a href="http://localhost:8080/videoKyc" target="_blank">Video Kyc Verification</a>
         </>
     )
 }

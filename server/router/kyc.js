@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { storeKyc,getKycsForVerification,storeKycOnIpfs,rejectKyc,scheduleAMeet } = require("../controller/kyc");
+const { storeKyc,getKycsForVerification,storeKycOnIpfs,rejectKyc,scheduleAMeet,joiningAMeet } = require("../controller/kyc");
 
 const router = express.Router();
 
@@ -15,6 +15,8 @@ router.post("/store-kyc-on-ipfs",storeKycOnIpfs);
 
 router.post("/reject-kyc",rejectKyc);
 
-router.post('/schedule-a-meet',scheduleAMeet);
+router.get('/schedule-a-meet/:userId',scheduleAMeet);
+
+router.post('/join-meet',joiningAMeet);
 
 module.exports = router;
