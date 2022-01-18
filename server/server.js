@@ -34,7 +34,7 @@ app.use('/users',usersRoutes);
 app.use('/kyc',kycRoutes);
 app.use('/ethereum',ethereumRoutes);
 app.use('/bank',bankRoutes);
-app.get('/getKyc', (req, res) => {
+app.get('/videoKyc', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 })
 app.use('/',(req,res) => {

@@ -10,6 +10,10 @@ const UnverifiedUsers = new Schema({
     storageId: {
         type:String,
         required:true
+    },
+    isScheduledAMeet: {
+        type:Boolean,
+        required: true
     }
 });
 

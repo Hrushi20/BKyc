@@ -73,7 +73,7 @@ const connectOrDisconnect = async (event) => {
   };
 
   const connect = async (identity) => {
-  const response = await fetch('/kyc/schedule-a-meet', {
+  const response = await fetch('/kyc/join-meet', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

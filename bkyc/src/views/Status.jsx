@@ -21,7 +21,7 @@ const Status = ({role}) => {
       };
 
     const [loading, setLoading] = useState(true);
-    const { fetchAllUnverifiedKycs,data,kycVerified,kycRejected } = useKycVerification();
+    const { fetchAllUnverifiedKycs,data,kycVerified,kycRejected,scheduleAMeet } = useKycVerification();
 
     React.useEffect(async() => {
          await fetchAllUnverifiedKycs();
@@ -35,7 +35,7 @@ const Status = ({role}) => {
             {data.length  ?
                 <div className='active'>
                     {data?.map((item, ind) => (
-                        <Item data={item} index={ind} kycVerified={kycVerified} kycRejected={kycRejected}/>
+                        <Item data={item} index={ind} kycVerified={kycVerified} kycRejected={kycRejected} scheduleAMeet={scheduleAMeet}/>
                     )) }
                 </div>
                 : 
