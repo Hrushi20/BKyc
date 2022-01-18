@@ -9,7 +9,7 @@ import useKycVerification from '../hooks/useKycVerfication';
 import Footer from '../components/Footer';
 
 
-const Status = () => {
+const Status = ({role}) => {
 
     const loadingForm = {
         loop: true,
@@ -49,7 +49,7 @@ const Status = () => {
         <div>
             <div className="sec1">
               <div className="front profile">
-                <Nav />
+                <Nav roleName={role}/>
                 <div className="mainHeading">
                     <p className="title">
                       <Fade left cascade> status </Fade>

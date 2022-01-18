@@ -6,10 +6,8 @@ import LoginButton from '../components/buttons/Login';
 import Logo from '../assets/logo.svg';
 
 
-function Nav() {
+function Nav({roleName}) {
     const { isAuthenticated } = useAuth0();
-    const user = localStorage.getItem("user-data");
-    const roleName = user ? JSON.parse(user).role : null;
     console.log(roleName);
     return (
         <div className="nav">

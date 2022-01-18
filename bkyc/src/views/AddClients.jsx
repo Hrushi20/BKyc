@@ -30,7 +30,7 @@ export function TabPanel(props) {
     );
   }
 
-function AddClients() {
+function AddClients({role}) {
 
   const loadingForm = {
     loop: true,
@@ -105,7 +105,7 @@ function AddClients() {
         <div>
             <div className="sec1">
               <div className="front profile">
-                <Nav />
+                <Nav roleName={role} />
                 <div className="mainHeading">
                     <p className="title">
                       <Fade left cascade> Add clients </Fade>

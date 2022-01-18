@@ -6,14 +6,14 @@ import Nav from '../../views/Nav';
 import { Avatar, Chip } from '@mui/material';
 import { useAuth0 } from "@auth0/auth0-react";
 
-const ProfileHeader = ({ status }) => {
+const ProfileHeader = ({ status, role }) => {
     const authData = useAuth0();
 
     return (
         <>
             <div className="sec1">
                 <div className="front profile">
-                    <Nav />
+                    <Nav roleName={role} />
                     <div className="mainHeading">
                         <p className="title">
                             <Fade left cascade> Profile</Fade>

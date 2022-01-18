@@ -48,7 +48,7 @@ function Profile({status, setStatus , role}) {
 
   return (
     <div>
-      <ProfileHeader status={status}  />
+      <ProfileHeader role={role} status={status}  />
       {
         status === 'rejected' || status === 'noKYC' ?
           <NoKycOrRejected status={status} setStatus={setStatus} data={data} /> :

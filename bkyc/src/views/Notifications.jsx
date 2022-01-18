@@ -35,7 +35,7 @@ const Req = ({item, role, grantBankAccess, rejectBankAccess,terminateBankAccess}
 
 
 
-function Notifications() {
+function Notifications({role}) {
 
   const [value, setValue] = useState(0);
   const [requests, setRequests] = useState(null);
@@ -114,7 +114,7 @@ function Notifications() {
         <div>
             <div className="sec1">
               <div className="front profile">
-                <Nav />
+                <Nav roleName={role} />
                 <div className="mainHeading">
                     <p className="title">
                       <Fade left cascade> Notifications </Fade>

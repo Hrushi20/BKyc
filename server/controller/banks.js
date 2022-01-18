@@ -1,9 +1,16 @@
 const { errHandler } = require("../utils/errHandler");
-const BankFunc = require("../lib/Bank/Bank")
+const BankFunc = require("../lib/Bank/Bank");
+const UserSchema = require("../models/Users");
 
 const requestUserKyc = async (req, res, next) => {
     try {
         const { userId,bankId } = req.body;
+        const ustatus = await UserSchema.findOne({ userId: userId }).exec();
+        console.log("user status : ", ustatus);
+        if(ustatus.status != 'verified'){
+            res.status(200).json({ message:`Requested user's status is still " ${ustatus.status} " ` });
+            return ;
+        }
         await BankFunc.requestUserKyc(userId,bankId); 
         res.status(200).json({ message:"Request to user sent successfully." });
     } catch (err) {
