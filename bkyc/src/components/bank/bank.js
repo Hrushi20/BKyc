@@ -25,7 +25,7 @@ const Bank = () => {
     }
 
     async function requestUserAccessForKyc() {
-        const bankId = localStorage.getItem("userId");
+        const bankId = JSON.parse(localStorage.getItem("user-data")).userId;
         const res = await (await fetch(`${process.env.REACT_APP_PORTAL}/bank/requestUserKyc`, {
             method: "POST",
             body: JSON.stringify({ userId: "1234", bankId: "9876" }),

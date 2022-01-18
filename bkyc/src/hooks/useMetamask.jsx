@@ -4,12 +4,13 @@ import KycStorage from "../truffle/build/contracts/KycStorage.json"
 import CryptoJs, { enc } from "crypto-js";
 
 let provider;
-const useMetamask = (cipherKey) => {
+const useMetamask = () => {
 
     const [isInstalled, setIsInstalled] = useState(false);
     const [address, setAddress] = useState(null);
     const [userKyc,setUserKyc] = useState(null);
 
+    const { userId } = JSON.parse(localStorage.getItem("user-data"))
 
     async function initMetamask() {
         if (window.ethereum !== undefined) {
@@ -44,8 +45,6 @@ const useMetamask = (cipherKey) => {
 async function getKycFromEthereum() {
     const networkId = Object.keys(KycStorage.networks)[0];
     const kycContract = new ethers.Contract(KycStorage.networks[networkId.toString()].address, KycStorage.abi, provider);
-
-    const userId = localStorage.getItem("userId");
     let blockchainResponse = await kycContract.getData(userId);
     console.log(blockchainResponse);
     return blockchainResponse;
@@ -58,37 +57,36 @@ async function sendKycToEthereum(cipherKey) {
     const kycContract = new ethers.Contract(KycStorage.networks[networkId.toString()].address, KycStorage.abi, provider);
     const kycSigner = kycContract.connect(signer);
     // let d = await kycSigner.setData("98498","this is a ipfs hash","This is a cipher key");
-    const userId = localStorage.getItem("userId");
     const ipfsHash = localStorage.getItem("ipfsHash");
-    let blockchainResponse = await kycSigner.setData(userId,ipfsHash,cipherKey);
+    let blockchainResponse = await kycSigner.setData(userId,ipfsHash,cipherKey.trim());
     localStorage.removeItem("ipfsHash");
     console.log(blockchainResponse);
     await kycStoredOnBlockchainSuccess();
     window.location.reload("http://localhost:3000/profile");
 }
 
-async function fetchHashedKycData(userId) {
-
+async function fetchHashedKycData() {
     const res = await (await fetch(`${process.env.REACT_APP_PORTAL}/ethereum/get-hashed-kyc/${userId}`)).json();
     return res;
 }
 
 async function decodeUserKyc(cipherKey) {
     const ipfsNode = window.IpfsHttpClient.create({ host: "localhost", port: 5001, protocol: 'http' });
-    const { ipfsHash } = await fetchHashedKycData(localStorage.getItem("userId"));
+    const { ipfsHash } = await fetchHashedKycData();
     localStorage.setItem("ipfsHash",ipfsHash);
-    console.log(ipfsHash,cipherKey,localStorage.getItem("userId"));
     const encryptedKycString = await ipfsNode.object.get(ipfsHash);
     const dirtyKycString = new TextDecoder("utf-8").decode(encryptedKycString.Data).toString();
+    console.log(cipherKey,ipfsHash);
     // DirtyKycString is not Displaying character. TO remove error, using below regex (Dirty string displayed is ????);
+    console.log(dirtyKycString)
     const cleanKycString = dirtyKycString.replace(/[^A-Za-z 0-9 \.,\?""!@#\$%\^&\*\(\)-_=\+;:<>\/\\\|\}\{\[\]`~]*/g, '')
-    const decryptedKycString = CryptoJs.AES.decrypt(cleanKycString, cipherKey).toString(enc.Utf8);
+    console.log(cleanKycString);
+    const decryptedKycString = CryptoJs.AES.decrypt(cleanKycString, cipherKey.trim()).toString(enc.Utf8);
     const decryptedKyc = JSON.parse(decryptedKycString);
     setUserKyc(decryptedKyc);
 }
 
 async function kycStoredOnBlockchainSuccess() {
-    const userId = localStorage.getItem("userId");
 
     const res = await (await fetch(`${process.env.REACT_APP_PORTAL}/ethereum/kyc-stored-on-blockchain-success/${userId}`)).json()
 }
