@@ -12,6 +12,8 @@ services:
     environment:
       - IPFS_URL=ipfs
       - GANACHE_URL=ganache
+    volumes:
+      - $PWD/truffle:/code/src/truffle
   backend:
     container_name: backend
     build: "./server"
@@ -21,6 +23,8 @@ services:
       - IPFS_URL=ipfs
       - GANACHE_URL=ganache
       - MONGODB_URL_DOCKER=mongo
+    volumes:
+      - $PWD/truffle:/server/truffle
   ipfs:
     container_name: ipfs
     build: "./docker/ipfs"

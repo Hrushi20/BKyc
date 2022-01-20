@@ -53,8 +53,9 @@ async function getKycFromEthereum() {
 async function sendKycToEthereum(cipherKey) {
 
     const signer = provider.getSigner();
-    const networkId = Object.keys(KycStorage.networks)[0];
-    const kycContract = new ethers.Contract(KycStorage.networks[networkId.toString()].address, KycStorage.abi, provider);
+    const keys = Object.keys(KycStorage.networks);
+    const key = keys[keys.length - 1];
+    const kycContract = new ethers.Contract(KycStorage.networks[key].address, KycStorage.abi, provider);
     const kycSigner = kycContract.connect(signer);
     // let d = await kycSigner.setData("98498","this is a ipfs hash","This is a cipher key");
     const ipfsHash = localStorage.getItem("ipfsHash");

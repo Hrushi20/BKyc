@@ -10,4 +10,4 @@ COPY . ./
 
 RUN mkdir ./UserData
 
-CMD ["node","server.js"]
+CMD ["yarn","run","start"]
