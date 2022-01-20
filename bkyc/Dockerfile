@@ -4,8 +4,7 @@ WORKDIR /code
 
 COPY package.json .
 
-RUN yarn install
+RUN npm install --save --legacy-peer-deps
+RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
 
-COPY . ./
-
-CMD ["yarn","start"]
+CMD ["npm","start"]

@@ -16,6 +16,9 @@ const UsersSchema = new Schema({
     },
     role:{
         type:String,
+    },
+    nickname: {
+        type: String
     }
 });
 

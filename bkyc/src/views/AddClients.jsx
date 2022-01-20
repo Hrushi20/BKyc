@@ -11,6 +11,7 @@ import loadingform from '../assets/loadingform.json';
 import Lottie from 'react-lottie';
 import Footer from '../components/Footer';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import DisplayKyc from '../components/displayKyc';
 
 
 export function TabPanel(props) {
@@ -44,11 +45,11 @@ function AddClients({role}) {
     const [value, setValue] = useState(0);
     const [id, setId] = useState('');
     const idInput = useRef(null);
+    const [open,setOpen] = useState(false);
 
     const [userDetails, setUserDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [userKyc, setUserKyc] = useState(null);
-    const [blockchainResponse, setBlockchainResponse] = useState(null);
 
     const user = localStorage.getItem("user-data");
     const bankId = JSON.parse(user).userId;
@@ -97,8 +98,14 @@ function AddClients({role}) {
 
     async function fetchUserKyc(userId){
       const res = await (await fetch(`${process.env.REACT_APP_PORTAL}/ethereum/get-decrypted-kyc-for-bank/${userId}`)).json();
+      setUserKyc(res.decryptedUserKyc);
+      setOpen(true);
       console.log(res);
-      console.log("Need to display user Kyc");
+    }
+
+    function handleClose(){
+      setOpen(false);
+      setUserKyc(null);
     }
 
     return (
@@ -115,7 +122,8 @@ function AddClients({role}) {
               </div>
                <div className="back profile" />
             </div> 
-            
+
+            {userKyc && <Modal open={open} onClose={handleClose}><DisplayKyc { ...userKyc }/></Modal>} 
             { !loading ? 
             <>
               <form >
