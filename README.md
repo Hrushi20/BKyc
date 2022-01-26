@@ -19,7 +19,7 @@ on the server and is sent to the client due to which there cannot be leakage of 
 
 [//]: # (Architecture image will be added here)
 
-[//]: # (<img src="">)
+<img src="./bkyc-arch-diagram.PNG">
 
 ## System requirments
 <hr/>
@@ -73,6 +73,18 @@ The above command downloads the required packages and starts all the containers 
 The project is up and running.
 
 Open http://locahost:3000 to access the frontend website.
+
+
+### Ganache Private keys-
+To store the data on the ethereum blockchain, we need ethers. We are using ganache as 
+our local blockchain and metamask as wallet to connect to ganache. Ganache provides 
+100 ethers each for 10 accounts. We can use ganache ethers to pay for storing the data on local blockchain.
+
+```
+docker logs ganache
+```
+
+<img src="./ganache-keys.png" />
 
 ### Ports being used in the project-
 
