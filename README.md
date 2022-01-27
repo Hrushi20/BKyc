@@ -93,7 +93,19 @@ On scrolling you can find the private keys for your local blockchain.
 
  >NOTE: The private keys may not be the same as displayed above
 
-### Ports being used in the project-
+### Metamask-
+Metamask wallet is used to connect to the ganache. Install metamask web extension for your browser.
+Create a metamask account, and you are good to go.
+
+Follow the steps in the below url to connect metamask with ganache.
+
+The <b>RPC URL</b> used in this project is <b> `http://127.0.0.1:7545`</b>
+Add this RPC URL in metamask.
+
+https://trufflesuite.com/docs/truffle/getting-started/truffle-with-metamask.html
+
+## Ports being used in the project-
+<hr/>
 
 | Port No. | Application   |
 |----------|---------------|
@@ -104,8 +116,8 @@ On scrolling you can find the private keys for your local blockchain.
 | 27017    | Mongodb       |
 | 8081     | mongo-express |
 
-
-### Roadmap-
+## Roadmap-
+<hr/>
 Although our solution is efficient, there's a lot more we wish to incorporate to expand bKYC, this includes:
 - A robust and even more secure system
 - A much more elegant UI/UX

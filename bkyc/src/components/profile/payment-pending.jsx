@@ -19,6 +19,7 @@ const PaymentPending = ({ connectToMetamask, address, isInstalled, sendKycToEthe
             <p className="pay-tit">You are almost there ! </p>
             <img style={{ width: 300, height: 300 }} src={pay} alt="This is an img" />
             <p className="pay-cont"> Complete the payment using Metamask to enjoy the benefits of BLOCKCHAIN </p>
+            <p className="pay-cont"> Check your email for cipher key </p>
             {!isInstalled && <Button color='success' variant='contained'> <a href='https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en-US' rel="noreferrer" target="_blank"> Install Metamask </a></Button>}
             {!address && isInstalled && <Button color='success' variant='contained' onClick={connectToMetamask}> Connect to metamask </Button>}
             {address && isInstalled && <p>Your wallet with address: {address} has been connected to our website</p>}
