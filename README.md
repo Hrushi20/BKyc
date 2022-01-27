@@ -47,6 +47,7 @@ user can build and run our entire project hazzel free.
 ```
 #### Open truffle folder in cloned directory and run-
 ```
+    cd truffle
     truffle build
 ```
 
@@ -67,9 +68,12 @@ After install all the dependencies the resulting log is displayed.
 ```
 The project is up and running. 
 
+>NOTE: This may take a few minutes as it builds all dependency containers of the system.
+
 #### In the truffle folder deploy smart contract to ganache using -
 ```
-   truffle deploy
+    cd truffle
+    truffle deploy
 ```
 
 After deploying the smart contract open the website http://localhost:3000
@@ -87,8 +91,7 @@ On scrolling you can find the private keys for your local blockchain.
 
 <img src="./ganache-keys.png" />
 
-<b>Note</b>:
-The private keys may not be the same as displayed above
+ >NOTE: The private keys may not be the same as displayed above
 
 ### Ports being used in the project-
 
