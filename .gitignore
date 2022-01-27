@@ -1,2 +1,5 @@
 *node_modules
-
+UserData
+/server/KycStorage.json
+truffle/build
+ai-models

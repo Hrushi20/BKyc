@@ -1,47 +1,76 @@
-const { node } = require("../../utils/ipfs");
-const { globSource } = require('ipfs-core');
+const { node } = require("../../utils/initEssentials");
+const CryptoJs = require("crypto-js");
+const { v4: uuidv4 } = require('uuid');
+const { enc } = require("crypto-js");
+const UnverifiedUsers = require("../../models/UnverifiedUsers");
+const UserSchema = require("../../models/Users");
+const UnpaidKycs = require("../../models/UnpaidKycs");
+const KycStorage = require("../kyc/kycStore");
+const Twilio = require("../twilio/twilio.js");
+const { sendMail } = require("../nodemailer/nodemailer");
+const KycStorageAbi = require("../../truffle/build/contracts/KycStorage.json");
+const Web3 = require("web3");
 
 class Ipfs {
 
-    async getHashesOfFilesInFolder (dir_name){
-        const fileHashes = [];
+    // Encrypting the userKyc.json file...
+    encryptUserKyc(data, cipherKey) {
+        return CryptoJs.AES.encrypt(data, cipherKey).toString();
+    }
 
-        for await(let hashes of node.ipfs.addAll(globSource(dir_name,"**/*")))
-            fileHashes.push(hashes);
-        
-        return fileHashes;
+    // Decrypting the ifps file...
+    decryptUserKyc(data, cipherKey) {
+        return CryptoJs.AES.decrypt(data, cipherKey).toString(enc.Utf8);
     }
 
     /*
-        Creates an html file and returns the hash of the html file. 
+        Hashes the json data of the user...
     */
-    async createUserKycHash(data){
+    async createUserKycHash(data, toEmail) {
 
-        const html = 
-        `<html>
-            <head>
-                <title>Hrushi</title>
-            </head>
-            <body>
-                <table>
-                    <tr>
-                        <td>Name</td>
-                        <td>Hrushi</td>
-                    </tr>
-                    <tr>
-                        <td>Address</td>
-                        <td>fjdksafjlaksdfjksdf</td>
-                    </tr>
-                </table>
+        const userId = data.userId;
+        delete data.userId;
 
-                <img src="https://ipfs.io/ipfs/QmfGcymAVSEPJx8W7PgNhPaxruY4d15mbW9caNanpj3WqD" alt="Pan card"/>
-                <img src="https://ipfs.io/ipfs/QmYz9doeU4fcihEFn6exDqHyhJsY8Yi1EwwmmHjXDqWcUY" alt="Aadhar card">
-            </body>
-        </html>`
+        const phoneNumber = data.phoneNumber;
+        const ipfsData = {};
+        const jsonString = JSON.stringify(data);
+        const cipherKey = uuidv4();
+        const encryptedData = this.encryptUserKyc(jsonString, cipherKey);
+        const userHash = await node.ipfs.add(encryptedData);
 
-        const htmlHash = await node.ipfs.add(html);
+        ipfsData["userHash"] = userHash;
 
-        return htmlHash;
+        // Delete unverified kyc...
+        const storageDetails = await UnverifiedUsers.findOneAndDelete({ userId: userId }, { new: true }).exec();
+        // Delete the storaged kyc on the server
+        KycStorage.deleteFolder(storageDetails.storageId);
+        // Storing the ipfs data in the db. Will be deleted after saving on the blockchain...
+        await (new UnpaidKycs({
+            userId,
+            ipfsHash: userHash.path
+        })).save();
+        // await Twilio.sendMessage(cipherKey,phoneNumber);
+        await sendMail(cipherKey, toEmail);
+        await UserSchema.findOneAndUpdate({ userId: userId }, { status: "payment-pending" }).exec();
+        return ipfsData;
+    }
+
+    static async decryptUserKycFromEthereum(kycId) {
+        const networkId = process.env.GANACHE_URL || '127.0.0.1';
+        const web3 = new Web3(new Web3.providers.HttpProvider(`http://${networkId}:7545`));
+        console.log(KycStorageAbi);
+        const keys = Object.keys(KycStorageAbi.networks);
+        console.log(keys);
+        const key = keys[keys.length - 1];
+        console.log(key);
+        const contract = new web3.eth.Contract(KycStorageAbi.abi, KycStorageAbi.networks[key].address);
+        const ethereumData = await contract.methods.getData(kycId).call();
+        const encryptedKycString = await node.ipfs.object.get(ethereumData['1']);
+        const dirtyKycString = new TextDecoder("utf-8").decode(encryptedKycString.Data).toString();
+        // DirtyKycString is not Displaying character. TO remove error, using below regex (Dirty string displayed is ????);
+        const cleanKycString = dirtyKycString.replace(/[^A-Za-z 0-9 \.,\?""!@#\$%\^&\*\(\)-_=\+;:<>\/\\\|\}\{\[\]`~]*/g, '')
+        const decryptedKycString = CryptoJs.AES.decrypt(cleanKycString, ethereumData['2']).toString(enc.Utf8);
+        return JSON.parse(decryptedKycString);
     }
 
 }

@@ -1,0 +1,23 @@
+.toggleButtons {
+    width: 100%;
+    margin: 42px 0;
+    justify-content: center;
+}
+
+.active, .pending {
+    margin: 16px 48px;
+    border: 1px solid var(--light-grey);
+    border-radius: 10px;
+    background-color:  #f2f2f2;
+    box-shadow: 3px 0px rgba(0,0,0,0.2), -3px 5px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.details-text {
+    margin: 32px 62px;
+    font-family: 'Anton', sans-serif;
+    font-size: 32px;
+    border-bottom: 1px solid gray;
+}

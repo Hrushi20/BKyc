@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@500&family=Nunito+Sans:wght@300&family=Nunito:wght@300&family=Righteous&display=swap');
+
+/* ============================================ colors ===================================================  */
+
+:root {
+    --light-black : rgba(0,0,0,0.6);
+    --orange : #ff9933;
+    --white : #ffffff;
+    --ash: #f2f2f2;
+    --light-grey: #b3b3b3;
+    --black: #000000;
+    --gray: gray;
+    --snow: snow;
+}
+
+
+/* ============================================ sec1 ======================================================  */
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.back, .front{
+    width: 100%;
+    height: 100vh;
+}
+
+.front {
+    background-color: var(--light-black);
+    display: flex;
+    flex-direction: column;
+}
+
+.back {
+    position: absolute;
+    top: 0;
+    background-image: url('../assets/network.svg');
+    z-index: -1;
+}
+
+.title {
+    font-family: 'Righteous', cursive;
+    font-size: 72px;
+    color: var(--white);
+    text-align: center;
+    vertical-align: middle;
+    letter-spacing: 8px;
+    margin-bottom: 20px;
+}
+
+.tagline {
+    font-family: 'Nunito', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: var(--white);
+    padding: 0 12px;
+    text-align: center;
+}
+
+.tech {
+    font-size: 2.4rem;
+    color: var(--orange);
+}
+
+.mainHeading {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.nav {
+    display: flex;
+    height: 100px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 32px;
+}
+
+.nav img{
+    position: relative;
+    top: -20px;
+}
+
+.nav ul {
+   display: flex;
+   align-content: center;
+   justify-content: center;
+}
+
+.nav ul .li {
+    padding: 5px 20px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: var(--white);
+    text-decoration: none;
+}
+
+.nav ul .li:hover {
+    cursor: pointer;
+    color: var(--orange);
+    border-bottom: 1px solid var(--white);
+    font-size: large;
+}
+
+.authButton {
+    margin-left: 20px;
+    padding: 5px 32px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-family: 'Nunito Sans', sans-serif;
+    border: 2px solid var(--white)
+}
+
+.authButton:hover {
+    cursor: pointer;
+    background-color: var(--orange);
+    color: var(--white);
+}
+
+
+/* ============================================ sec2 ======================================================  */
+
+.sec2 {
+    display: flex;
+    margin: 100px 100px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.sec2 img {
+    height: 300px;
+    width: 300px;
+}
+
+.sec2 .contentArea {
+    width: 40vw;
+    background-color: snow;
+    padding: 24px 44px;
+    border-radius: 8px;
+    border: 2px solid var(--light-grey);
+
+}
+
+.contentArea .content{
+    font-family: 'Nunito', sans-serif;
+    line-height: 24px;
+    font-size: 18px;
+}
+
+.container {
+    position: absolute;
+    height: 160px;
+    width: 45vw;
+    margin-left: 34px;
+    border: 1px solid var(--black);
+    background-color: var(--light-grey);
+    z-index: -1;
+    border-radius: 8px;
+}
+
+
+/* ============================================ contact form ================================================ */
+
+.contact-form {
+    height: 400px;
+    width: 100%;
+    background-color: var(--orange);
+    margin-top: 360px;
+    display: flex;
+    justify-content: center;
+} 
+
+.form {
+    position: relative;
+    top: -150px;
+    border: 2px solid var(--gray);
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    width: 80%;
+    height: 450px;
+    background-color: var(--snow);
+}
+
+.text {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.cform {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left-width: 1px;
+    border-left-color: var(--gray);
+    border-left-style: solid;
+}
+
+.cform .inputItem {
+    padding: 20px 100px;
+}
+
+.cform .inputItem label {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.inputItem input {
+    margin-left: 16px;
+    width: 180px;
+    height: 24px;
+    border-width: 1;
+}
+
+.contactSvg {
+    width: 200px;
+    height: 200px;
+}
+
+.contactText {
+    font-size: 70px;
+    margin-bottom: 40px;
+    font-family: 'Anton', sans-serif;
+}
+
+.msg-sent {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.texts p {
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Nunito', sans-serif;
+    margin: 16px 8px;
+}
+
+/* ============================================  footer  ================================================ */
+
+.footer {
+    height: 350px;
+    background-color: var(--orange);
+    display: flex;
+}
+
+.left-footer, .right-footer {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--black);
+    flex-direction: column;
+}
+
+.right-footer {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.right-footer .head {
+    margin-top: 28px;
+}
+
+.footer .foottit {
+    font-size: 56px;
+    color: var(--black);
+    margin-bottom: 40px;
+}
+
+.footer .head {
+     font-size: 20px;
+     font-family: 'Anton', sans-serif;
+     margin-bottom: 12px;
+     letter-spacing: 2px;
+}
+
+.right-footer .links, .left-footer .cp {
+    font-size: 16px;
+    font-family: 'Nunito', sans-serif;
+    margin-bottom: 4px;
+    display: block;
+    text-decoration: none;
+    color: var(--black);
+}
+
+.left-footer .cp {
+    margin-top: 44px;
+    font-size: 12px;
+}

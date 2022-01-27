@@ -1,0 +1,57 @@
+services:
+  ganache:
+    container_name: ganache
+    build: "./docker/ganache"
+    ports:
+      - "7545:7545"
+  frontend:
+    container_name: frontend
+    build: "./bkyc"
+    ports:
+      - "3000:3000"
+    environment:
+      - IPFS_URL=ipfs
+      - GANACHE_URL=ganache
+    volumes:
+      - ./bkyc:/code
+      - /code/node_modules
+      - ./truffle:/code/src/truffle
+  backend:
+    container_name: backend
+    build: "./server"
+    ports:
+      - "8080:8080"
+    environment:
+      - IPFS_URL=ipfs
+      - GANACHE_URL=ganache
+      - MONGODB_URL_DOCKER=mongo
+    volumes:
+      - ./server:/server
+      - /server/node_modules
+      - ./truffle:/server/truffle
+  ipfs:
+    container_name: ipfs
+    build: "./docker/ipfs"
+    ports:
+      - "5050:5050"
+      - "5001:5001"
+      - "4001:4001"
+  mongodb:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=admin 
+      - ME_CONFIG_MONGODB_SERVER=mongo   
