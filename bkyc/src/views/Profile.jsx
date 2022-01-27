@@ -10,7 +10,7 @@ import NoKycOrRejected from '../components/profile/noKyc-reject';
 import Pending from '../components/profile/pending';
 import ProfileHeader from '../components/profile/header';
 
-function Profile({status, setStatus , role}) {
+function Profile({ status, setStatus, role }) {
 
   const authData = useAuth0();
 
@@ -20,35 +20,33 @@ function Profile({status, setStatus , role}) {
     role
   }
 
-  const { initMetamask,getKycFromEthereum, ...metamaskData} = useMetamask();
+  const { initMetamask, getKycFromEthereum, ...metamaskData } = useMetamask();
 
   const { ...data } = useKyc();
 
-
-  async function findUserinMongoose(setStatus, uData) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(uData)
-    }
-      const data = await (await fetch(`${process.env.REACT_APP_PORTAL}/users/store-user`, requestOptions)).json();
-      const jsonData = { userId : data.userId, role: data.role, status: data.status }
-      localStorage.setItem("user-data", JSON.stringify(jsonData));
-      console.log("item set");
-      setStatus(data.status);
-  }
-
-  
-
   useEffect(() => {
-      initMetamask(); 
-      findUserinMongoose(setStatus, uData);
-    }, [])
+    initMetamask();
+    // findUserinMongoose(setStatus, uData);
+   const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(uData)
+    }
+    const loopId = setInterval(async() => {
+      let data = await(await fetch(`${process.env.REACT_APP_PORTAL}/users/store-user`, requestOptions)).json()
+      const jsonData = { userId: data.userId, role: data.role, status: data.status }
+      localStorage.setItem("user-data", JSON.stringify(jsonData));
+      setStatus(data.status);
+      console.log("Status is being fetched");
+    }, 5000);
+
+    return ()=> clearInterval(loopId);
+  }, [])
 
 
   return (
     <div>
-      <ProfileHeader role={role} status={status}  />
+      <ProfileHeader role={role} status={status} />
       {
         status === 'rejected' || status === 'noKYC' ?
           <NoKycOrRejected status={status} setStatus={setStatus} data={data} /> :
@@ -56,15 +54,15 @@ function Profile({status, setStatus , role}) {
 
             <Verified
               getKycFromEthereum={getKycFromEthereum}
-             />
+            />
 
             : status === 'pending' ?
 
               <Pending />
 
               : status === 'payment-pending' ?
-                <PaymentPending 
-                {...metamaskData}
+                <PaymentPending
+                  {...metamaskData}
                 />
                 : <></>
 

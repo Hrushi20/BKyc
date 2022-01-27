@@ -8,7 +8,7 @@ const UnpaidKycs = require("../../models/UnpaidKycs");
 const KycStorage = require("../kyc/kycStore");
 const Twilio = require("../twilio/twilio.js");
 const { sendMail } = require("../nodemailer/nodemailer");
-const KycStorageAbi = require("../../KycStorage.json");
+const KycStorageAbi = require("../../truffle/build/contracts/KycStorage.json");
 const Web3 = require("web3");
 
 class Ipfs {
@@ -58,7 +58,11 @@ class Ipfs {
     static async decryptUserKycFromEthereum(kycId) {
         const networkId = process.env.GANACHE_URL || '127.0.0.1';
         const web3 = new Web3(new Web3.providers.HttpProvider(`http://${networkId}:7545`));
-        const key = Object.keys(KycStorageAbi.networks)[0];
+        console.log(KycStorageAbi);
+        const keys = Object.keys(KycStorageAbi.networks);
+        console.log(keys);
+        const key = keys[keys.length - 1];
+        console.log(key);
         const contract = new web3.eth.Contract(KycStorageAbi.abi, KycStorageAbi.networks[key].address);
         const ethereumData = await contract.methods.getData(kycId).call();
         const encryptedKycString = await node.ipfs.object.get(ethereumData['1']);

@@ -4,18 +4,7 @@ WORKDIR /code
 
 COPY package.json .
 
-RUN yarn install
+RUN npm install --save --legacy-peer-deps
+RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
 
-RUN yarn global add truffle
-
-COPY . ./
-
-WORKDIR /code/src/truffle
-
-RUN truffle build 
-
-# RUN truffle deploy
-
-WORKDIR /code
-
-CMD ["yarn","start"]
+CMD ["npm","start"]

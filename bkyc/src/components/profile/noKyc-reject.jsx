@@ -6,7 +6,7 @@ import Form4 from '../forms/Kyc/form4';
 import Form3 from '../forms/Kyc/form3';
 import Form2 from '../forms/Kyc/form2';
 import Form1 from '../forms/Kyc/form1';
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 const StepperForm = ({ data, activeStep, setActiveStep, setStatus }) => {
 
@@ -29,6 +29,7 @@ const StepperForm = ({ data, activeStep, setActiveStep, setStatus }) => {
             {activeStep === 0 ? <Form1 {...data} /> : activeStep === 1 ? <Form2 {...data} /> : activeStep === 2 ? <Form3 {...data} /> : <Form4 setStatus={setStatus} {...data} />}
             <div className="buttons">
                 <Button variant='outlined' disabled={activeStep === 0} color='inherit' onClick={() => setActiveStep(activeStep - 1)}>Previous</Button>
+                    <p style={{ color:"red" }}>Fill your details with caution</p>
                 <Button variant='outlined' disabled={activeStep === 3} color='inherit' onClick={onNextHandler}>Next</Button>
             </div>
         </div>
@@ -41,6 +42,11 @@ const NoKycOrRejected = ({ data, status, setStatus }) => {
 
     return (
         <>
+
+        <div style={{ width:"100%",height:"100%" }}>
+            <Typography variant='h4' align='center'>Let's get started by filling your KYC.</Typography>
+             <Typography align='center' style={{ margin:30 }}>Your details are stored securely on the blockchain</Typography> 
+        </div>
 
             {status === 'rejected' && <p className="statuscontent" style={{ fontSize: 15, color: 'red' }} > The previous KYC was rejected. Please fill it again. To know WHY ? <a href='#'> view report </a>  </p>}
             <Stepper activeStep={activeStep} alternativeLabel>
