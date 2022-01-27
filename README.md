@@ -119,6 +119,7 @@ https://trufflesuite.com/docs/truffle/getting-started/truffle-with-metamask.html
 ## Roadmap-
 <hr/>
 Although our solution is efficient, there's a lot more we wish to incorporate to expand bKYC, this includes:
+
 - A robust and even more secure system
 - A much more elegant UI/UX
 - Improved AI models that aims to automate the validation process hence removing the human intervention in the process
