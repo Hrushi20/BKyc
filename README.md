@@ -19,13 +19,14 @@ on the server and is sent to the client due to which there cannot be leakage of 
 
 [//]: # (Architecture image will be added here)
 
-[//]: # (<img src="">)
+<img src="./bkyc-arch-diagram.PNG">
 
 ## System requirments
 <hr/>
 
 - Docker
-- Node v12.13.0 (LTS)
+- Node v > 12.13.0  (LTS)
+- Metamask (wallet to connect to blockchain)
 
 
 ## Running the project
@@ -54,14 +55,8 @@ user can build and run our entire project hazzel free.
     docker-compose up -d  
 ```
 The above command downloads the required packages and starts all the containers in the background.
+After install all the dependencies the resulting log is displayed.
 
-#### In the truffle dir run the following command to deploy smart contract to ganache-
-```
-   truffle deploy
-```
-
-
-#### The resulting log 
 ```
     Creating ganache       ... done
     Creating mongo         ... done
@@ -70,9 +65,30 @@ The above command downloads the required packages and starts all the containers 
     Creating ipfs          ... done
     Creating backend       ... done
 ```
-The project is up and running.
+The project is up and running. 
 
-Open http://locahost:3000 to access the frontend website.
+#### In the truffle folder deploy smart contract to ganache using -
+```
+   truffle deploy
+```
+
+After deploying the smart contract open the website http://localhost:3000
+
+### Ganache Private keys-
+To store the data on the ethereum blockchain, we need ethers. We are using ganache as 
+our local blockchain and metamask as wallet to connect to ganache. Ganache provides 
+100 ethers each for 10 accounts. We can use ganache ethers to pay for storing the data on local blockchain.
+
+```
+docker logs ganache
+```
+
+On scrolling you can find the private keys for your local blockchain. 
+
+<img src="./ganache-keys.png" />
+
+<b>Note</b>:
+The private keys may not be the same as displayed above
 
 ### Ports being used in the project-
 
