@@ -4,6 +4,7 @@ import '../styles/item.css';
 import Button from '@mui/material/Button';
 import AspectRatioOutlinedIcon from '@mui/icons-material/AspectRatioOutlined';
 import { IconButton, Modal, Tooltip } from '@mui/material';
+import { toast } from 'react-toastify';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import TodayIcon from '@mui/icons-material/Today';
@@ -16,6 +17,7 @@ const Buttons = ({kycVerified,kycRejected,index, email, scheduleAMeet}) => {
     }
     
     const onAccept = () => {
+        toast.success("KYC verified successfully !");
         kycVerified(index, email);
     }
 
@@ -24,7 +26,7 @@ const Buttons = ({kycVerified,kycRejected,index, email, scheduleAMeet}) => {
     }
 
     return ( <div className="buttons">
-        <Button startIcon={<TodayIcon />} style={{margin: '0 20'}}  variant="contained" onClick={onScheduleAMeet}> Schedule a Meet </Button>
+        <Button startIcon={<TodayIcon />} style={{margin: '0 20'}}  variant="contained" onClick={onScheduleAMeet}> Application ready for vKYC </Button>
         <Tooltip title="Accept">
             <IconButton color='success' onClick={onAccept}>
                 <CheckCircleIcon style={{margin: '0 20'}} />
