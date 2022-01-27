@@ -16,7 +16,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 const Req = ({ item, role, grantBankAccess, rejectBankAccess, terminateBankAccess }) => (
   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid#b3b3b3' }}>
     <div className="details">
-      <p className='uid bid'>BANK - NAME: &nbsp;&nbsp;&nbsp; {item.bankName} </p>
+      <p className='uid bid'>BANK - NAME: &nbsp;&nbsp;&nbsp; ABC Bank </p>
       <p className='uid bid'>BANK - ID : &nbsp;&nbsp;&nbsp;  {item.bankId}</p>
     </div>
     <div className="buttons">
