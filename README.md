@@ -1,3 +1,13 @@
+#### Note-
+**Hackathon**: [Ctrl Alt Debt](https://ctrl-alt-debt.hackerearth.com/#overview) <br>
+**Team Name**: [Nubz_squad_](https://ctrl-alt-debt.hackerearth.com/challenges/hackathon/ctrl-alt-debt/dashboard/02041f8/team/) <br>
+**Result**: **Top 25** team <br>
+
+#### Teamates-
+* [Hrushikesh Rao](https://github.com/hrushi20)
+* [Saimahesh](https://github.com/saimaheshtaduri)
+* [Bilal Aamer](https://github.com/bilal-aamer)
+
 
 # BKyc
 <hr>
