@@ -126,6 +126,11 @@ https://trufflesuite.com/docs/truffle/getting-started/truffle-with-metamask.html
 | 27017    | Mongodb       |
 | 8081     | mongo-express |
 
+### Video Link
+<hr/>
+https://youtu.be/mmYmcLOrsnY
+
+
 ## Roadmap-
 <hr/>
 Although our solution is efficient, there's a lot more we wish to incorporate to expand bKYC, this includes:
