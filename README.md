@@ -128,6 +128,7 @@ https://trufflesuite.com/docs/truffle/getting-started/truffle-with-metamask.html
 
 ### Video Link
 <hr/>
+The entire working of the application is available on YouTube. 
 https://youtu.be/mmYmcLOrsnY
 
 
