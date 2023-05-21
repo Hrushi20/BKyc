@@ -17,6 +17,5 @@ module.exports = class Twilio {
             messagingServiceSid: "MG770eb17b7cecf6396947e755aae76572"
         });
 
-        console.log(message.sid);
     }   
 }

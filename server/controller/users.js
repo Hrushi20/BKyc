@@ -29,7 +29,6 @@ const storeUser = async(req,res,next) => {
 
 const getMessage = async(req, res, next) => {
     try{
-        console.log("reqBody here : ", req.body);
         const message = await MessageSchema.findOne({email: req.body.email }).exec();
 
         if(message == null) {
@@ -53,10 +52,8 @@ const getMessage = async(req, res, next) => {
 const getUserInfo = async(req,res,next) => {
     try{
         const data = req.body;
-        console.log(data);
         if(!data.isAuthenticated) return;
         let userData = await UsersSchema.findOne({ userId: data.user.sub }).exec();
-        console.log("user : ", userData);
         if(!userData){
             return ;
         }
@@ -79,9 +76,7 @@ const getRequests = async(req, res, next) => {
             granted.push(bankDetail);
         }
         for(let bank of reqDetails.pending_kyc_access){
-            console.log("pending banks1 ", bank);
             const bankDetail = await BankData.findOne({ bankId:bank.bankId }).select("bankId -_id").exec();
-            console.log("pending banks ", bankDetail);
             pending.push(bankDetail);
         }
         const requests =  { 'grantedRequests': granted, 'pendingRequests': pending }

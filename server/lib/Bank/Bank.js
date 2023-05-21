@@ -43,7 +43,6 @@ module.exports = class Bank {
              await bank.save();
              details = await BankData.findOne({ bankId }).exec();
         }
-        console.log("Details : ", details);
         for(let user of details.granted_kyc_accesses){
             const userDetail = await UserSchema.findOne({ userId:user.userId }).select("username userId -_id").exec();
             granteduserDetails.push(userDetail);

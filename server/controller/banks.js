@@ -6,7 +6,6 @@ const requestUserKyc = async (req, res, next) => {
     try {
         const { userId,bankId } = req.body;
         const ustatus = await UserSchema.findOne({ userId: userId }).exec();
-        console.log("user status : ", ustatus);
         if(ustatus.status != 'verified'){
             res.status(200).json({ message:`Requested user's status is still " ${ustatus.status} " ` });
             return ;
@@ -53,9 +52,7 @@ const terminateBankKyc = async (req,res,next) => {
 const getAllUserDetails = async(req,res,next) => {
     try{
         const bankId = req.params.bankId;
-        console.log("bankId", bankId);
         const userDetails = await BankFunc.getAllUserDetails(bankId);
-        console.log("users : ", userDetails);
         res.status(201).json({ userDetails });
     }catch(err){
         errHandler(err,next);

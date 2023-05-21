@@ -3,6 +3,8 @@ const nodemailer = require("nodemailer");
 
 const sendMail = async (cipherKey, toEmail) => {
 
+    console.log("Cipher Key ", cipherKey);
+
     const transport = nodemailer.createTransport({
         service: 'gmail',
         auth: {

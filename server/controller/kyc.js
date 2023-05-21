@@ -18,6 +18,7 @@ const storeKyc = async(req,res,next) => {
         // Get the json data from client
         data = JSON.parse(req.body.body);
 
+        console.log(data + " data to store kyc");
         // Get the pan and aadhar details
         const docs = req.files;
         const kycStorage = new KycStore(data,docs);

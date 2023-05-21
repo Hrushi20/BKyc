@@ -10,9 +10,7 @@ const initEssentials = async() => {
 
     if(!node.mongoose){
         let url = process.env.MONGODB_URL;
-        if(process.env.MONGODB_URL_DOCKER){
-            url = `mongodb://admin:admin@${process.env.MONGODB_URL_DOCKER}:27017`;
-        }
+        console.log(url, " is the mongodb url");
         node.mongoose = await connect(url);
     }
 

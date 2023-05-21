@@ -88,7 +88,6 @@ const connectOrDisconnect = async (event) => {
   });
 
   const data = await response.json();
-  console.log(data);
   room = await Twilio.Video.connect(data.token);
   localIdentity.innerHTML = identity;
 

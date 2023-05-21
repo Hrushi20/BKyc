@@ -8,6 +8,7 @@ module.exports = class Users {
 
     static async createUser(data) {
         
+        console.log(data + " create user");
         const user = new UsersSchema({
             username: data.authData.user.name,
             status: data.role === 'user' ? 'noKYC' : '-',

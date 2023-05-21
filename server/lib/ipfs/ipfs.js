@@ -58,11 +58,8 @@ class Ipfs {
     static async decryptUserKycFromEthereum(kycId) {
         const networkId = process.env.GANACHE_URL || '127.0.0.1';
         const web3 = new Web3(new Web3.providers.HttpProvider(`http://${networkId}:7545`));
-        console.log(KycStorageAbi);
         const keys = Object.keys(KycStorageAbi.networks);
-        console.log(keys);
         const key = keys[keys.length - 1];
-        console.log(key);
         const contract = new web3.eth.Contract(KycStorageAbi.abi, KycStorageAbi.networks[key].address);
         const ethereumData = await contract.methods.getData(kycId).call();
         const encryptedKycString = await node.ipfs.object.get(ethereumData['1']);
