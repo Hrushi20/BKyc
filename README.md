@@ -131,6 +131,12 @@ https://trufflesuite.com/docs/truffle/getting-started/truffle-with-metamask.html
 The entire working of the application is available on YouTube. 
 https://youtu.be/mmYmcLOrsnY
 
+### Development tools
+<hr/>
+
+#### [Ipfs Desktop](https://docs.ipfs.tech/install/ipfs-desktop/#install-the-ipfs-desktop-app)
+
+Ipfs desktop can be used to view the encrypted kyc data on ipfs network. Connect the ipfs application to the software. 
 
 ## Roadmap-
 <hr/>
