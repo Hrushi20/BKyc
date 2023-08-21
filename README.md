@@ -7,6 +7,7 @@
 * [Hrushikesh Rao](https://github.com/hrushi20)
 * [Saimahesh](https://github.com/saimaheshtaduri)
 * [Bilal Aamer](https://github.com/bilal-aamer)
+* [Surya Teja](https://github.com/teja1809)
 
 
 # BKyc
