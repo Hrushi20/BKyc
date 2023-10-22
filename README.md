@@ -38,6 +38,7 @@ on the server and is sent to the client due to which there cannot be leakage of 
 - Docker
 - Node v > 12.13.0  (LTS)
 - Google Chrome with Metamask (wallet to connect to blockchain)
+- It is recommended to use Google Chrome while connecting to metamask (Stable). Other browsers (Especially Firefox) throws error while connecting to metamask.
 
 ## Running the project
 <hr>
@@ -132,10 +133,8 @@ The entire working of the application is available on YouTube.
 https://youtu.be/mmYmcLOrsnY
 <br>
 <br>
-Below video helps setup metamask in browser using ganache. Using [npm ganache](https://www.npmjs.com/package/ganache) because Ganache docker image is not supported on Arm chips.
+Below video helps setup metamask in browser using ganache. Using npm ganache in below video because Ganache docker image is not supported on Arm chips.
 <br>
-<br>
-It is recommended to use Google Chrome while connecting to metamask (Stable). Other browsers (Especially Firefox) throws error while connecting to metamask.
 <br>
 https://drive.google.com/file/d/1oZ4xTXW2SUBpeMAU8HD0DDAQzXRNZhXa/view?usp=sharin
 
