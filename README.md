@@ -130,9 +130,13 @@ https://trufflesuite.com/docs/truffle/getting-started/truffle-with-metamask.html
 <hr/>
 The entire working of the application is available on YouTube. 
 https://youtu.be/mmYmcLOrsnY
-
+<br>
+<br>
 Below video helps setup metamask in browser using ganache. Using [npm ganache](https://www.npmjs.com/package/ganache) because Ganache docker image is not supported on Arm chips.
+<br>
+<br>
 It is recommended to use Google Chrome while connecting to metamask (Stable). Other browsers (Especially Firefox) throws error while connecting to metamask.
+<br>
 https://drive.google.com/file/d/1oZ4xTXW2SUBpeMAU8HD0DDAQzXRNZhXa/view?usp=sharin
 
 
