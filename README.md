@@ -37,8 +37,7 @@ on the server and is sent to the client due to which there cannot be leakage of 
 
 - Docker
 - Node v > 12.13.0  (LTS)
-- Metamask (wallet to connect to blockchain)
-
+- Google Chrome with Metamask (wallet to connect to blockchain)
 
 ## Running the project
 <hr>
@@ -131,6 +130,11 @@ https://trufflesuite.com/docs/truffle/getting-started/truffle-with-metamask.html
 <hr/>
 The entire working of the application is available on YouTube. 
 https://youtu.be/mmYmcLOrsnY
+
+Below video helps setup metamask in browser using ganache. Using [npm ganache](https://www.npmjs.com/package/ganache) because Ganache docker image is not supported on Arm chips.
+It is recommended to use Google Chrome while connecting to metamask (Stable). Other browsers (Especially Firefox) throws error while connecting to metamask.
+https://drive.google.com/file/d/1oZ4xTXW2SUBpeMAU8HD0DDAQzXRNZhXa/view?usp=sharin
+
 
 ### Development tools
 <hr/>
